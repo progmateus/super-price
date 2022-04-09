@@ -14,7 +14,6 @@ class CreateProductUseCase {
 
 
     async execute({
-        id,
         name,
         gtin,
         brand,
@@ -28,7 +27,6 @@ class CreateProductUseCase {
         }
 
         await this.productsRepository.create({
-            id,
             name: name.toLowerCase(),
             gtin,
             brand: brand.toLowerCase(),
