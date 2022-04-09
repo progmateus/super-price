@@ -1,6 +1,6 @@
 import { AppError } from "@errors/AppError";
-import { ICreateSupermakertdTO } from "@modules/superomarkets/dtos/ICreateSupermarketDTO";
-import { ISupermarketsRepository } from "@modules/superomarkets/repositories/ISupermarketsRepository";
+import { ICreateSupermakertdTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
+import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { inject, injectable } from "tsyringe";
 
 

@@ -1,5 +1,5 @@
-import { ICreateSupermakertdTO } from "@modules/superomarkets/dtos/ICreateSupermarketDTO";
-import { ISupermarketsRepository } from "@modules/superomarkets/repositories/ISupermarketsRepository";
+import { ICreateSupermakertdTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
+import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { getRepository, Repository } from "typeorm";
 import { Supermarket } from "../entities/Supermarket";
 

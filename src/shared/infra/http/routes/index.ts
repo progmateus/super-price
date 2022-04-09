@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { authenticateRoutes } from "./authenticate.routes";
+import { pricesRoutes } from "./prices.routes";
 import { productsRoutes } from "./products.routes";
 import { supermarketsRoutes } from "./supermarkets.routes";
 import { usersRoutes } from "./users.routes";
@@ -10,5 +11,6 @@ router.use("/users", usersRoutes);
 router.use("/authenticate", authenticateRoutes);
 router.use("/products", productsRoutes)
 router.use("/supermarkets", supermarketsRoutes)
+router.use("/prices", pricesRoutes);
 
 export { router };
