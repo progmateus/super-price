@@ -6,5 +6,6 @@ interface ISupermarketsRepository {
     create(data: ICreateSupermakertdTO): Promise<void>;
     findById(id: string): Promise<Supermarket>;
     findByName(name: string): Promise<Supermarket>;
+    list(): Promise<Supermarket[]>;
 }
 export { ISupermarketsRepository }

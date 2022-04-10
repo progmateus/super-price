@@ -35,5 +35,10 @@ class SupermarketsRepository implements ISupermarketsRepository {
         return supermarket;
     }
 
+    async list(): Promise<Supermarket[]> {
+        const supermarkets = await this.repository.find();
+        return supermarkets
+    }
+
 }
 export { SupermarketsRepository }
