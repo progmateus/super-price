@@ -11,12 +11,6 @@ class ProductsRepository implements IProductsRepository {
         this.repository = getRepository(Product)
     }
 
-
-    async listProducts(): Promise<Product[]> {
-        const products = await this.repository.find();
-        return products
-    }
-
     async create({
         id,
         name,
@@ -46,6 +40,11 @@ class ProductsRepository implements IProductsRepository {
     async findByName(name: string): Promise<Product> {
         const product = await this.repository.findOne({ name })
         return product;
+    }
+
+    async list(): Promise<Product[]> {
+        const products = await this.repository.find();
+        return products
     }
 
 }

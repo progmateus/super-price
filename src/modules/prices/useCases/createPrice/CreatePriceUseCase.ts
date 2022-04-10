@@ -3,8 +3,8 @@ import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepositor
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { inject, injectable } from "tsyringe";
-import { ICreatePriceDTO } from "../dtos/ICreatePriceDTO";
-import { IPricesRepository } from "../repositories/IPricesRepository";
+import { ICreatePriceDTO } from "../../dtos/ICreatePriceDTO";
+import { IPricesRepository } from "../../repositories/IPricesRepository";
 
 @injectable()
 class CreatePriceUseCase {

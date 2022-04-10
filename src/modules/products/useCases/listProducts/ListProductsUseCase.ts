@@ -14,7 +14,7 @@ class ListProductsUseCase {
 
 
     async execute(): Promise<Product[]> {
-        const products = await this.productsRepository.listProducts()
+        const products = await this.productsRepository.list()
         return products;
     }
 }
