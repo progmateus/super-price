@@ -47,7 +47,6 @@ class UpdateUserUseCase {
 
 
         const user = await this.usersRepository.findById(id)
-        console.log(user);
 
         if (name) {
             const nameLowerCase = name.toLowerCase();

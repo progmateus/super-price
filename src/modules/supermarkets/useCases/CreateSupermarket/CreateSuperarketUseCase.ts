@@ -16,6 +16,10 @@ class CreateSupermarketUseCase {
         name,
     }: ICreateSupermakertdTO) {
 
+        if (name.length > 50) {
+            throw new AppError("Character limit exceeded", 400)
+        }
+
         const nameLowerCase = name.toLowerCase();
 
         const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);

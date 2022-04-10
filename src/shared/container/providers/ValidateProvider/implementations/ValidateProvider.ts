@@ -8,9 +8,9 @@ class ValidateProvider implements IValidateProvider {
 
         const regex = /^[a-záàâãéèêíïóôõöúçñ]+$/i
 
-        const isValidName = regex.test(name);
+        const isValid = regex.test(name);
 
-        return isValidName
+        return isValid
     }
 
     ValidateEmail(email: string): boolean {
@@ -45,6 +45,14 @@ class ValidateProvider implements IValidateProvider {
 
 
         return validateEmail;
+    }
+
+    validateGtin(gtin: string): boolean {
+
+        const regex = /^[0-9]+$/g
+
+        const isValid = regex.test(gtin);
+        return isValid;
     }
 
 }
