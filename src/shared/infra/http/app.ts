@@ -1,11 +1,13 @@
 import "reflect-metadata";
 import "../../../database/index"
 import express, { Request, Response, NextFunction } from "express";
+import createConnection from "@database/index";
 import "express-async-errors"
 import "../../container/index"
 import { router } from "./routes";
 import { AppError } from "@errors/AppError";
 
+createConnection();
 const app = express();
 app.use(express.json())
 

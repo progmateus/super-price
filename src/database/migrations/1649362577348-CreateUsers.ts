@@ -21,6 +21,11 @@ export class CreateUsers1649362577348 implements MigrationInterface {
                         type: "varchar"
                     },
                     {
+                        name: "isAdmin",
+                        type: "boolean",
+                        default: false
+                    },
+                    {
                         name: "email",
                         type: "varchar"
                     },
@@ -45,6 +50,7 @@ export class CreateUsers1649362577348 implements MigrationInterface {
                         type: "timestamp",
                         default: "now()"
                     }
+
                 ]
             })
         )
