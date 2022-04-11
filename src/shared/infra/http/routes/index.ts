@@ -8,7 +8,7 @@ import { usersRoutes } from "./users.routes";
 const router = Router();
 
 router.use("/users", usersRoutes);
-router.use("/authenticate", authenticateRoutes);
+router.use("/sessions", authenticateRoutes);
 router.use("/products", productsRoutes)
 router.use("/supermarkets", supermarketsRoutes)
 router.use("/prices", pricesRoutes);
