@@ -15,4 +15,5 @@ productsRoutes.post("/", ensureAuthenticated, createProductController.handle);
 productsRoutes.get("/", ensureAuthenticated, litsProductsController.handle);
 productsRoutes.get("/:gtin", ensureAuthenticated, findProductByGtinController.handle);
 
+
 export { productsRoutes };

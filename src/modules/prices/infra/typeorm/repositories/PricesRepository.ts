@@ -51,5 +51,30 @@ class PricesRepository implements IPricesRepository {
         return price
     }
 
+
+    async findPrice(supermarket_id?: string, product_id?: string): Promise<Price[]> {
+        const pricesQuery = this.repository.createQueryBuilder("p")
+
+        if (supermarket_id && product_id) {
+            pricesQuery
+                .where("supermarket_id = :supermarket_id", { supermarket_id })
+                .andWhere("product_id = :product_id", { product_id })
+        }
+
+        if (supermarket_id && !product_id) {
+            pricesQuery
+                .where("supermarket_id = :supermarket_id", { supermarket_id })
+        }
+
+        if (product_id && !supermarket_id) {
+            pricesQuery.where("product_id = :product_id", { product_id })
+        }
+
+
+        const prices = await pricesQuery.getMany();
+
+        return prices;
+    }
+
 }
 export { PricesRepository };

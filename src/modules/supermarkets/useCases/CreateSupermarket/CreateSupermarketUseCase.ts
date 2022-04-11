@@ -23,7 +23,7 @@ class CreateSupermarketUseCase {
         const nameLowerCase = name.toLowerCase();
 
         const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
-        console.log("supermarket: ", supermarket)
+
         if (supermarket) {
             throw new AppError("Supermarket already exists!");
         }

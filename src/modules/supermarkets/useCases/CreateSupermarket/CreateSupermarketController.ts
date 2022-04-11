@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreateSupermarketUseCase } from "./CreateSuperarketUseCase";
+import { CreateSupermarketUseCase } from "./CreateSupermarketUseCase";
 
 class CreateSupermarketController {
 
