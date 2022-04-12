@@ -43,7 +43,7 @@ describe("Create User", () => {
 
 
 
-    it("Should be able to create a new Product", async () => {
+    it("Should not be able to create a new Product with same Gtin", async () => {
 
         expect(async () => {
             const product = {

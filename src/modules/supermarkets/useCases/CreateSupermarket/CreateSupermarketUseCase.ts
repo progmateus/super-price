@@ -1,5 +1,5 @@
 import { AppError } from "@errors/AppError";
-import { ICreateSupermakertdTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
+import { ICreateSupermarketDTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { inject, injectable } from "tsyringe";
 
@@ -14,7 +14,7 @@ class CreateSupermarketUseCase {
 
     async execute({
         name,
-    }: ICreateSupermakertdTO) {
+    }: ICreateSupermarketDTO) {
 
         if (name.length > 50) {
             throw new AppError("Character limit exceeded", 400)

@@ -39,7 +39,6 @@ class ValidateProvider implements IValidateProvider {
         const badCharactersRegex = /[!#$%&'*()+`{|}~]/g;
         const validEmail = badCharactersRegex.test(email);
         if (validEmail === true) {
-            console.log("bad Character found");
             return false
         }
 

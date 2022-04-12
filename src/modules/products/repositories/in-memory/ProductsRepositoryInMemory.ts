@@ -17,12 +17,13 @@ class ProductsRepositoryInMemory implements IProductsRepository {
         const product = new Product();
 
         Object.assign(product, {
-            name: "name test",
-            gtin: "7898940123025",
-            brand: "brand test"
+            name,
+            gtin,
+            brand,
         })
 
         this.products.push(product)
+
 
     }
     async findById(id: string): Promise<Product> {

@@ -1,4 +1,4 @@
-import { ICreateSupermakertdTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
+import { ICreateSupermarketDTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { getRepository, Repository } from "typeorm";
 import { Supermarket } from "../entities/Supermarket";
@@ -12,11 +12,9 @@ class SupermarketsRepository implements ISupermarketsRepository {
     }
 
     async create({
-        id,
         name
-    }: ICreateSupermakertdTO): Promise<void> {
+    }: ICreateSupermarketDTO): Promise<void> {
         const supermarket = this.repository.create({
-            id,
             name
         })
 

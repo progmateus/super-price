@@ -12,7 +12,7 @@ describe("Create product controller", () => {
         connection = await createConnection();
         await connection.runMigrations();
 
-        const user = await request(app)
+        await request(app)
             .post("/users")
             .send({
                 name: "username",
@@ -28,7 +28,7 @@ describe("Create product controller", () => {
     })
 
 
-    it("Should be able to create a new product", async () => {
+    it("Should be able to create a new Supermarket", async () => {
         const responseToken = await request(app)
 
             .post('/sessions')
@@ -40,11 +40,9 @@ describe("Create product controller", () => {
         const { token } = responseToken.body;
 
         const response = await request(app)
-            .post("/products")
+            .post("/supermarkets")
             .send({
-                name: "product test",
-                gtin: "7898940123025",
-                brand: "brand test"
+                name: "supermarket test",
             })
             .set({
                 authorization: `Bearer ${token}`
@@ -53,7 +51,7 @@ describe("Create product controller", () => {
         expect(response.status).toBe(201);
     })
 
-    it("Should be able to create a new product with same Gtin", async () => {
+    it("Should be able to create a new Supermarket with same name", async () => {
         const responseToken = await request(app)
 
             .post('/sessions')
@@ -65,11 +63,9 @@ describe("Create product controller", () => {
         const { token } = responseToken.body;
 
         const response = await request(app)
-            .post("/products")
+            .post("/supermarkets")
             .send({
-                name: "product test",
-                gtin: "7898940123025",
-                brand: "brand test"
+                name: "supermarket test",
             })
             .set({
                 authorization: `Bearer ${token}`
