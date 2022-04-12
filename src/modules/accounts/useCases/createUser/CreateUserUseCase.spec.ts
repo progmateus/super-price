@@ -1,5 +1,5 @@
 import { AppError } from "@errors/AppError";
-import { UsersRepositoryInMemory } from "@modules/accounts/infra/typeorm/repositories/in-memory/UsersRepositoryInMemory";
+import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersRepositoryInMemory";
 import { ValidateProvider } from "@shared/container/providers/ValidateProvider/implementations/ValidateProvider";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 

@@ -3,6 +3,6 @@ interface ICreateProductDTO {
     name: string;
     gtin: string;
     brand: string;
-    thumbnail: string;
+    thumbnail?: string;
 }
 export { ICreateProductDTO }

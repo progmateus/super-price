@@ -32,4 +32,18 @@ describe("Create User Controller", () => {
         expect(response.status).toBe(201);
 
     })
+
+    it("Should not be able to create a new User with same email", async () => {
+        const response = await request(app)
+            .post("/users")
+            .send({
+                name: "username",
+                lastname: "userlastname",
+                email: "user@email.com",
+                password: "user123",
+            })
+
+        expect(response.status).toBe(400);
+
+    })
 })
