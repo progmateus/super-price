@@ -15,6 +15,9 @@ class User {
     lastname: string;
 
     @Column()
+    isAdmin: boolean
+
+    @Column()
     email: string;
 
     @Column()

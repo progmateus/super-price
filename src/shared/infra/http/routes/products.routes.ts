@@ -2,6 +2,7 @@ import { CreateProductController } from "@modules/products/useCases/CreateProduc
 import { FindProductByGtinController } from "@modules/products/useCases/findProductByGtin/FindProductByGtinController";
 import { LitsProductsController } from "@modules/products/useCases/listProducts/ListProductsController";
 import { Router } from "express";
+import { EnsureAdmin } from "../middlewares/EnsureAdmin";
 import { ensureAuthenticated } from "../middlewares/EnsureAuthenticated";
 
 const productsRoutes = Router();
