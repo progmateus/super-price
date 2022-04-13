@@ -12,7 +12,7 @@ const litsProductsController = new LitsProductsController();
 const findProductByGtinController = new FindProductByGtinController()
 
 
-productsRoutes.post("/", ensureAuthenticated, createProductController.handle);
+productsRoutes.post("/", ensureAuthenticated, EnsureAdmin, createProductController.handle);
 productsRoutes.get("/", ensureAuthenticated, litsProductsController.handle);
 productsRoutes.get("/:gtin", ensureAuthenticated, findProductByGtinController.handle);
 
