@@ -18,7 +18,7 @@ class ProductsRepository implements IProductsRepository {
         brand,
         thumbnail,
 
-    }: ICreateProductDTO): Promise<void> {
+    }: ICreateProductDTO): Promise<Product> {
         const product = this.repository.create({
             id,
             name,
@@ -28,6 +28,8 @@ class ProductsRepository implements IProductsRepository {
         })
 
         await this.repository.save(product);
+
+        return product
     }
     async findById(id: string): Promise<Product> {
         const product = await this.repository.findOne(id);

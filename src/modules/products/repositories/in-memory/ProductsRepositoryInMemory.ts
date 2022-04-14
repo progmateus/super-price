@@ -12,19 +12,21 @@ class ProductsRepositoryInMemory implements IProductsRepository {
     async create({
         name,
         gtin,
-        brand
-    }: ICreateProductDTO): Promise<void> {
+        brand,
+        thumbnail
+    }: ICreateProductDTO): Promise<Product> {
         const product = new Product();
 
         Object.assign(product, {
             name,
             gtin,
             brand,
+            thumbnail
         })
 
         this.products.push(product)
 
-
+        return product
     }
     async findById(id: string): Promise<Product> {
         const product = this.products.find(product => product.id === id)
