@@ -13,12 +13,14 @@ class SupermarketsRepository implements ISupermarketsRepository {
 
     async create({
         name
-    }: ICreateSupermarketDTO): Promise<void> {
+    }: ICreateSupermarketDTO): Promise<Supermarket> {
         const supermarket = this.repository.create({
             name
         })
 
         await this.repository.save(supermarket)
+
+        return supermarket;
     }
 
 

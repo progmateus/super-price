@@ -7,7 +7,7 @@ import { ISupermarketsRepository } from "../ISupermarketsRepository";
 class SupermarketsRepositoryInMemory implements ISupermarketsRepository {
     supermarkets: Supermarket[] = [];
 
-    async create({ name }: ICreateSupermarketDTO): Promise<void> {
+    async create({ name }: ICreateSupermarketDTO): Promise<Supermarket> {
         const supermarket = new Supermarket();
 
         Object.assign(supermarket, {
@@ -15,6 +15,8 @@ class SupermarketsRepositoryInMemory implements ISupermarketsRepository {
         })
 
         this.supermarkets.push(supermarket);
+
+        return supermarket;
 
     }
 
