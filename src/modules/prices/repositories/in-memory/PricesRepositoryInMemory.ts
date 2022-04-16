@@ -25,8 +25,8 @@ class PricesRepositoryInMemory implements IPricesRepository {
         this.prices.push(value);
 
         return value;
-
     }
+
     async findById(id: string): Promise<Price> {
         const price = this.prices.find(price => price.id === id)
         return price
@@ -45,18 +45,23 @@ class PricesRepositoryInMemory implements IPricesRepository {
     }
     async findPrice(supermarket_id?: string, product_id?: string): Promise<Price[]> {
 
-        const prices = await this.prices.filter((price) => {
-            if (
-                (supermarket_id && price.supermarket_id === supermarket_id) ||
-                (product_id && price.product_id === product_id)
-            ) {
-                return prices
-            }
+        if (supermarket_id && !product_id) {
+            const prices = await this.prices.filter(price => price.supermarket_id === supermarket_id);
+            return prices
+        }
 
-            return null;
-        });
+        if (product_id && !supermarket_id) {
+            const prices = await this.prices.filter(price => price.product_id === product_id);
+            return prices
+        }
 
-        return prices;
+        if (product_id && supermarket_id) {
+            const prices = await this.prices.filter(price => price.product_id === product_id && price.supermarket_id === supermarket_id);
+            return prices
+        }
+
+        return null;
+
     }
 
 }

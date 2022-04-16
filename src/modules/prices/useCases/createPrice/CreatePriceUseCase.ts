@@ -27,7 +27,6 @@ class CreatePriceUseCase {
     ) { }
 
     async execute({
-        id,
         product_id,
         supermarket_id,
         user_id,
@@ -51,7 +50,6 @@ class CreatePriceUseCase {
         }
 
         const priceCreated = await this.pricesRepository.create({
-            id,
             product_id,
             supermarket_id,
             user_id,

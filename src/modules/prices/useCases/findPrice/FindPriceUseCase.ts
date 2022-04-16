@@ -29,7 +29,6 @@ class FindPriceUseCase {
 
     async execute({ supermarket_name, gtin }: IRequest) {
 
-
         if (gtin?.length > 50) {
             throw new AppError("Character limit exceeded", 400)
         }
