@@ -17,14 +17,14 @@ class CreatePriceController {
 
         const createPriceUseCase = container.resolve(CreatePriceUseCase);
 
-        await createPriceUseCase.execute({
+        const priceCreated = await createPriceUseCase.execute({
             product_id,
             supermarket_id,
             user_id: id,
             price
         })
 
-        return response.status(201).send();
+        return response.status(201).json(priceCreated);
     }
 }
 export { CreatePriceController }
