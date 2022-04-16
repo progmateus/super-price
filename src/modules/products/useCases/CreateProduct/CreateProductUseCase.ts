@@ -1,5 +1,6 @@
 import { AppError } from "@errors/AppError";
 import { ICreateProductDTO } from "@modules/products/dtos/ICreateProductDTO";
+import { Product } from "@modules/products/infra/typeorm/entities/Product";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
 import { inject, injectable } from "tsyringe";
@@ -22,7 +23,7 @@ class CreateProductUseCase {
         gtin,
         brand,
         thumbnail,
-    }: ICreateProductDTO): Promise<void> {
+    }: ICreateProductDTO): Promise<Product> {
 
         if (gtin.length > 50) {
             throw new AppError("Character limit exceeded", 400)
@@ -40,12 +41,14 @@ class CreateProductUseCase {
             throw new AppError("Product already exists!")
         }
 
-        await this.productsRepository.create({
+        const productCreated = await this.productsRepository.create({
             name: name.toLowerCase(),
             gtin,
             brand: brand.toLowerCase(),
             thumbnail,
         });
+
+        return productCreated;
 
     }
 

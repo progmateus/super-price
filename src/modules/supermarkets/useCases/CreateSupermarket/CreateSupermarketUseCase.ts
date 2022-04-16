@@ -1,5 +1,6 @@
 import { AppError } from "@errors/AppError";
 import { ICreateSupermarketDTO } from "@modules/supermarkets/dtos/ICreateSupermarketDTO";
+import { Supermarket } from "@modules/supermarkets/infra/typeorm/entities/Supermarket";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { inject, injectable } from "tsyringe";
 
@@ -14,7 +15,7 @@ class CreateSupermarketUseCase {
 
     async execute({
         name,
-    }: ICreateSupermarketDTO) {
+    }: ICreateSupermarketDTO): Promise<Supermarket> {
 
         if (name.length > 50) {
             throw new AppError("Character limit exceeded", 400)
@@ -28,9 +29,11 @@ class CreateSupermarketUseCase {
             throw new AppError("Supermarket already exists!");
         }
 
-        await this.supermarketsRepository.create({
+        const supermarketCreated = await this.supermarketsRepository.create({
             name: nameLowerCase
         })
+
+        return supermarketCreated;
     }
 
 }

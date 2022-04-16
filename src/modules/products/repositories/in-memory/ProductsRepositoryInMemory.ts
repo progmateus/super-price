@@ -2,8 +2,6 @@ import { ICreateProductDTO } from "@modules/products/dtos/ICreateProductDTO";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { Product } from "../../infra/typeorm/entities/Product";
 
-
-
 class ProductsRepositoryInMemory implements IProductsRepository {
 
     products: Product[] = [];

@@ -10,9 +10,9 @@ class CreateSupermarketController {
 
         const createSupermarketUseCase = container.resolve(CreateSupermarketUseCase);
 
-        await createSupermarketUseCase.execute({ name });
+        const supermarket = await createSupermarketUseCase.execute({ name });
 
-        return response.status(201).send();
+        return response.status(201).json(supermarket);
     }
 }
 export { CreateSupermarketController };

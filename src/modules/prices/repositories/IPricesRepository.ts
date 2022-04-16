@@ -3,7 +3,7 @@ import { Price } from "../infra/typeorm/entities/Price";
 
 interface IPricesRepository {
 
-    create(data: ICreatePriceDTO): Promise<void>;
+    create(data: ICreatePriceDTO): Promise<Price>;
     findById(id: string): Promise<Price>;
     findBySupermarketId(supermarket_id: string): Promise<Price[]>;
     findByProductId(product_id: string): Promise<Price[]>;

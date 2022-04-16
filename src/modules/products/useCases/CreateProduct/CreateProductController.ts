@@ -15,14 +15,14 @@ class CreateProductController {
 
         const createProductUseCase = container.resolve(CreateProductUseCase);
 
-        await createProductUseCase.execute({
+        const product = await createProductUseCase.execute({
             name,
             gtin,
             brand,
             thumbnail
         })
 
-        return response.status(201).send();
+        return response.status(201).json(product);
 
     }
 }

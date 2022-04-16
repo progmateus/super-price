@@ -17,7 +17,7 @@ class PricesRepository implements IPricesRepository {
         supermarket_id,
         user_id,
         price
-    }: ICreatePriceDTO): Promise<void> {
+    }: ICreatePriceDTO): Promise<Price> {
         const value = this.repository.create({
             id,
             product_id,
@@ -27,6 +27,8 @@ class PricesRepository implements IPricesRepository {
         })
 
         await this.repository.save(value);
+
+        return value;
     }
     async findById(id: string): Promise<Price> {
         const price = await this.repository.findOne(id)

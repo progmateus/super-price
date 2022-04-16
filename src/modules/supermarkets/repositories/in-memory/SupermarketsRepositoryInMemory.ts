@@ -26,7 +26,7 @@ class SupermarketsRepositoryInMemory implements ISupermarketsRepository {
     }
 
     async findByName(name: string): Promise<Supermarket> {
-        const supermarket = await this.supermarkets.find((supermarket => supermarket.name === name))
+        const supermarket = await this.supermarkets.find((supermarket => supermarket.name === name));
         return supermarket;
     }
 

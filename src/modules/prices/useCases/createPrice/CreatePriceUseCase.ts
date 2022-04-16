@@ -1,5 +1,6 @@
 import { AppError } from "@errors/AppError";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { Price } from "@modules/prices/infra/typeorm/entities/Price";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { ISupermarketsRepository } from "@modules/supermarkets/repositories/ISupermarketsRepository";
 import { inject, injectable } from "tsyringe";
@@ -31,7 +32,7 @@ class CreatePriceUseCase {
         supermarket_id,
         user_id,
         price
-    }: ICreatePriceDTO): Promise<void> {
+    }: ICreatePriceDTO): Promise<Price> {
 
 
         const product = await this.productsRepository.findById(product_id);
@@ -49,13 +50,15 @@ class CreatePriceUseCase {
             throw new AppError("User does not exists");
         }
 
-        await this.pricesRepository.create({
+        const priceCreated = await this.pricesRepository.create({
             id,
             product_id,
             supermarket_id,
             user_id,
             price
         })
+
+        return priceCreated;
     }
 }
 export { CreatePriceUseCase }
