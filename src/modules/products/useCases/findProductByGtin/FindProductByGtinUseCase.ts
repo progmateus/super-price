@@ -1,7 +1,9 @@
 import { AppError } from "@errors/AppError";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
-import { inject, injectable } from "tsyringe";
+import { getProductByGtin } from "services/api";
+import { container, inject, injectable } from "tsyringe";
+import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
 
 
 @injectable()
@@ -27,10 +29,19 @@ class FindProductByGtinUseCase {
             throw new AppError("Invalid Gtin", 400)
         }
 
-        const product = await this.productsRepository.findByGtin(gtin);
+        let product = await this.productsRepository.findByGtin(gtin);
 
         if (!product) {
-            throw new AppError("Product not found!", 404)
+            const getProduct = await getProductByGtin(gtin);
+
+            const createProductUseCase = container.resolve(CreateProductUseCase);
+
+            const productCreated = await createProductUseCase.execute({
+                name: getProduct.name,
+                brand: getProduct.brand,
+                gtin: getProduct.gtin,
+                thumbnail: getProduct.thumbnail
+            });
         }
 
         return product;

@@ -6,6 +6,7 @@ import "express-async-errors"
 import "../../container/index"
 import { router } from "./routes";
 import { AppError } from "@errors/AppError";
+import { getProductByGtin } from "services/api";
 
 createConnection();
 const app = express();
@@ -30,7 +31,4 @@ app.use(
 
     }
 )
-
-
-
 export { app };
