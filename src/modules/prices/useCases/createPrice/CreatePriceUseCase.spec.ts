@@ -1,3 +1,4 @@
+import { AppError } from "@errors/AppError";
 import { UsersRepositoryInMemory } from "@modules/accounts/repositories/in-memory/UsersRepositoryInMemory";
 import { PricesRepositoryInMemory } from "@modules/prices/repositories/in-memory/PricesRepositoryInMemory";
 import { Product } from "@modules/products/infra/typeorm/entities/Product";
@@ -59,6 +60,45 @@ describe("Create Price useCase", () => {
         })
 
         expect(price).toHaveProperty("id");
+    })
+
+    it("Should not be able to create a Price with same product id and supermarket id", async () => {
+
+        expect(async () => {
+            const user = await usersRepositoryInMemory.create({
+                name: "John",
+                lastname: "Doe",
+                email: "johndoe@gmail.com",
+                password: "john123",
+            })
+
+            const userCreated = await usersRepositoryInMemory.findByEmail("johndoe@gmail.com")
+
+            const product = await productsRepositoryInMemory.create({
+                name: "name test",
+                gtin: "7898940123025",
+                brand: "brand test",
+                thumbnail: "link image test",
+            })
+
+            const supermarket = await supermarketsRepositoryInMemory.create({
+                name: "supermarket test"
+            })
+
+            await createPriceUseCase.execute({
+                product_id: product.id,
+                supermarket_id: supermarket.id,
+                user_id: userCreated.id,
+                price: 4.0
+            })
+
+            await createPriceUseCase.execute({
+                product_id: product.id,
+                supermarket_id: supermarket.id,
+                user_id: userCreated.id,
+                price: 4.0
+            })
+        }).rejects.toBeInstanceOf(AppError);
     })
 })
 

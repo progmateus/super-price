@@ -21,6 +21,9 @@
         ],
         "@database/*":[
             "database/*"
+        ],
+        "@services/*":[
+            "services/*"
         ]
     },
     "esModuleInterop": true,

@@ -28,7 +28,7 @@ describe("Create supermarket controller", () => {
     })
 
 
-    it("Should be able to create a new Supermarket", async () => {
+    it("Should be able to find a Supermarket by name", async () => {
         const responseToken = await request(app)
 
             .post('/sessions')
@@ -39,7 +39,7 @@ describe("Create supermarket controller", () => {
 
         const { token } = responseToken.body;
 
-        const response = await request(app)
+        await request(app)
             .post("/supermarkets")
             .send({
                 name: "supermarket test",
@@ -48,30 +48,17 @@ describe("Create supermarket controller", () => {
                 authorization: `Bearer ${token}`
             })
 
-        expect(response.status).toBe(201);
-    })
-
-    it("Should be able to create a new Supermarket with same name", async () => {
-        const responseToken = await request(app)
-
-            .post('/sessions')
-            .send({
-                email: "user@email.com",
-                password: "user123"
-            })
-
-        const { token } = responseToken.body;
-
         const response = await request(app)
-            .post("/supermarkets")
-            .send({
+            .get("/supermarkets/find/")
+            .query({
                 name: "supermarket test",
             })
             .set({
                 authorization: `Bearer ${token}`
             })
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("id");
+        expect(response.body.name).toEqual("supermarket test");
     })
-
 });

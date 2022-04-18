@@ -30,8 +30,6 @@ describe("Create price controller", () => {
         await connection.close();
     })
 
-
-
     it("Should be able to create a price", async () => {
 
         const responseTokenAdmin = await request(app)
@@ -74,10 +72,50 @@ describe("Create price controller", () => {
                 authorization: `Bearer ${tokenAdmin}`
             })
 
-
         expect(response.status).toBe(201);
         expect(response.body).toHaveProperty("id");
         expect(response.body.supermarket_id).toEqual(supermarketResponse.body.id);
 
+    })
+
+    it("Should not be able to create a Price with same product id and supermarket id", async () => {
+
+        const responseTokenAdmin = await request(app)
+            .post('/sessions')
+            .send({
+                email: "admin@gmail.com",
+                password: "admin123"
+            })
+
+        const tokenAdmin = responseTokenAdmin.body.token;
+
+        const productResponse = await request(app)
+            .get("/products/7898940123025")
+            .set({
+                authorization: `Bearer ${tokenAdmin}`
+            })
+
+        const supermarketResponse = await request(app)
+            .get("/supermarkets/find/")
+            .query({
+                name: "supermarket test",
+            })
+            .set({
+                authorization: `Bearer ${tokenAdmin}`
+            })
+
+        const response = await request(app)
+            .post("/prices")
+            .send({
+                supermarket_id: supermarketResponse.body.id,
+                product_id: productResponse.body.id,
+                price: 4.0
+            })
+            .set({
+                authorization: `Bearer ${tokenAdmin}`
+            })
+
+
+        expect(response.status).toBe(400);
     })
 })

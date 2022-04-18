@@ -1,7 +1,7 @@
 import { AppError } from "@errors/AppError";
 import { IProductsRepository } from "@modules/products/repositories/IProductsRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
-import { getProductByGtin } from "services/api";
+import { getProductByGtin } from "@services/api";
 import { container, inject, injectable } from "tsyringe";
 import { CreateProductUseCase } from "../CreateProduct/CreateProductUseCase";
 
