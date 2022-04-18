@@ -4,6 +4,10 @@ import { IPricesRepository } from "../IPricesRepository";
 
 
 class PricesRepositoryInMemory implements IPricesRepository {
+    async findBySupermarketIdAndProductId(supermarket_id: string, product_id: string): Promise<Price> {
+        const price = await this.prices.find(price => price.product_id === product_id && price.supermarket_id === supermarket_id);
+        return price
+    }
 
     prices: Price[] = []
 

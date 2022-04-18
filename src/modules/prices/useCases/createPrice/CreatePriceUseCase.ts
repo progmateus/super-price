@@ -49,6 +49,15 @@ class CreatePriceUseCase {
             throw new AppError("User does not exists");
         }
 
+        const priceAlreadyExists = await this.pricesRepository.findBySupermarketIdAndProductId(
+            supermarket_id,
+            product_id
+        );
+
+        if (priceAlreadyExists) {
+            throw new AppError("Price already exists!")
+        }
+
         const priceCreated = await this.pricesRepository.create({
             product_id,
             supermarket_id,

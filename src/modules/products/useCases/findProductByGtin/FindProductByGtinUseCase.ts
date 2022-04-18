@@ -34,16 +34,24 @@ class FindProductByGtinUseCase {
         if (!product) {
             const getProduct = await getProductByGtin(gtin);
 
-            const createProductUseCase = container.resolve(CreateProductUseCase);
+            switch (getProduct.status) {
+                case 200:
+                    const createProductUseCase = container.resolve(CreateProductUseCase);
 
-            const productCreated = await createProductUseCase.execute({
-                name: getProduct.name,
-                brand: getProduct.brand,
-                gtin: getProduct.gtin,
-                thumbnail: getProduct.thumbnail
-            });
+                    product = await createProductUseCase.execute({
+                        name: getProduct.data.description,
+                        brand: getProduct.data.brand.name,
+                        gtin: getProduct.data.gtins[0].gtin,
+                        thumbnail: getProduct.data.thumbnail
+                    });
+                    break;
+
+                case 404:
+                    throw new AppError("Product not found", 404)
+                default:
+                    throw new AppError("Internal server error", 400)
+            }
         }
-
         return product;
     }
 
