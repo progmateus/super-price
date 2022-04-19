@@ -39,5 +39,10 @@ class ProductsRepositoryInMemory implements IProductsRepository {
         return products;
     }
 
+    async findByName(name: string): Promise<Product[]> {
+        const products = this.products.filter(product => product.name === name)
+        return products
+    }
+
 }
 export { ProductsRepositoryInMemory };

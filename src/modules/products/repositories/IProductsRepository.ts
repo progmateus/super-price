@@ -6,8 +6,7 @@ interface IProductsRepository {
     create(data: ICreateProductDTO): Promise<Product>;
     findById(id: string): Promise<Product>;
     findByGtin(gtin: string): Promise<Product>;
+    findByName(name: string): Promise<Product[]>;
     list(): Promise<Product[]>;
-    ///findByName(name: string): Promise<Product[]>;
-
 }
 export { IProductsRepository };

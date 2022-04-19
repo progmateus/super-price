@@ -9,7 +9,7 @@ import { hash } from "bcryptjs";
 let connection: Connection
 
 
-describe("Find product bt gtin controller", () => {
+describe("Find product bt name controller", () => {
     beforeAll(async () => {
         connection = await createConnection();
         await connection.runMigrations();
@@ -32,7 +32,7 @@ describe("Find product bt gtin controller", () => {
 
 
 
-    it("Should be able to find a product by gtin", async () => {
+    it("Should be able to find a product by name", async () => {
 
         const responseTokenAdmin = await request(app)
             .post('/sessions')
@@ -79,14 +79,17 @@ describe("Find product bt gtin controller", () => {
 
 
         const response = await request(app)
-            .get("/products/7898940123025")
+            .get("/products/find/")
+            .query({
+                name: "product"
+            })
             .set({
                 authorization: `Bearer ${tokenUser}`
             })
 
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty("id");
-        expect(response.body.name).toEqual("product test");
+        expect(response.body[0]).toHaveProperty("id");
+        expect(response.body[0].name).toEqual("product test");
 
     })
 })

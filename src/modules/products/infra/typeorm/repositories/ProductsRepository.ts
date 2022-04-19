@@ -39,15 +39,18 @@ class ProductsRepository implements IProductsRepository {
         const product = await this.repository.findOne({ gtin })
         return product;
     }
-    async findByName(name: string): Promise<Product> {
-        const product = await this.repository.findOne({ name })
-        return product;
+    async findByName(name: string): Promise<Product[]> {
+        const productsQuery = await this.repository.createQueryBuilder("products")
+        productsQuery.where("name like :name", { name: `%${name}%` })
+
+        const products = await productsQuery.getMany();
+
+        return products;
     }
 
     async list(): Promise<Product[]> {
         const products = await this.repository.find();
         return products
     }
-
 }
 export { ProductsRepository };
