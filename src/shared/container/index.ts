@@ -1,5 +1,7 @@
 import { UsersRepository } from "@modules/accounts/infra/typeorm/repositories/UsersRepository";
+import { UsersTokensRepository } from "@modules/accounts/infra/typeorm/repositories/UsersTokensRepository";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
+import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
 import { PricesRepository } from "@modules/prices/infra/typeorm/repositories/PricesRepository";
 import { IPricesRepository } from "@modules/prices/repositories/IPricesRepository";
 import { ProductsRepository } from "@modules/products/infra/typeorm/repositories/ProductsRepository";
@@ -27,4 +29,9 @@ container.registerSingleton<ISupermarketsRepository>(
 container.registerSingleton<IPricesRepository>(
     "PricesRepository",
     PricesRepository
+)
+
+container.registerSingleton<IUsersTokensRepository>(
+    "UsersTokensRepository",
+    UsersTokensRepository
 )
