@@ -55,7 +55,6 @@ class UsersRepository implements IUsersRepository {
         })
 
         await this.repository.save(user);
-
     }
 
 }

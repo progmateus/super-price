@@ -12,7 +12,7 @@ const findSupermarketByNameController = new FindSupermarketByNameController();
 
 supermarketsRoutes.post("/", ensureAuthenticated, createSupermarketController.handle)
 supermarketsRoutes.get("/", ensureAuthenticated, listSupermarketsController.handle);
-supermarketsRoutes.get("/find", ensureAuthenticated, findSupermarketByNameController.handle);
+supermarketsRoutes.get("/name/", ensureAuthenticated, findSupermarketByNameController.handle);
 
 
 export { supermarketsRoutes };

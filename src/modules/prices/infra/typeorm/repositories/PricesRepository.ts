@@ -11,12 +11,17 @@ class PricesRepository implements IPricesRepository {
     }
 
     async findBySupermarketIdAndProductId(supermarket_id: string, product_id: string): Promise<Price> {
-        const priceQuery = this.repository.createQueryBuilder("p")
-        priceQuery
-            .where("supermarket_id = :supermarket_id", { supermarket_id })
-            .andWhere("product_id = :product_id", { product_id })
+        /*  const priceQuery = this.repository.createQueryBuilder("p")
+         priceQuery
+             .where("supermarket_id = :supermarket_id", { supermarket_id })
+             .andWhere("product_id = :product_id", { product_id })
+ 
+         const price = await priceQuery.getOne(); */
 
-        const price = await priceQuery.getOne();
+        const price = this.repository.findOne({
+            supermarket_id,
+            product_id
+        });
 
         return price;
 
