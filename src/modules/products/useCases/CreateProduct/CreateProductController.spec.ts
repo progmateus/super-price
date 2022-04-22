@@ -51,7 +51,7 @@ describe("Create product controller", () => {
                 password: "admin123"
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
 
         const response = await request(app)
             .post("/products")
@@ -61,7 +61,7 @@ describe("Create product controller", () => {
                 brand: "brand test"
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         expect(response.status).toBe(201);
@@ -76,7 +76,7 @@ describe("Create product controller", () => {
                 password: "admin123"
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
 
         const response = await request(app)
             .post("/products")
@@ -86,7 +86,7 @@ describe("Create product controller", () => {
                 brand: "brand test"
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         expect(response.status).toBe(400);

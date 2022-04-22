@@ -41,7 +41,7 @@ describe("Find price controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.token;
+        const tokenAdmin = responseTokenAdmin.body.refresh_token;
 
         const productResponse = await request(app)
             .post("/products")
@@ -92,7 +92,7 @@ describe("Find price controller", () => {
                 password: "user123"
             })
 
-        const tokenUser = responseTokenUser.body.token;
+        const tokenUser = responseTokenUser.body.refresh_token;
 
 
         const response = await request(app)

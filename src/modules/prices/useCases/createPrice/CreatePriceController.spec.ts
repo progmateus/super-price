@@ -39,8 +39,7 @@ describe("Create price controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.token;
-
+        const tokenAdmin = responseTokenAdmin.body.refresh_token;
         const productResponse = await request(app)
             .post("/products")
             .send({
@@ -87,7 +86,7 @@ describe("Create price controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.token;
+        const tokenAdmin = responseTokenAdmin.body.refresh_token;
 
         const productResponse = await request(app)
             .get("/products/7898940123025")
@@ -96,7 +95,7 @@ describe("Create price controller", () => {
             })
 
         const supermarketResponse = await request(app)
-            .get("/supermarkets/find/")
+            .get("/supermarkets/name/")
             .query({
                 name: "supermarket test",
             })
@@ -114,8 +113,6 @@ describe("Create price controller", () => {
             .set({
                 authorization: `Bearer ${tokenAdmin}`
             })
-
-
         expect(response.status).toBe(400);
     })
 })

@@ -44,7 +44,7 @@ describe("List products controller", () => {
                 password: "admin123"
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
 
         await request(app)
             .post("/products")
@@ -54,13 +54,13 @@ describe("List products controller", () => {
                 brand: "brand test"
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         const response = await request(app)
             .get("/products")
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         expect(response.status).toBe(200);

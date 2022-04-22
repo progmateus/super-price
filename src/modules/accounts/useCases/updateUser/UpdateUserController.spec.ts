@@ -46,7 +46,7 @@ describe("Update User Controller", () => {
                 password: user.password
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
 
         const userUpdate = {
             name: "test",
@@ -58,7 +58,7 @@ describe("Update User Controller", () => {
                 name: userUpdate.name
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
 
@@ -93,7 +93,7 @@ describe("Update User Controller", () => {
                 password: user.password
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
 
         const userUpdate = {
             name: "john",
@@ -107,7 +107,7 @@ describe("Update User Controller", () => {
                 lastname: userUpdate.lastname
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         expect(response.status).toBe(400);

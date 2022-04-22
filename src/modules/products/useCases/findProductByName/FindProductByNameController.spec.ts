@@ -41,7 +41,7 @@ describe("Find product bt name controller", () => {
                 password: "admin123"
             })
 
-        const tokenAdmin = responseTokenAdmin.body.token;
+        const tokenAdmin = responseTokenAdmin.body.refresh_token;
 
         await request(app)
             .post("/products")
@@ -74,12 +74,12 @@ describe("Find product bt name controller", () => {
                 password: "user123"
             })
 
-        const tokenUser = responseTokenUser.body.token;
+        const tokenUser = responseTokenUser.body.refresh_token;
 
 
 
         const response = await request(app)
-            .get("/products/find/")
+            .get("/products/name/")
             .query({
                 name: "product"
             })

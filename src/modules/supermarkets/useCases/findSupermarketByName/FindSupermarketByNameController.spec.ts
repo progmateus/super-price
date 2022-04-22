@@ -37,7 +37,7 @@ describe("Create supermarket controller", () => {
                 password: "user123"
             })
 
-        const { token } = responseToken.body;
+        const { refresh_token } = responseToken.body;
 
         await request(app)
             .post("/supermarkets")
@@ -45,16 +45,16 @@ describe("Create supermarket controller", () => {
                 name: "supermarket test",
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         const response = await request(app)
-            .get("/supermarkets/find/")
+            .get("/supermarkets/name/")
             .query({
                 name: "supermarket test",
             })
             .set({
-                authorization: `Bearer ${token}`
+                authorization: `Bearer ${refresh_token}`
             })
 
         expect(response.status).toBe(200);
