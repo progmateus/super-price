@@ -19,7 +19,11 @@ class FindSupermarketByNameUseCase {
             throw new AppError("Character limit exceeded", 400)
         }
 
-        const supermarket = await this.supermarketsRepository.findByName(name);
+        const nameLowerCase = name.toLowerCase();
+
+
+        const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
+
 
         if (!supermarket) {
             throw new AppError("Supermarket not found!", 404);

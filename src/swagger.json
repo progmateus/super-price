@@ -10,7 +10,7 @@
     "paths":{
         "/products":{
             "post":{
-                "summary": "Product registration",
+                "summary": "Create product",
                 "description": "Only admin can use to route to create Product",
                 "tags": ["Products"],
                 "security":[{"bearerAuth": []}],
@@ -86,8 +86,8 @@
         },
         "/products/{gtin}":{
             "get":{
-                "description": "find product by Gtin",
-                "summary": "find product by Gtin",
+                "description": "Find product by gtin",
+                "summary": "find product by gtin",
                 "tags": ["Products"],
                 "security":[{"bearerAuth": []}],
                 "produces": ["application/json"],
@@ -96,7 +96,14 @@
                     "in": "path",
                     "description": "gtin of product",
                     "required": true,
-                    "type": "string"
+                    "type": "string",
+                    "examples":{
+                        "gtin":{
+                            "value": "7898940123025"
+                
+                        }
+                    }
+                    
                 }],
                 "responses":{
                     "200":{
@@ -128,7 +135,7 @@
         },
         "/products/name/":{
             "get":{
-                "summary": "Find Product by name",
+                "summary": "Find products by name",
                 "description": "Route for find product by name",
                 "tags": ["Products"],
                 "security":[{"bearerAuth": []}],
@@ -137,7 +144,13 @@
                     "in": "query",
                     "description": "name of product to search",
                     "required": true,
-                    "type": "string"
+                    "type": "string",
+                    "examples":{
+                        "name":{
+                            "value": "FEIJAO NATURAL PRETO TIPO 2 1KG"
+                
+                        }
+                    }
                 }],
                 "responses":{
                     "200":{
@@ -149,6 +162,121 @@
                                     "items":{
                                         "$ref": "#/components/schemas/Product"
                                     }
+                                }
+                            }
+                        }
+
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/supermarkets":{
+            "post":{
+                "summary": "Create supermarket",
+                "description": "Route for create supermarket",
+                "tags": ["Supermarkets"],
+                "security":[{"bearerAuth": []}],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/Supermarket"
+                            },
+                            "examples":{
+                                "supermarket":{
+                                    "value":{
+                                        "name": "Supermercados Mundial"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Supermarket"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid information"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "get":{
+                "summary": "List Supermarkets",
+                "description": "Route to list all Supermarkets",
+                "tags": ["Supermarkets"],
+                "security":[{"bearerAuth": []}],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Supermarket"
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                } 
+            }
+        },
+        "/supermarkets/name/":{
+            "get":{
+                "summary": "Find supermarket by name",
+                "description": "Route for find supermarket by name",
+                "tags": ["Supermarkets"],
+                "security":[{"bearerAuth": []}],
+                "parameters":[{
+                    "name": "name",
+                    "in": "query",
+                    "description": "name of supermarket to search",
+                    "required": true,
+                    "type": "string",
+                    "examples":{
+                        "name":{
+                            "value": "Supermercados Mundial"
+                
+                        }
+                    }
+                }],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Supermarket"
                                 }
                             }
                         }
@@ -179,6 +307,14 @@
                             "type": "string"
                         },
                         "thumbnail":{
+                            "type": "string"
+                        }
+                    }
+                },
+                "Supermarket":{
+                    "type": "object",
+                    "properties":{
+                        "name":{
                             "type": "string"
                         }
                     }

@@ -32,6 +32,7 @@ class SupermarketsRepository implements ISupermarketsRepository {
 
     async findByName(name: string): Promise<Supermarket> {
         const supermarket = await this.repository.findOne({ name })
+
         return supermarket;
     }
 

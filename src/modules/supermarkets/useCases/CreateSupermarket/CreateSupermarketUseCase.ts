@@ -17,7 +17,7 @@ class CreateSupermarketUseCase {
         name,
     }: ICreateSupermarketDTO): Promise<Supermarket> {
 
-        if (name.length > 50) {
+        if (name.length > 100) {
             throw new AppError("Character limit exceeded", 400)
         }
 
