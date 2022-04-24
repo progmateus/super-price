@@ -15,7 +15,7 @@ interface IRequest {
 
 interface IResponse {
     user: {
-        name: string,
+        id: string,
         email: string
     },
     token: string;
@@ -59,8 +59,6 @@ class AuthenticateUserUseCase {
 
         const user = await this.usersRepository.findByEmail(emailLowerCase);
         const {
-            secret_refresh_token,
-            secret_token,
             expires_in_token,
             expires_in_refresh_token,
             refresh_token_expires_days
@@ -76,12 +74,12 @@ class AuthenticateUserUseCase {
             throw new AppError("Email or password incorrect!")
         }
 
-        const token = sign({}, secret_token, {
+        const token = sign({}, process.env.SECRET_TOKEN, {
             subject: user.id,
             expiresIn: expires_in_token
         });
 
-        const refresh_token = sign({ email }, secret_refresh_token, {
+        const refresh_token = sign({}, process.env.SECRET_REFRESH_TOKEN, {
             subject: user.id,
             expiresIn: expires_in_refresh_token
         })
@@ -99,10 +97,11 @@ class AuthenticateUserUseCase {
         const tokenReturn: IResponse = {
             token,
             user: {
-                name: user.name,
+                id: user.id,
                 email: user.email
             },
-            refresh_token
+            refresh_token,
+
         };
 
         return tokenReturn

@@ -26,7 +26,7 @@ class CreateSupermarketUseCase {
         const supermarket = await this.supermarketsRepository.findByName(nameLowerCase);
 
         if (supermarket) {
-            throw new AppError("Supermarket already exists!");
+            throw new AppError("Supermarket already exists!", 409);
         }
 
         const supermarketCreated = await this.supermarketsRepository.create({

@@ -38,7 +38,7 @@ class CreateProductUseCase {
         const product = await this.productsRepository.findByGtin(gtin)
 
         if (product) {
-            throw new AppError("Product already exists!")
+            throw new AppError("Product already exists!", 409)
         }
 
         const productCreated = await this.productsRepository.create({

@@ -46,7 +46,7 @@ class SendForgotPasswordMailUseCase {
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user) {
-            throw new AppError("User does not exists!")
+            throw new AppError("User does not exists!", 404)
         }
 
         const token = uuidV4();
