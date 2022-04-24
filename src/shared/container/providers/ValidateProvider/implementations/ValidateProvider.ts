@@ -1,5 +1,7 @@
 import { injectable } from "tsyringe";
 import { IValidateProvider } from "../IValidateProvider";
+import { version as uuidVersion } from 'uuid';
+import { validate as uuidValidate } from 'uuid';
 
 @injectable()
 class ValidateProvider implements IValidateProvider {
@@ -52,6 +54,10 @@ class ValidateProvider implements IValidateProvider {
 
         const isValid = regex.test(gtin);
         return isValid;
+    }
+
+    async uuidValidateV4(id: string): Promise<boolean> {
+        return uuidValidate(id) && uuidVersion(id) === 4;
     }
 
 }
