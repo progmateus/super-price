@@ -49,7 +49,7 @@ class FindProductByGtinUseCase {
                 case 404:
                     throw new AppError("Product not found", 404)
                 default:
-                    throw new AppError("Internal server error", 400)
+                    throw new AppError("Internal server error", 500)
             }
         }
         return product;

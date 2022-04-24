@@ -1,0 +1,195 @@
+{
+    "openapi": "3.0.0",
+    "info":{
+        "title": "Super Price Documentation",
+        "description": "This is api super price",
+        "version": "1.0.0",
+        "contact": {"email": "contact@email.com"}
+
+    },
+    "paths":{
+        "/products":{
+            "post":{
+                "summary": "Product registration",
+                "description": "Only admin can use to route to create Product",
+                "tags": ["Products"],
+                "security":[{"bearerAuth": []}],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples":{
+                                "product":{
+                                    "value":{
+                                        "name": "FEIJAO NATURAL PRETO TIPO 2 1KG",
+                                        "gtin": "7898940123025",
+                                        "brand": "Não informado"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid information"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "get":{
+                "summary": "List Products",
+                "description": "Route to list all Products",
+                "tags": ["Products"],
+                "security":[{"bearerAuth": []}],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/products/{gtin}":{
+            "get":{
+                "description": "find product by Gtin",
+                "summary": "find product by Gtin",
+                "tags": ["Products"],
+                "security":[{"bearerAuth": []}],
+                "produces": ["application/json"],
+                "parameters":[{
+                    "name": "gtin",
+                    "in": "path",
+                    "description": "gtin of product",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid information"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "404":{
+                        "description": "Product not found"
+                    },
+                    "500":{
+                        "description": "Internal server Error"
+                    }
+                }
+
+            }
+        },
+        "/products/name/":{
+            "get":{
+                "summary": "Find Product by name",
+                "description": "Route for find product by name",
+                "tags": ["Products"],
+                "security":[{"bearerAuth": []}],
+                "parameters":[{
+                    "name": "name",
+                    "in": "query",
+                    "description": "name of product to search",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "components":{
+            "schemas": {
+                "Product":{
+                    "type": "object",
+                    "properties":{
+                        "name":{
+                            "type": "string"
+                        },
+                        "gtin":{
+                            "type": "string"
+                        },
+                        "brand":{
+                            "type": "string"
+                        },
+                        "thumbnail":{
+                            "type": "string"
+                        }
+                    }
+                }
+        },
+        "securitySchemes":{
+            "bearerAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}

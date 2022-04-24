@@ -3,14 +3,20 @@ import "../../../database/index"
 import express, { Request, Response, NextFunction } from "express";
 import createConnection from "@database/index";
 import "express-async-errors"
+import swaggerUi from "swagger-ui-express";
+
 import "../../container/index"
 import { router } from "./routes";
 import { AppError } from "@errors/AppError";
-import { getProductByGtin } from "services/api";
+import swaggerFile from "../../../swagger.json"
+
 
 createConnection();
 const app = express();
 app.use(express.json())
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 
 app.use(router)
 app.use(
