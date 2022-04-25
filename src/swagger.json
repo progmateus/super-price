@@ -45,10 +45,13 @@
                         }
                     },
                     "400":{
-                        "description": "Invalid information"
+                        "description": "Invalid information sended"
                     },
                     "401":{
                         "description": "Unauthorized"
+                    },
+                    "409":{
+                        "description": "Product already exists"
                     },
                     "500":{
                         "description": "Internal server error"
@@ -118,7 +121,7 @@
                         }
                     },
                     "400":{
-                        "description": "Invalid information"
+                        "description": "Invalid information sended"
                     },
                     "401":{
                         "description": "Unauthorized"
@@ -211,10 +214,13 @@
                         }
                     },
                     "400":{
-                        "description": "Invalid information"
+                        "description": "Invalid information sended"
                     },
                     "401":{
                         "description": "Unauthorized"
+                    },
+                    "409":{
+                        "description": "Supermarket already exists"
                     },
                     "500":{
                         "description": "Internal server error"
@@ -290,6 +296,167 @@
                     }
                 }
             }
+        },
+        "/prices":{
+            "post":{
+                "summary": "Create Price",
+                "description": "Route to create a price",
+                "tags": ["Prices"],
+                "security":[{"bearerAuth": []}],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples":{
+                                "product":{
+                                    "value":{
+                                        "supermarket_id": "8d306b21-8005-4e65-b5c2-e13d5a586274",
+                                        "product_id": "f17b155b-48ef-46db-b9ab-08d1dfa5eb00",
+                                        "price": 4.99
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Price"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid information"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "404":{
+                        "description": "Supermarket or product not found"
+                    },
+                    "409":{
+                        "description": "Price already exists"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "get":{
+                "summary": "Find Price",
+                "description": "Route to find a price of product in a supermarket",
+                "tags": ["Prices"],
+                "security":[{"bearerAuth": []}],
+                "parameters":[{
+                    "name": "supermarket_name",
+                    "in": "query",
+                    "description": "gtin of product to search",
+                    "required": false,
+                    "type": "string",
+                    "examples":{
+                        "supermarket_name":{
+                            "value": "prezunic"
+                
+                        }
+                    }
+                },
+                {
+                    "name": "gtin",
+                    "in": "query",
+                    "description": "name of supermarket to search",
+                    "required": false,
+                    "type": "string",
+                    "examples":{
+                        "gtin":{
+                            "value": "7898940123025"
+                        }
+                    }
+                }],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Price"
+                                    }
+                                }
+                            }
+                        }
+
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "404":{
+                        "description": "Supermarket or product not found"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "patch":{
+                "summary": "Update Price",
+                "description": "Route to update a price",
+                "tags": ["Prices"],
+                "security":[{"bearerAuth": []}],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/Product"
+                            },
+                            "examples":{
+                                "product":{
+                                    "value":{
+                                        "price_id": "b9288009-9196-4861-ab68-c420a1819a5b",
+                                        "price": 4.99
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Updated",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Price"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description": "Invalid information"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "404":{
+                        "description": "Supermarket or product not found"
+                    },
+                    "409":{
+                        "description": "Price already exists"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "components":{
@@ -297,6 +464,9 @@
                 "Product":{
                     "type": "object",
                     "properties":{
+                        "id":{
+                            "type": "string"
+                        },
                         "name":{
                             "type": "string"
                         },
@@ -308,18 +478,57 @@
                         },
                         "thumbnail":{
                             "type": "string"
+                        },
+                        "created_at":{
+                            "type": "string"
+                        },
+                        "updated_at":{
+                            "type": "string"
                         }
                     }
                 },
                 "Supermarket":{
                     "type": "object",
                     "properties":{
+                        "id":{
+                            "type": "string"
+                        },
                         "name":{
+                            "type": "string"
+                        },
+                        "created_at":{
+                            "type": "string"
+                        },
+                        "updated_at":{
                             "type": "string"
                         }
                     }
+                },
+                "Price":{
+                        "type": "object",
+                        "properties":{
+                            "id":{
+                                "type": "string"
+                            },
+                            "product_id":{
+                                "type": "string"
+                            },
+                            "supermarket_id":{
+                                "type": "string"
+                            },
+                            "price":{
+                                "type": "string"
+                            },
+                            "created_at":{
+                                "type": "string"
+                            },
+                            "updated_at":{
+                                "type": "string"
+                            }
+
+                        }
                 }
-        },
+            },
         "securitySchemes":{
             "bearerAuth":{
                 "type": "http",

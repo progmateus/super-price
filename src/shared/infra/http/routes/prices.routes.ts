@@ -12,7 +12,7 @@ const updatePriceController = new UpdatePriceController();
 
 pricesRoutes.post("/", ensureAuthenticated, createPriceController.handle);
 pricesRoutes.patch("/", ensureAuthenticated, updatePriceController.handle)
-pricesRoutes.get("/find", ensureAuthenticated, findPriceController.handle);
+pricesRoutes.get("/", ensureAuthenticated, findPriceController.handle);
 
 
 export { pricesRoutes };

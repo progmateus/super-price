@@ -52,7 +52,7 @@ class FindPriceUseCase {
 
             const product = await this.productsRepository.findByGtin(gtin);
             if (!product) {
-                throw new AppError("Product not found!")
+                throw new AppError("Product not found!", 404)
             }
 
 
@@ -64,7 +64,7 @@ class FindPriceUseCase {
             const supermarket = await this.supermarketsRepository.findByName(supermarket_name.toLocaleLowerCase());
 
             if (!supermarket) {
-                throw new AppError("Supermarket not found!")
+                throw new AppError("Supermarket not found!", 404)
             }
 
             supermarket_id = supermarket.id;
