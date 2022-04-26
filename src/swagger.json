@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info":{
-        "title": "Super Price Documentation",
+        "title": "Super Price",
         "description": "This is api super price",
         "version": "1.0.0",
         "contact": {"email": "contact@email.com"}
@@ -97,6 +97,35 @@
                     },
                     "500": {
                         "description": "Internal server Error"
+                    }
+                }
+            }
+        },
+        "/users/email":{
+            "get":{
+                "description": "Verify email",
+                "summary": "verify if email already been used",
+                "tags": ["Users"],
+                "produces": ["application/json"],
+                "parameters":[{
+                    "name": "email",
+                    "in": "query",
+                    "description": "email to search",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses":{
+                    "200":{
+                        "description": "Email already exists"
+                    },
+                    "404":{
+                        "description": "Email does not exists"
+                    },
+                    "400":{
+                        "description": "Invalid email format"
+                    },
+                    "500":{
+                        "description": "Internal server error"
                     }
                 }
             }
