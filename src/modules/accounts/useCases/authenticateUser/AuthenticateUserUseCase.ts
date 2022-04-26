@@ -54,7 +54,7 @@ class AuthenticateUserUseCase {
         const isValidEmail = this.validateProvider.ValidateEmail(emailLowerCase);
 
         if (isValidEmail === false) {
-            throw new AppError("Email or password incorrect!");
+            throw new AppError("Email or password incorrect!", 401);
         }
 
         const user = await this.usersRepository.findByEmail(emailLowerCase);
@@ -65,13 +65,13 @@ class AuthenticateUserUseCase {
         } = auth
 
         if (!user) {
-            throw new AppError("Email or password incorrect!")
+            throw new AppError("Email or password incorrect!", 401)
         }
 
         const passwordMatch = await compare(password, user.password);
 
         if (!passwordMatch) {
-            throw new AppError("Email or password incorrect!")
+            throw new AppError("Email or password incorrect!", 401)
         }
 
         const token = sign({}, process.env.SECRET_TOKEN, {
