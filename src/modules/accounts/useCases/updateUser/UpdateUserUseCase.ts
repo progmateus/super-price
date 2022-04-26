@@ -2,7 +2,7 @@ import { AppError } from "@errors/AppError";
 import { IUpdateUserDTO } from "@modules/accounts/dtos/IUpdateUserDTO";
 import { IUsersRepository } from "@modules/accounts/repositories/IUsersRepository";
 import { IValidateProvider } from "@shared/container/providers/ValidateProvider/IValidateProvider";
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
@@ -22,6 +22,7 @@ class UpdateUserUseCase {
         lastname,
         email,
         password,
+        last_password,
     }: IUpdateUserDTO) {
         if (name?.length > 50) {
             throw new AppError("Character limit exceeded", 400)
@@ -39,14 +40,17 @@ class UpdateUserUseCase {
             throw new AppError("Character limit exceeded", 400)
         }
 
-        if (name && lastname || name && email || name && password ||
-            lastname && email || lastname && password ||
-            email && password) {
-            throw new AppError("Only 1 parameter", 400)
+        if (last_password?.length > 80) {
+            throw new AppError("Character limit exceeded", 400)
         }
 
-
         const user = await this.usersRepository.findById(id)
+
+        const passwordMatch = await compare(last_password, user.password);
+
+        if (!passwordMatch) {
+            throw new AppError("last password incorrect!", 401)
+        }
 
         if (name) {
             const nameLowerCase = name.toLowerCase();
@@ -89,9 +93,12 @@ class UpdateUserUseCase {
             await this.usersRepository.update(user)
         }
 
-        /// falta o password
-        /// const passwordHash = await hash(password, 8)
+        if (password) {
 
+            user.password = await hash(password, 8);
+
+            await this.usersRepository.update(user);
+        }
 
     }
 

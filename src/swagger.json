@@ -50,6 +50,55 @@
                         "description": "Internal server error"
                     }
                 }
+            },
+            "put":{
+                "summary": "Update User",
+                "description": "Route to update a user",
+                "tags": ["Users"],
+                "security":[{"bearerAuth": []}],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "name":{
+                                        "type": "string"
+                                    },
+                                    "lastname":{
+                                        "type": "string"
+                                    },
+                                    "email":{
+                                        "type": "string"
+                                    },
+                                    "password":{
+                                        "type": "string"
+                                    },
+                                    "last_password":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "Updated"
+                    },
+                    "400": {
+                        "description": "Invalid information sended"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "409":{
+                        "description": "Email already exists"
+                    },
+                    "500": {
+                        "description": "Internal server Error"
+                    }
+                }
             }
         },
         "/sessions":{
@@ -142,6 +191,79 @@
                 "responses":{
                     "204":{
                         "description": "OK"
+                    },
+                    "401":{
+                        "description": "Unauthorized"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/password/forgot":{
+            "post":{
+                "summary": "Send forgot password mail",
+                "description": "Send forgot password mail to user",
+                "tags": ["Users"],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "email":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK"
+                    },
+                    "400":{
+                        "description": "Invalid information sended"
+                    },
+                    "404":{
+                        "description": "User does not exists"
+                    },
+                    "500":{
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/password/reset":{
+            "post":{
+                "summary": "Reset password",
+                "description": "Reset user password",
+                "tags": ["Users"],
+                "parameters":[{
+                    "name": "token",
+                    "in": "query",
+                    "description": "token of reset password",
+                    "required": true,
+                    "type": "string"
+                }],
+                "requestBody": {
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "type": "object",
+                                "properties":{
+                                    "password":{
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, "responses":{
+                    "200":{
+                        "description": "Ok"
                     },
                     "401":{
                         "description": "Unauthorized"

@@ -31,14 +31,14 @@ class ResetPasswordUserUseCase {
         const userToken = await this.usersTokensRepository.findByRefreshToken(token)
 
         if (!userToken) {
-            throw new AppError("Invalid Token!")
+            throw new AppError("Invalid Token!", 401)
         }
 
         if (this.dateProvider.compareIfBefore(
             userToken.expires_date,
             this.dateProvider.dateNow()
         )) {
-            throw new AppError("Invalid Expired!")
+            throw new AppError("Token Expired!", 401)
         }
 
         const user = await this.usersRepository.findById(userToken.user_id);

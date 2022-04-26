@@ -45,7 +45,7 @@ class UsersRepository implements IUsersRepository {
         lastname,
         email,
         password,
-        avatar
+        avatar,
     }: IUpdateUserDTO) {
         const user = this.repository.create({
             id,

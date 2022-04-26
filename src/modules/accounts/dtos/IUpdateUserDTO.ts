@@ -5,5 +5,6 @@ interface IUpdateUserDTO {
     email?: string;
     password?: string;
     avatar?: string;
+    last_password?: string;
 }
 export { IUpdateUserDTO };

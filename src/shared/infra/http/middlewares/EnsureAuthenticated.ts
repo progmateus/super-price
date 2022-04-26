@@ -40,7 +40,7 @@ export async function ensureAuthenticated(
         );
 
         if (!user) {
-            throw new AppError("Invalid Token");
+            throw new AppError("Invalid Token", 401);
         }
 
         request.user = {
@@ -49,6 +49,6 @@ export async function ensureAuthenticated(
 
         next();
     } catch {
-        throw new AppError("Invalid Token");
+        throw new AppError("Invalid Token", 401);
     }
 }

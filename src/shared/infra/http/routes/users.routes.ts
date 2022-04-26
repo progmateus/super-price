@@ -13,12 +13,12 @@ const updateUserController = new UpdateUserController
 const uploadUserAvatarController = new UpdateUserAvatarController();
 
 usersRoutes.post("/", createUserController.handle);
+usersRoutes.put("/", ensureAuthenticated, updateUserController.handle);
 usersRoutes.patch(
     "/avatar",
     ensureAuthenticated,
     uploadAvatar.single("avatar"),
     uploadUserAvatarController.handle);
-usersRoutes.put("/edit", ensureAuthenticated, updateUserController.handle);
 
 
 export { usersRoutes };
