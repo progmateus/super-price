@@ -1,7 +1,11 @@
+import { Header } from "../components/header"
 import styles from "./styles.module.scss"
 
-export default function Home() {
+export default function Sidebar() {
   return (
-    <h1> teste </h1>
+    <>
+      <Header />
+      <h1> teste </h1>
+    </>
   )
 }

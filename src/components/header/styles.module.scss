@@ -1,37 +1,38 @@
 .headerContainer{
-    height: 5rem;
+    height: 12vh;
+    width: 100vw;
     background: var(--header-500);
     border-bottom: 1px solid;
 }
 
 .headerContent{
     max-height: 1120px;
-    height: 5rem;
-    margin: 0 6rem;
-    padding: 0 2rem;
+    height: 12vh;
+    margin: 0 4vw;
+    padding: 0 2vh;
     display:  flex;
     align-items: center;
 
     img{
-        width: 4rem;
+        width: 4.5vw;
     }
 
     nav{
-        margin-left: 5rem;
-        height: 5rem;
+        margin-left: 8vw;
+        height: 12.5vh;
 
         a{
             display: inline-block;
             position: relative;
             padding: 0 0.5rem;
-            height: 5rem;
-            line-height: 5rem;
+            height: 12.3vh;
+            line-height: 12.4vh;
             color: var(--gray-200);
 
             transition: color 0.2rem;
 
             & + a{
-                margin-left: 2rem;
+                margin-left: 2vw;
             }
 
             &:hover{
@@ -55,13 +56,15 @@
                 background: #F4F00C;
             }
         }
+
     }
 
     label{
+        display: flex;
         flex-direction: row;
         max-width: 400px;
-        width: 15rem;
-        margin-left: 8rem;
+        width: 23vw;
+        margin-left: 8vw;
         padding: 1rem;
         align-self: center;
         color: var(--white);
@@ -71,43 +74,98 @@
 
         input{
             color: var(--white);
-            width: 11rem;
+            width: 19vw;
             border: none;
             background: none;
-            margin-right: 0.5rem;
 
             &::placeholder{
                 color: var(--gray-200);
             }
-
-            &:focus{
-                outline: none;
-            }
         }
+
+        svg{
+            margin-left: auto;
+            display: flex;
+        }
+
+
     }
 
     div{
         display: flex;
+        margin-left: auto;
 
         div{
             display: block;
-            margin-left: 8rem;
-            margin-right: 2rem;
+            position: relative;
+            margin-right: 0.5vw;
             text-align: right;
 
+            p{
+                position: relative;
+            }
+
             & p + p{
-                color: black;
+                color: var(--gray-200);
                 font-size: small;
             }
-
-
-            & + div{
-                img{
-                    border-radius: 50%;
-                    width: 2rem;
-                }
-            }
+        }
+        img{
+            border-radius: 50%;
+            width: 3.3vw
         }
     }
 
 }
+
+@media (max-width: 900px){
+
+
+    .headerContainer{
+
+        .headerContent{
+
+            img{
+                width: 8vw;
+            }
+
+
+            nav{
+                display: none;
+            }
+        
+            label{
+                margin: auto;
+                width: 40vw;
+                height: 7vh;
+                padding: 2vw;
+
+                input{
+                    width: 29vw;
+                }
+
+                svg{
+                    align-self: center;
+                }
+            }
+
+            div{
+                div{
+                    display: none;
+                }
+
+                img{
+                    display: none;
+                }
+            }
+
+        }
+    }
+}
+
+
+
+
+
+
+

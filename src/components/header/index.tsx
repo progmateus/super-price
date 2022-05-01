@@ -14,21 +14,18 @@ export function Header() {
                 </nav>
 
                 <label>
-                    <input placeholder="Buscar na plataforma" />
+                    <input placeholder="Buscar produto" />
                     <RiSearchLine />
                 </label>
 
-                <div>
-                    <div>
+                <div className={styles.headerProfile}>
+                    <div className={styles.headerProfileName}>
                         <p>john doe</p>
                         <p>johndoe@gmail.com</p>
-
                     </div>
 
+                    <img src="/images/teste.jpg" alt="Foto de perfil" />
 
-                    <div>
-                        <img src="/images/teste.jpg" alt="Foto de perfil" />
-                    </div>
                 </div>
             </div>
         </header>
