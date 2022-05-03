@@ -1,11 +1,7 @@
-import { Header } from "../components/header"
-import styles from "./styles.module.scss"
 
-export default function Sidebar() {
+export default function SignIn() {
   return (
     <>
-      <Header />
-      <h1> teste </h1>
     </>
   )
 }

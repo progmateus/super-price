@@ -1,34 +1,97 @@
-import styles from "./styles.module.scss"
-import { RiSearchLine } from "react-icons/ri"
+import { Flex, Icon, Input, HStack, Text, Box, Avatar } from "@chakra-ui/react"
+import { RiNotificationLine, RiSearchLine, RiUserAddLine } from "react-icons/ri"
 
 export function Header() {
     return (
-        <header className={styles.headerContainer}>
-            <div className={styles.headerContent}>
-                <img src="/images/white-shopping-cart-icon-9.jpg" alt="logo super price" />
+        <Flex
+            as="header"
+            w="100%"
+            maxWidth={1480}
+            h="20"
+            mx="auto"
+            mt="4"
+            px="6"
+            align="center"
+        >
 
-                <nav>
-                    <a className={styles.active}> Home </a>
-                    <a href=""> Products </a>
-                    <a href=""> About </a>
-                </nav>
+            <Text
+                fontSize="3xl"
+                fontWeight="bold"
+                letterSpacing="tight"
+                w="64"
+            >
+                SuperPrice
 
-                <label>
-                    <input placeholder="Buscar produto" />
-                    <RiSearchLine />
-                </label>
+                <Text as="span" ml="1" color="pink.500">.</Text>
+            </Text>
 
-                <div className={styles.headerProfile}>
-                    <div className={styles.headerProfileName}>
-                        <p>john doe</p>
-                        <p>johndoe@gmail.com</p>
-                    </div>
 
-                    <img src="/images/teste.jpg" alt="Foto de perfil" />
+            <Flex
+                as="label"
+                flex="1"
+                py="4"
+                px="8"
+                ml="6"
+                maxWidth={400}
+                alignSelf="center"
+                color="gray.200"
+                position="relative"
+                bg="gray.800"
+                borderRadius="full"
+            >
 
-                </div>
-            </div>
-        </header>
+                <Input
+                    color="gray.50"
+                    variant="unstyled"
+                    px="4"
+                    mr="4"
+                    placeholder="Buscar Produto"
+                    _placeholder={{ color: "gray.400" }}
+                />
+
+                <Icon as={RiSearchLine} fontSize="26" color="gray.200" />
+            </Flex>
+
+
+            <Flex
+                align="center"
+                ml="auto"
+
+            >
+
+                <HStack
+                    spacing="8"
+                    mx="8"
+                    pr="8"
+                    py="1"
+                    color="gray.300"
+                    borderRightWidth={1}
+                    borderColor="gray.700"
+                >
+                    <Icon as={RiNotificationLine} fontSize="20" />
+                    <Icon as={RiUserAddLine} fontSize="20" />
+                </HStack>
+
+                <Flex align="center">
+
+                    <Box mr="4" textAlign="right">
+                        <Text mt="4" textAlign="right">Mateus Vieira</Text>
+                        <Text color="gray.300" fontSize="small">mateusvieira@teste.com</Text>
+                    </Box>
+
+                    <Avatar size="md" name="Mateus Vieira" src="https://github.com/ninkua.png" />
+
+
+                </Flex>
+
+
+            </Flex>
+
+
+
+
+        </Flex >
+
 
     )
 }
