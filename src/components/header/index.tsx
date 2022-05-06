@@ -21,9 +21,9 @@ export function Header() {
             as="header"
             w="100%"
             maxWidth={1480}
-            h="20"
+            h={["16", "20"]}
             mx="auto"
-            mt="4"
+            mt={["2", "4"]}
             px="6"
             align="center"
         >
