@@ -2,12 +2,17 @@ import { Box, Flex, Img, Stack, Text } from "@chakra-ui/react"
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
 import { Price } from "../components/price"
+import { AuthContext } from "../contexts/AuthContext"
+import { useContext } from "react"
 
 
 export default function Dashboard() {
+    const { user } = useContext(AuthContext);
+
     return (
         <Flex direction="column" h="100vh">
             <Header />
+
             <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="1">
                 <Sidebar />
 
