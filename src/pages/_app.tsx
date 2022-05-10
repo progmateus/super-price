@@ -8,7 +8,6 @@ import { theme } from "../styles/theme"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-
     <ChakraProvider theme={theme}>
       <SidebarDrawerProvider>
         <AuthProvider>
@@ -16,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </AuthProvider>
       </SidebarDrawerProvider>
     </ChakraProvider>
+
 
   )
 

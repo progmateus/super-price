@@ -11,24 +11,20 @@ type User = {
     avatar?: string;
 }
 
-
 type SignInCredentials = {
     email: string;
     password: string;
 }
 
 type AuthContextData = {
-
     signIn(credentials: SignInCredentials): Promise<void>;
     isAuthenticated: boolean;
     user: User;
-
 }
 
 type AuthProviderProps = {
     children: ReactNode;
 }
-
 
 export const AuthContext = createContext({} as AuthContextData)
 
@@ -39,8 +35,6 @@ export function signOut() {
     Router.push("/")
 }
 
-
-
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User>()
     const isAuthenticated = !!user;
@@ -50,6 +44,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         if (token) {
             api.get("/users/profile").then(response => {
+                console.log(response)
                 const { id, name, lastname, email, avatar } = response.data;
 
                 setUser({
@@ -64,7 +59,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             })
         }
     }, [])
-
 
     async function signIn({ email, password }: SignInCredentials) {
         try {
@@ -98,6 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         } catch (err) {
             console.log(err);
         }
+
     }
 
     return (

@@ -23,8 +23,6 @@ export function setupAPIClient(ctx = undefined) {
         return response
     }, (error) => {
 
-
-
         if (error.response.status === 401) {
             if (error.response.data?.message == "Invalid Token") {
 
