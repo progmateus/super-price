@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Input } from "../components/form/Input";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { withSSRGuest } from "../utils/withSSRGuest";
 
 
 type SingInFormData = {
@@ -91,3 +92,11 @@ export default function SignIn() {
     </Flex>
   )
 }
+
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {}
+  }
+})
+

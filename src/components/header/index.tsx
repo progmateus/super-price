@@ -1,12 +1,23 @@
 import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
 import { RiMenuLine } from "react-icons/ri"
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext"
+import { withSSRGuest } from "../../utils/withSSRGuest"
 import { Logo } from "./Logo"
 import { NotificationsNav } from "./NotificationsNav"
 import { Profile } from "./Profile"
 import { SearchBox } from "./SearchBox"
 
-export function Header() {
+
+type HeaderProps = {
+    userName: string;
+    userEmail: string;
+    userAvatar: string;
+}
+
+export function Header({
+    userName,
+    userEmail,
+    userAvatar }: HeaderProps) {
 
     const { onOpen } = useSidebarDrawer();
 
@@ -46,10 +57,22 @@ export function Header() {
 
             <Flex align="center" ml="auto" >
                 <NotificationsNav />
-                <Profile showProfileData={isWideVersion} />
+                <Profile
+                    showProfileData={isWideVersion}
+                    userName={userName}
+                    userEmail={userEmail}
+                    userAvatar={userAvatar}
+                />
             </Flex>
         </Flex >
 
 
     )
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+
+    return {
+        props: {}
+    }
+})

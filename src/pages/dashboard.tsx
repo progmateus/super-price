@@ -1,17 +1,24 @@
-import { Box, Flex, Img, Stack, Text } from "@chakra-ui/react"
+import { Box, Flex, Stack } from "@chakra-ui/react"
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
 import { Price } from "../components/price"
-import { AuthContext } from "../contexts/AuthContext"
+import { withSSRAuth } from "../utils/withSSRAuth"
+import { setupAPIClient } from "../services/api"
 import { useContext } from "react"
+import { AuthContext } from "../contexts/AuthContext"
 
 
 export default function Dashboard() {
-    const { user } = useContext(AuthContext);
+
+    const { user } = useContext(AuthContext)
 
     return (
         <Flex direction="column" h="100vh">
-            <Header />
+            <Header
+                userName="Diego Fernandes"
+                userEmail="DiegoFernandes@email.com"
+                userAvatar="https://github.com/ninkua.png"
+            />
 
             <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="1">
                 <Sidebar />
@@ -50,3 +57,17 @@ export default function Dashboard() {
 
     )
 }
+
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+
+    const apiClient = setupAPIClient(ctx);
+
+    const response = await apiClient.get("/users/profile");
+    console.log(response);
+
+    return {
+        props: {}
+    }
+});
+
+

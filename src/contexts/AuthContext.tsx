@@ -1,11 +1,14 @@
 import { createContext, ReactNode, useEffect, useState } from "react"
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router"
-import { api } from "../services/api";
+import { api } from "../services/apiClient";
 
 type User = {
     id: string;
+    name?: string;
+    lastname?: string;
     email: string;
+    avatar?: string;
 }
 
 
@@ -29,6 +32,13 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData)
 
+export function signOut() {
+    destroyCookie(undefined, "super-price.token")
+    destroyCookie(undefined, "super-price.refreshToken")
+
+    Router.push("/")
+}
+
 
 
 export function AuthProvider({ children }: AuthProviderProps) {
@@ -39,8 +49,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { 'super-price.token': token } = parseCookies();
 
         if (token) {
-            api.get("/profile").then(response => {
-                console.log(response);
+            api.get("/users/profile").then(response => {
+                const { id, name, lastname, email, avatar } = response.data;
+
+                setUser({
+                    id,
+                    name,
+                    lastname,
+                    email,
+                    avatar
+                })
+            }).catch(() => {
+                signOut();
             })
         }
     }, [])
