@@ -15,18 +15,18 @@ export function Profile({
     userEmail,
     userAvatar }: ProfileProps) {
 
-    const { user } = useContext(AuthContext);
+    const { user } = useContext(AuthContext)
 
     return (
         <Flex align="center">
             {showProfileData && (
                 <Box mr="4" textAlign="right">
-                    <Text mt="4" textAlign="right">{userName}</Text>
-                    <Text color="gray.300" fontSize="small">{userEmail}</Text>
+                    <Text mt="4" textAlign="right">{`${user?.name} ${user?.lastname}`}</Text>
+                    <Text color="gray.300" fontSize="small">{user?.email}</Text>
                 </Box>
             )}
 
-            <Avatar size="md" name={userName} src={userAvatar} />
+            <Avatar size="md" name={`${user?.name} ${user?.lastname}`} src={user?.avatar} />
         </Flex>
     )
 }

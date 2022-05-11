@@ -36,6 +36,7 @@ export function signOut() {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+
     const [user, setUser] = useState<User>()
     const isAuthenticated = !!user;
 
@@ -43,20 +44,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const { 'super-price.token': token } = parseCookies();
 
         if (token) {
-            api.get("/users/profile").then(response => {
-                console.log(response)
-                const { id, name, lastname, email, avatar } = response.data;
+            api.get("/users/profile")
+                .then(response => {
+                    const { id, name, lastname, email, avatar } = response.data;
 
-                setUser({
-                    id,
-                    name,
-                    lastname,
-                    email,
-                    avatar
+                    setUser({
+                        id,
+                        name,
+                        lastname,
+                        email,
+                        avatar
+                    })
+                }).catch(() => {
+                    signOut();
                 })
-            }).catch(() => {
-                signOut();
-            })
         }
     }, [])
 
@@ -80,15 +81,22 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 path: "/"
             });
 
-
-            setUser({
-                id: user.id,
-                email: user.email
-            })
-
             api.defaults.headers['Authorization'] = `Bearer ${token}`
 
-            Router.push("/dashboard")
+            api.get("/users/profile")
+                .then(response => {
+                    const { id, name, lastname, email, avatar } = response.data;
+
+                    setUser({
+                        id,
+                        name,
+                        lastname,
+                        email,
+                        avatar
+                    })
+                })
+
+            Router.push("/dashboard");
         } catch (err) {
             console.log(err);
         }

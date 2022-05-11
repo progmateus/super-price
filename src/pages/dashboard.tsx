@@ -5,17 +5,28 @@ import { Price } from "../components/price"
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
+import { setupAPIClient } from "../services/api"
+import { type } from "os"
+import { titleCase } from "../utils/titleCase"
 
 
-export default function Dashboard() {
-    const { user } = useContext(AuthContext)
+type price = {
+    name: "teste",
+    gtin: "testando",
+    brand: "string",
+    thumbnail: "string",
+}
+
+export default function Dashboard(props) {
+
+    console.log(props.data);
 
     return (
         <Flex direction="column" h="100vh">
             <Header
-                userName={`${user?.name} ${user?.lastname}`}
-                userEmail={user?.email}
-                userAvatar={user?.avatar}
+                userName=""
+                userEmail=""
+                userAvatar=""
             />
 
             <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="1">
@@ -23,30 +34,21 @@ export default function Dashboard() {
 
                 <Box>
                     <Stack spacing="2" >
-                        <Price
-                            product_image_url="https://cdn-cosmos.bluesoft.com.br/products/7891910000197"
-                            product_name="AÇUCAR REFINADO UNIÃO 1KG"
-                            price={7.99}
-                            supermarket_name="Supermercados Mundial"
-                        />
-                        <Price
-                            product_image_url="https://cdn-cosmos.bluesoft.com.br/products/7896001001091"
-                            product_name="SPANADOR BETTANIN MICROFIBRA 109"
-                            price={7.99}
-                            supermarket_name="cerrefour"
-                        />
-                        <Price
-                            product_image_url="https://cdn-cosmos.bluesoft.com.br/products/7891910000197"
-                            product_name="PACK BISCOITO INTEGRAL RECHEIO REQUEIJÃO CLUB SOCIAL PACOTE 106G 4 UNIDADES"
-                            price={7.99}
-                            supermarket_name="Supermercados Mundial"
-                        />
-                        <Price
-                            product_image_url="https://cdn-cosmos.bluesoft.com.br/products/7899674027481"
-                            product_name="DESOD ABOVE ELEMENTS OCEAN ACO 150ML/90G"
-                            price={7.99}
-                            supermarket_name="prezunic"
-                        />
+
+                        {
+                            props.data.map((price) => {
+                                return (
+                                    <Price key={price.id}
+                                        product_image_url={price.thumbnail}
+                                        product_name={price.name.toUpperCase()}
+                                        price={7.99}
+                                        supermarket_name={titleCase(price.brand)}
+                                    />
+                                )
+
+                            })
+                        }
+
                     </Stack>
                 </Box>
 
@@ -56,8 +58,19 @@ export default function Dashboard() {
     )
 }
 export const getServerSideProps = withSSRAuth(async (ctx) => {
+
+    const apiClient = setupAPIClient(ctx);
+
+    const response = await apiClient.get("/products")
+
+    const { data } = response;
+
+
+
     return {
-        props: {}
+        props: {
+            data
+        }
     }
 });
 
