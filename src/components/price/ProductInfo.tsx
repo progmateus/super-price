@@ -2,11 +2,11 @@ import { Box, Text } from "@chakra-ui/react";
 
 
 interface ProductInfoProps {
-    product_name: string;
+    name: string;
     price: number
 }
 
-export function ProductInfo({ product_name, price }: ProductInfoProps) {
+export function ProductInfo(props: ProductInfoProps) {
     return (
         <Box
             w="55%"
@@ -18,7 +18,7 @@ export function ProductInfo({ product_name, price }: ProductInfoProps) {
                 textAlign="left"
                 fontWeight="bold"
             >
-                {product_name}
+                {props.name}
             </Text>
 
             <Text
@@ -26,7 +26,7 @@ export function ProductInfo({ product_name, price }: ProductInfoProps) {
                 fontSize={["lg", "2xl"]}
                 fontWeight="bold"
             >
-                R${price}
+                R${props.price}
             </Text>
 
         </Box>

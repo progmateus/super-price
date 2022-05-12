@@ -5,24 +5,37 @@ import { SupermarketName } from "./supermarketName";
 
 
 interface PriceProps {
+    price: {
+        product: {
+            id: string;
+            name: string;
+            gtin: string;
+            brand: string;
+            thumbnail: string;
+        }
 
-    product_image_url: string;
-    product_name: string;
-    price: number
-    supermarket_name: string;
+        price: {
+            id: string;
+            price: number;
+            user_id: string;
+            created_at: string;
+            updated_at: string;
+        },
+
+        supermarket: {
+            id: string;
+            name: string;
+        }
+    }
+
 }
 
-export function Price({
-    product_image_url,
-    product_name,
-    price,
-    supermarket_name,
-}: PriceProps) {
+export function Price(props: PriceProps) {
     return (
-        <Flex w="100%" bg="gray.800" p="2" h={["14vh", "17vh"]} minHeight={["14vh", "17vh"]} borderRadius={6}>
-            <ProductImage product_image_url={product_image_url} />
-            <ProductInfo product_name={product_name} price={price} />
-            <SupermarketName supermarket_name={supermarket_name} />
+        <Flex w="80vw" bg="gray.800" p="2" h={["14vh", "17vh"]} minHeight={["14vh", "17vh"]} borderRadius={6}>
+            <ProductImage thumbnail={props.price.product.thumbnail} />
+            <ProductInfo name={props.price.product.name} price={props.price.price.price} />
+            <SupermarketName name={props.price.supermarket.name} />
         </Flex>
     )
 }

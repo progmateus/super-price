@@ -4,7 +4,7 @@ import Router from "next/router"
 import { api } from "../services/apiClient";
 
 type User = {
-    id: string;
+    id?: string;
     name?: string;
     lastname?: string;
     email: string;

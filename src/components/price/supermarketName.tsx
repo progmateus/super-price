@@ -1,11 +1,12 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { titleCase } from "../../utils/titleCase";
 
 
 interface SupermarketNameProps {
-    supermarket_name: string;
+    name: string;
 }
 
-export function SupermarketName({ supermarket_name }: SupermarketNameProps) {
+export function SupermarketName(props: SupermarketNameProps) {
     return (
         <Flex
             w="35%"
@@ -16,7 +17,7 @@ export function SupermarketName({ supermarket_name }: SupermarketNameProps) {
                 fontWeight="bold"
                 textAlign="center"
             >
-                {supermarket_name}
+                {titleCase(props.name)}
             </Text>
         </Flex>
     )

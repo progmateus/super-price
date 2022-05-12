@@ -1,10 +1,10 @@
 import { Box, Flex, Img } from "@chakra-ui/react";
 
 interface ProductImageProps {
-    product_image_url: string;
+    thumbnail: string;
 }
 
-export function ProductImage({ product_image_url }: ProductImageProps) {
+export function ProductImage(props: ProductImageProps) {
     return (
         <Box
             w={["21%", "10%"]}
@@ -16,7 +16,7 @@ export function ProductImage({ product_image_url }: ProductImageProps) {
                 maxHeight="100%"
                 mx="auto"
 
-                src={product_image_url}
+                src="https://cosmos.bluesoft.com.br/assets/ncm/III-96384b7eb013668a08bacb0629145dd7.png"
             />
         </Box>
     )
