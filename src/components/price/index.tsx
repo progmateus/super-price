@@ -32,7 +32,7 @@ interface PriceProps {
 
 export function Price(props: PriceProps) {
     return (
-        <Flex w="80vw" bg="gray.800" p="2" h={["14vh", "17vh"]} minHeight={["14vh", "17vh"]} borderRadius={6}>
+        <Flex w={["100vw", "70vw"]} bg="gray.800" p="2" h="17vh" minHeight={["14vh", "17vh"]} borderRadius={6}>
             <ProductImage thumbnail={props.price.product.thumbnail} />
             <ProductInfo name={props.price.product.name} price={props.price.price.price} />
             <SupermarketName name={props.price.supermarket.name} />

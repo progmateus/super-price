@@ -39,21 +39,23 @@ export default function CreateUser(props) {
 
 
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
+        console.log(values)
 
         try {
             const response = await api.put("/users", {
                 name: values.name,
                 lastname: values.lastname,
                 email: values.email,
-                password: "priscilla321",
-                last_password: "priscilla321"
             });
+
+
+            window.location.reload();
 
             console.log(response)
 
 
         } catch (err) {
-            console.log(err);
+            console.log(err.response.data);
         }
     }
 
@@ -79,7 +81,7 @@ export default function CreateUser(props) {
                         <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
                             <Input
                                 name="name"
-                                label="Name"
+                                label="Nome"
                                 error={errors.name}
                                 {...register("name")}
                                 focusBorderColor="pink.500"

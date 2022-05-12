@@ -24,7 +24,7 @@ const updateUserPasswordFormSchema = yup.object().shape({
     last_password: yup.string().required("Senha atual obrigatória").min(6, "No mínimo 6 caracteres"),
 })
 
-export default function CreateUser(props) {
+export default function CreateUser() {
 
 
     const { register, handleSubmit, formState } = useForm(({
@@ -38,9 +38,6 @@ export default function CreateUser(props) {
 
         try {
             const response = await api.put("/users", {
-                name: props.name,
-                lastname: props.lastname,
-                email: props.email,
                 password: values.password,
                 last_password: values.last_password
             });
@@ -140,19 +137,8 @@ export default function CreateUser(props) {
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
 
-    const apiClient = setupAPIClient(ctx);
-
-    const response = await apiClient.get("/users/profile")
-
-    const { id, name, lastname, email, avatar } = response.data;
-
     return {
         props: {
-            id,
-            name: titleCase(name),
-            lastname: titleCase(lastname),
-            email,
-            avatar
         }
     }
 });
