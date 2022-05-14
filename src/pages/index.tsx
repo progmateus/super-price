@@ -1,4 +1,4 @@
-import { Button, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Stack } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,6 +6,9 @@ import { Input } from "../components/form/Input";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
+import { api } from "../services/apiClient";
+import { setCookie } from "nookies";
+import { Router } from "next/router";
 
 
 type SingInFormData = {
@@ -23,14 +26,25 @@ export default function SignIn() {
 
   const { signIn } = useContext(AuthContext);
 
-  const { register, handleSubmit, formState } = useForm(({
+  const { register, handleSubmit, setError, formState } = useForm(({
     resolver: yupResolver(signInForSchema)
   }));
 
   const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SingInFormData> = async (credentials: SingInFormData) => {
-    await signIn(credentials);
+
+    try {
+      await signIn(credentials);
+    } catch (err) {
+
+      console.log(err);
+
+      setError('apiError', {
+        message: err.response.data?.message,
+      });
+      console.log("ERROR APP: ", errors.apiError.message);
+    }
   }
 
   return (
@@ -65,7 +79,7 @@ export default function SignIn() {
           <Input
             name="password"
             type="password"
-            label="Password"
+            label="Senha"
             error={errors.password}
             {...register("password")}
             focusBorderColor="pink.500"
@@ -86,10 +100,18 @@ export default function SignIn() {
           Entrar
         </Button>
 
+        {errors.apiError &&
+          <Box
+            mt="2"
+            color="#FF3B2D"
+          >E-mail ou senha inválidos
+          </Box>
+        }
+
 
       </Flex>
 
-    </Flex>
+    </Flex >
   )
 }
 

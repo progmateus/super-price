@@ -19,27 +19,26 @@ type UpdateUserFormData = {
 }
 
 const updateUserFormSchema = yup.object().shape({
-    name: yup.string().required("Nome obrigatório"),
-    lastname: yup.string().required("Sobrenome obrigatório"),
-    email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
+    name: yup.string().required("Nome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um nome é permitido"),
+    lastname: yup.string().required("Sobrenome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um sobrenome é permitido"),
+    email: yup.string().required("E-mail obrigatório").matches(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, "Somente letras (a - z), números (0 - 9), pontos ( . ) e símbolos ( _   - ) são permitidos")
 })
 
 export default function CreateUser(props) {
 
-    const { register, handleSubmit, formState } = useForm(({
+    const { register, handleSubmit, setError, formState } = useForm(({
         defaultValues: {
             name: props.name,
             lastname: props.lastname,
             email: props.email,
+            apiError: null
         },
         resolver: yupResolver(updateUserFormSchema)
     }));
 
     const { errors } = formState;
 
-
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
-        console.log(values)
 
         try {
             const response = await api.put("/users", {
@@ -48,14 +47,10 @@ export default function CreateUser(props) {
                 email: values.email,
             });
 
-
             window.location.reload();
 
-            console.log(response)
-
-
         } catch (err) {
-            console.log(err.response.data);
+            console.log(err);
         }
     }
 
@@ -161,3 +156,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
         }
     }
 });
+function setError(arg0: string, arg1: { message: any; }) {
+    throw new Error("Function not implemented.");
+}
+

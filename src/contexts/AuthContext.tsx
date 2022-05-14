@@ -62,44 +62,41 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }, [])
 
     async function signIn({ email, password }: SignInCredentials) {
-        try {
 
-            const response = await api.post("/sessions", {
-                email,
-                password
+        const response = await api.post("/sessions", {
+            email,
+            password
+        })
+
+        const { user, token, refresh_token } = response.data
+
+        setCookie(undefined, "super-price.token", token, {
+            maxAge: 60 * 60 * 24 * 30, // 30 days
+            path: "/"
+        });
+
+        setCookie(undefined, "super-price.refreshToken", refresh_token, {
+            maxAge: 60 * 60 * 24 * 30, // 30 days
+            path: "/"
+        });
+
+        api.defaults.headers['Authorization'] = `Bearer ${token}`
+
+        api.get("/users/profile")
+            .then(response => {
+                const { id, name, lastname, email, avatar } = response.data;
+
+                setUser({
+                    id,
+                    name,
+                    lastname,
+                    email,
+                    avatar
+                })
             })
 
-            const { user, token, refresh_token } = response.data
+        Router.push("/dashboard");
 
-            setCookie(undefined, "super-price.token", token, {
-                maxAge: 60 * 60 * 24 * 30, // 30 days
-                path: "/"
-            });
-
-            setCookie(undefined, "super-price.refreshToken", refresh_token, {
-                maxAge: 60 * 60 * 24 * 30, // 30 days
-                path: "/"
-            });
-
-            api.defaults.headers['Authorization'] = `Bearer ${token}`
-
-            api.get("/users/profile")
-                .then(response => {
-                    const { id, name, lastname, email, avatar } = response.data;
-
-                    setUser({
-                        id,
-                        name,
-                        lastname,
-                        email,
-                        avatar
-                    })
-                })
-
-            Router.push("/dashboard");
-        } catch (err) {
-            console.log(err);
-        }
 
     }
 
