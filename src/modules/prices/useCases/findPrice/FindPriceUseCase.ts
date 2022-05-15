@@ -9,7 +9,6 @@ interface IRequest {
     supermarket_name?: string;
     gtin?: string;
 }
-
 @injectable()
 class FindPriceUseCase {
 
@@ -76,8 +75,40 @@ class FindPriceUseCase {
             product_id
         )
 
+        const pricesResponse = [];
 
-        return prices;
+        for (var i = 0; i < prices.length; i++) {
+
+            const mapPrice = await this.pricesRepository.findById(prices[i].id)
+            const mapProduct = await this.productsRepository.findById(prices[i].product_id)
+            const mapSupermarket = await this.supermarketsRepository.findById(prices[i].supermarket_id)
+
+            const priceResponse = {
+                product: {
+                    id: mapProduct.id,
+                    name: mapProduct.name,
+                    gtin: mapProduct.gtin,
+                    brand: mapProduct.brand,
+                    thumbnail: mapProduct.thumbnail
+                },
+
+                price: {
+                    id: mapPrice.id,
+                    price: mapPrice.price,
+                    user_id: mapPrice.user_id,
+                    created_at: mapPrice.created_at,
+                    updated_at: mapPrice.updated_at,
+                },
+
+                supermarket: {
+                    id: mapPrice.supermarket_id,
+                    name: mapSupermarket.name
+                }
+            }
+
+            pricesResponse.push(priceResponse);
+        }
+        return pricesResponse;
 
     }
 

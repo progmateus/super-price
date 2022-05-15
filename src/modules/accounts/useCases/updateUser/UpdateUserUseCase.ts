@@ -46,11 +46,11 @@ class UpdateUserUseCase {
 
         const user = await this.usersRepository.findById(id)
 
-        const passwordMatch = await compare(last_password, user.password);
-
-        if (!passwordMatch) {
-            throw new AppError("last password incorrect!", 401)
+        if (!user) {
+            throw new AppError("User does not exists", 404)
         }
+
+        console.log(user)
 
         if (name) {
             const nameLowerCase = name.toLowerCase();
@@ -76,24 +76,41 @@ class UpdateUserUseCase {
             await this.usersRepository.update(user)
         }
 
+
+
+
+
         if (email) {
-            const emailLoweCase = email.toLowerCase()
-            const isValidEmail = this.validateProvider.ValidateEmail(emailLoweCase);
-            if (isValidEmail === false) {
-                throw new AppError("Invalid Email", 400)
+            const emailLowerCase = email.toLowerCase()
+
+            if (user.email !== emailLowerCase) {
+
+
+                const isValidEmail = this.validateProvider.ValidateEmail(emailLowerCase);
+
+                if (isValidEmail === false) {
+                    throw new AppError("Invalid Email", 400)
+                }
+
+                const userAlreadyExists = await this.usersRepository.findByEmail(emailLowerCase);
+                if (userAlreadyExists) {
+                    throw new AppError("User already exists!", 409)
+                }
+
+                user.email = emailLowerCase;
+
+                await this.usersRepository.update(user)
+
             }
-
-            const user = await this.usersRepository.findByEmail(emailLoweCase);
-            if (user) {
-                throw new AppError("User already exists!", 409)
-            }
-
-            user.email = emailLoweCase;
-
-            await this.usersRepository.update(user)
         }
 
-        if (password) {
+        if (password && last_password) {
+
+            const passwordMatch = await compare(last_password, user.password);
+
+            if (!passwordMatch) {
+                throw new AppError("last password incorrect!", 401)
+            }
 
             user.password = await hash(password, 8);
 
