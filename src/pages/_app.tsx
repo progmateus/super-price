@@ -15,9 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         </AuthProvider>
       </SidebarDrawerProvider>
     </ChakraProvider>
-
-
   )
-
 }
 export default MyApp

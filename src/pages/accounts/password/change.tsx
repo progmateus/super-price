@@ -42,14 +42,10 @@ export default function CreateUser() {
                 last_password: values.last_password
             });
 
-            console.log(response)
-
-
         } catch (err) {
             console.log(err);
         }
     }
-
 
     return (
         <Box>

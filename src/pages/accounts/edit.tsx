@@ -24,7 +24,7 @@ const updateUserFormSchema = yup.object().shape({
     email: yup.string().required("E-mail obrigatório").matches(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, "Somente letras (a - z), números (0 - 9), pontos ( . ) e símbolos ( _   - ) são permitidos")
 })
 
-export default function CreateUser(props) {
+export default function UpdateUser(props) {
 
     const { register, handleSubmit, setError, formState } = useForm(({
         defaultValues: {
@@ -41,7 +41,7 @@ export default function CreateUser(props) {
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
 
         try {
-            const response = await api.put("/users", {
+            await api.put("/users", {
                 name: values.name,
                 lastname: values.lastname,
                 email: values.email,

@@ -6,9 +6,7 @@ import { Input } from "../components/form/Input";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
-import { api } from "../services/apiClient";
-import { setCookie } from "nookies";
-import { Router } from "next/router";
+
 
 
 type SingInFormData = {
@@ -38,12 +36,16 @@ export default function SignIn() {
       await signIn(credentials);
     } catch (err) {
 
-      console.log(err);
-
-      setError('apiError', {
-        message: err.response.data?.message,
-      });
-      console.log("ERROR APP: ", errors.apiError.message);
+      if (err.response.status === 500) {
+        setError('apiError', {
+          message: "Erro",
+        });
+      }
+      else {
+        setError('apiError', {
+          message: "E-mail ou senha inválidos",
+        });
+      }
     }
   }
 
@@ -104,7 +106,7 @@ export default function SignIn() {
           <Box
             mt="2"
             color="#FF3B2D"
-          >E-mail ou senha inválidos
+          >{errors.apiError.message}
           </Box>
         }
 

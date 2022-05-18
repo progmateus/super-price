@@ -8,7 +8,10 @@ export function SidebarNav() {
         <Stack spacing="12" align="flex-start">
 
             <NavSection title="GERAL">
-                <NavLink icon={RiDashboardLine} href="/dashboard">Dashboard</NavLink>
+                <NavLink icon={RiDashboardLine} href="/dashboard">Home</NavLink>
+                <NavLink icon={RiDashboardLine} href="/prices">Buscar preços</NavLink>
+                <NavLink icon={RiDashboardLine} href="/products">Produtos</NavLink>
+
 
 
             </NavSection>

@@ -1,13 +1,13 @@
 import { Box, Flex, Stack } from "@chakra-ui/react"
-import Sidebar from "../components/sidebar"
-import { Header } from "../components/header"
-import { Price } from "../components/price"
-import { withSSRAuth } from "../utils/withSSRAuth"
-import { setupAPIClient } from "../services/api"
-import { titleCase } from "../utils/titleCase"
+import { Header } from "../components/header";
+import { Price } from "../components/price";
+import Sidebar from "../components/sidebar";
+import { setupAPIClient } from "../services/api";
+import { withSSRAuth } from "../utils/withSSRAuth";
 
 
 export default function Dashboard(props) {
+
     return (
         <Flex direction="column" w="100vw" >
             <Header />
@@ -18,12 +18,12 @@ export default function Dashboard(props) {
                 <Box>
                     <Stack spacing="2" >
                         {
-                            props.prices.length > 0 ? (
-                                props.prices.map((price) => {
+                            props.products.length > 0 ? (
+                                props.products.map((product) => {
                                     return (
                                         <Price
-                                            key={price.price.id}
-                                            price={price}
+                                            key={product.id}
+                                            price={product}
                                         />
                                     )
                                 })
@@ -40,28 +40,21 @@ export default function Dashboard(props) {
     )
 }
 export const getServerSideProps = withSSRAuth(async (ctx) => {
-    let formatter = new Intl.NumberFormat([], {
-        style: 'currency',
-        currency: 'BRL'
-    })
+
 
     const apiClient = setupAPIClient(ctx);
 
-    const response = await apiClient.get("/prices")
+    const response = await apiClient.get("/products")
 
     const { data } = response;
 
-    data.map((price) => {
-        price.supermarket.name = titleCase(price.supermarket.name);
-        price.product.name = price.product.name.toUpperCase()
-        price.price.price = formatter.format(price.price.price)
+    data.map((product) => {
+        product.name = product.name.toUpperCase()
     })
 
     return {
         props: {
-            prices: data
+            products: data
         }
     }
 });
-
-

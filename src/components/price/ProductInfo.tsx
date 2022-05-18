@@ -13,7 +13,7 @@ export function ProductInfo(props: ProductInfoProps) {
             p="2"
         >
             <Text
-                fontSize={["xs", "lg"]}
+                fontSize={["xs", "1rem"]}
                 lineHeight="1.1"
                 textAlign="left"
                 fontWeight="bold"
@@ -26,7 +26,7 @@ export function ProductInfo(props: ProductInfoProps) {
                 fontSize={["lg", "2xl"]}
                 fontWeight="bold"
             >
-                R${props.price}
+                {props.price}
             </Text>
 
         </Box>

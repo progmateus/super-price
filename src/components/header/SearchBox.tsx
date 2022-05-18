@@ -1,10 +1,28 @@
+
+import * as React from "react";
 import { Flex, Icon, Input } from "@chakra-ui/react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { RiSearchLine } from "react-icons/ri";
+import Router from "next/router"
+import encodeQueryData from "../../utils/encodeURL";
+
+
+type searchFormData = {
+    gtin: string;
+}
 
 export function SearchBox() {
+
+    const { register, handleSubmit, formState } = useForm();
+
+    const handleSearch: SubmitHandler<searchFormData> = async (value) => {
+        const urlEncoded = encodeQueryData(value);
+        Router.push(`/prices/${urlEncoded}`)
+    }
+
     return (
         <Flex
-            as="label"
+            as="form"
             flex="1"
             py="4"
             px="8"
@@ -15,6 +33,7 @@ export function SearchBox() {
             position="relative"
             bg="gray.800"
             borderRadius="full"
+            onSubmit={handleSubmit(handleSearch)}
         >
 
             <Input
@@ -24,6 +43,7 @@ export function SearchBox() {
                 mr="4"
                 placeholder="Buscar Produto"
                 _placeholder={{ color: "gray.400" }}
+                {...register("gtin")}
             />
 
             <Icon as={RiSearchLine} fontSize="26" color="gray.200" />

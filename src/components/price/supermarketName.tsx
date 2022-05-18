@@ -13,7 +13,7 @@ export function SupermarketName(props: SupermarketNameProps) {
         >
             <Text
                 m="auto"
-                fontSize={["xs", "2xl"]}
+                fontSize={["xs", "1rem"]}
                 fontWeight="bold"
                 textAlign="center"
             >
