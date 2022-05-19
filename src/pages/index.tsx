@@ -7,8 +7,6 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
 
-
-
 type SingInFormData = {
   email: string;
   password: string;
@@ -109,7 +107,6 @@ export default function SignIn() {
           >{errors.apiError.message}
           </Box>
         }
-
 
       </Flex>
 

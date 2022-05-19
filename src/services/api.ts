@@ -10,14 +10,12 @@ export function setupAPIClient(ctx = undefined) {
 
     let cookies = parseCookies(ctx);
 
-
     const api = axios.create({
         baseURL: "http://localhost:3333",
         headers: {
             Authorization: `Bearer ${cookies['super-price.token']}`
         }
     })
-
 
     api.interceptors.response.use(response => {
         return response
@@ -57,7 +55,6 @@ export function setupAPIClient(ctx = undefined) {
                         failedRequestQueue.forEach(request => request.onFailure(error))
                         failedRequestQueue = []
 
-                        /// ou process.browser (foi preterido)
                         if (typeof window) {
                             signOut();
                         }

@@ -1,12 +1,22 @@
 import { Box, Flex, Stack } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { Price } from "../components/price";
+import { Product } from "../components/product";
 import Sidebar from "../components/sidebar";
 import { setupAPIClient } from "../services/api";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
+interface ProductProps {
+    id: string;
+    name: string;
+    gtin: string;
+    brand: string;
+    thumbnail: string;
+
+}
 
 export default function Dashboard(props) {
+    console.log(props.products.length)
 
     return (
         <Flex direction="column" w="100vw" >
@@ -18,12 +28,13 @@ export default function Dashboard(props) {
                 <Box>
                     <Stack spacing="2" >
                         {
+
                             props.products.length > 0 ? (
-                                props.products.map((product) => {
+                                props.products.map((product: ProductProps) => {
                                     return (
-                                        <Price
+                                        <Product
                                             key={product.id}
-                                            price={product}
+                                            product={product}
                                         />
                                     )
                                 })
@@ -46,15 +57,15 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
     const response = await apiClient.get("/products")
 
-    const { data } = response;
+    const { data: products } = response;
 
-    data.map((product) => {
+    products.map((product) => {
         product.name = product.name.toUpperCase()
     })
 
     return {
         props: {
-            products: data
+            products
         }
     }
 });
