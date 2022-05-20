@@ -16,7 +16,7 @@ export function ProductImage(props: ProductImageProps) {
                 maxHeight="100%"
                 mx="auto"
 
-                src="https://cosmos.bluesoft.com.br/assets/ncm/III-96384b7eb013668a08bacb0629145dd7.png"
+                src={props.thumbnail}
             />
         </Box>
     )

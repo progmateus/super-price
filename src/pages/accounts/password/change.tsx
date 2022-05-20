@@ -7,8 +7,6 @@ import { Header } from "../../../components/header";
 import Sidebar from "../../../components/sidebar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { api } from "../../../services/apiClient";
-import { setupAPIClient } from "../../../services/api";
-import { titleCase } from "../../../utils/titleCase";
 import { withSSRAuth } from "../../../utils/withSSRAuth";
 
 type UpdateUserPasswordFormData = {
@@ -24,10 +22,9 @@ const updateUserPasswordFormSchema = yup.object().shape({
     last_password: yup.string().required("Senha atual obrigatória").min(6, "No mínimo 6 caracteres"),
 })
 
-export default function CreateUser() {
+export default function UpdateUserPassword() {
 
-
-    const { register, handleSubmit, formState } = useForm(({
+    const { register, handleSubmit, setError, formState } = useForm(({
         resolver: yupResolver(updateUserPasswordFormSchema)
     }));
 
@@ -42,8 +39,20 @@ export default function CreateUser() {
                 last_password: values.last_password
             });
 
+            window.location.reload();
+
         } catch (err) {
-            console.log(err);
+
+            if (err.response.data.message === "last password incorrect!") {
+                setError('apiError', {
+                    message: "Senha atual incorreta",
+                });
+            }
+            else {
+                setError('apiError', {
+                    message: "Erro",
+                });
+            }
         }
     }
 
@@ -57,26 +66,27 @@ export default function CreateUser() {
                     as="form"
                     flex="1"
                     borderRadius={8}
-                    bg="gray.800"
+                    bg="#FFFFFF"
                     p={["6", "8"]}
                     onSubmit={handleSubmit(handleUpdateUserPassword)}
                 >
 
-                    <Heading size="lg" fontWeight="normal"> Alterar senha </Heading>
+                    <Heading size="lg" fontWeight="normal" color="gray.900"> Alterar senha </Heading>
                     <Divider my="6" borderColor="gray.700" />
 
                     <VStack spacing="8">
                         <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
                             <Input
                                 name="password"
+                                color="gray.900"
                                 type="password"
                                 label="Nova senha"
                                 error={errors.password}
                                 {...register("password")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.900"
+                                bgColor="gray.100"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.900" }}
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
                             <Input
@@ -86,9 +96,9 @@ export default function CreateUser() {
                                 error={errors.password_confirmation}
                                 {...register("password_confirmation")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.900"
+                                bgColor="gray.100"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.900" }}
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
                         </SimpleGrid>
@@ -100,14 +110,21 @@ export default function CreateUser() {
                                 error={errors.last_password}
                                 {...register("last_password")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.900"
+                                bgColor="gray.100"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.900" }}
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
-                        </SimpleGrid>
 
+                        </SimpleGrid>
                     </VStack>
+                    {errors.apiError &&
+                        <Box
+                            mt="2"
+                            color="#FF3B2D"
+                        >{errors.apiError.message}
+                        </Box>
+                    }
 
                     <Flex mt="8" justify="flex-end" >
                         <HStack spacing="4">
@@ -116,8 +133,6 @@ export default function CreateUser() {
                                 <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>
                             </Link>
                             <Button type="submit" colorScheme="pink">Alterar senha</Button>
-
-
                         </HStack>
 
                     </Flex>

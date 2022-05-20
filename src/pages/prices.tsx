@@ -69,15 +69,15 @@ export default function Prices(props) {
             <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
-                <Box flex="1" borderRadius={8} bg="gray.800" p="8" >
+                <Box flex="1" borderRadius={8} bg="#FFFFFF" p="8" >
                     <Flex mb="8" justify="space-between" align="center">
-                        <Heading size="lg" fontWeight="normal"> Preços</Heading>
+                        <Heading size="lg" color="gray.900" fontWeight="normal"> Preços</Heading>
 
                         <Button
                             as="a"
                             size="sm"
                             fontSize="sm"
-                            colorScheme="pink"
+                            bg="blue.700"
                             leftIcon={<Icon as={RiAddLine} fontSize="20" />}
                         >
                             Criar preço
@@ -85,7 +85,7 @@ export default function Prices(props) {
 
                     </Flex>
 
-                    <Table colorScheme="whiteAlpha">
+                    <Table colorScheme="blackAlpha">
                         <Thead>
                             <Tr>
                                 <Th>
@@ -110,13 +110,13 @@ export default function Prices(props) {
                                         <Tr key={price.price.id}>
                                             <Td>
 
-                                                <Text fontWeight="bold"> {price.price?.price} </Text>
+                                                <Text fontWeight="bold" color="green.500"> {price.price?.price} </Text>
                                             </Td>
                                             <Td>
-                                                <Text > {price.supermarket?.name} </Text>
+                                                <Text color="gray.800"> {price.supermarket?.name} </Text>
                                             </Td>
                                             <Td>
-                                                <Text as="em"> {price.price?.updated_at} </Text>
+                                                <Text as="em" color="gray.800"> {price.price?.updated_at} </Text>
                                             </Td>
                                             <Td><Button
                                                 as="a"

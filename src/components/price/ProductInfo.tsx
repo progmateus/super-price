@@ -14,6 +14,7 @@ export function ProductInfo(props: ProductInfoProps) {
         >
             <Text
                 fontSize={["xs", "1rem"]}
+                color="gray.900"
                 lineHeight="1.1"
                 textAlign="left"
                 fontWeight="bold"
@@ -23,6 +24,7 @@ export function ProductInfo(props: ProductInfoProps) {
 
             <Text
                 mt={["2", "15"]}
+                color="green.500"
                 fontSize={["lg", "2xl"]}
                 fontWeight="bold"
             >

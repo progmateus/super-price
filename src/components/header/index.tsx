@@ -25,6 +25,7 @@ export function Header() {
     return (
         <Flex
             as="header"
+            bg="blue.600"
             w="100%"
             maxWidth={1480}
             h={["16", "20"]}

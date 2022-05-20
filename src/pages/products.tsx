@@ -4,6 +4,7 @@ import { Price } from "../components/price";
 import { Product } from "../components/product";
 import Sidebar from "../components/sidebar";
 import { setupAPIClient } from "../services/api";
+import { titleCase } from "../utils/titleCase";
 import { withSSRAuth } from "../utils/withSSRAuth";
 
 interface ProductProps {
@@ -61,6 +62,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
     products.map((product) => {
         product.name = product.name.toUpperCase()
+        product.brand = titleCase(product.brand)
     })
 
     return {

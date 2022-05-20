@@ -15,6 +15,7 @@ export function SupermarketName(props: SupermarketNameProps) {
                 m="auto"
                 fontSize={["xs", "1rem"]}
                 fontWeight="bold"
+                color="gray.700"
                 textAlign="center"
             >
                 {titleCase(props.name)}

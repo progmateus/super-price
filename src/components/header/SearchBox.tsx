@@ -31,7 +31,7 @@ export function SearchBox() {
             alignSelf="center"
             color="gray.200"
             position="relative"
-            bg="gray.800"
+            bg="blue.700"
             borderRadius="full"
             onSubmit={handleSubmit(handleSearch)}
         >
@@ -42,7 +42,7 @@ export function SearchBox() {
                 px="4"
                 mr="4"
                 placeholder="Buscar Produto"
-                _placeholder={{ color: "gray.400" }}
+                _placeholder={{ color: "gray.100" }}
                 {...register("gtin")}
             />
 

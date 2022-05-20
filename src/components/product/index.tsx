@@ -1,7 +1,4 @@
 import { Box, Flex, Img, Text } from "@chakra-ui/react";
-import { titleCase } from "../../utils/titleCase";
-
-
 interface ProductProps {
     product: {
         id: string;
@@ -14,7 +11,7 @@ interface ProductProps {
 
 export function Product(props: ProductProps) {
     return (
-        <Flex w={["100vw", "70vw"]} bg="gray.800" p="2" h="17vh" minHeight={["14vh", "17vh"]} borderRadius={6}>
+        <Flex w={["100vw", "70vw"]} bg="#FFFFFF" p="2" h="17vh" minHeight={["14vh", "17vh"]} borderRadius={6}>
             <Box
                 w={["21%", "10%"]}
                 m="1"
@@ -34,11 +31,20 @@ export function Product(props: ProductProps) {
             >
                 <Text
                     fontSize={["xs", "1rem"]}
+                    color="gray.900"
                     lineHeight="1.1"
                     textAlign="left"
                     fontWeight="bold"
                 >
                     {props.product.name}
+                </Text>
+
+                <Text
+                    color="gray.500"
+                    mt={["2", "5"]}
+                    fontSize={["sm", "sm"]}
+                >
+                    {props.product.brand}
                 </Text>
             </Box>
             <Flex

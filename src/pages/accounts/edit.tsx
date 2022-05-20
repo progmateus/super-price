@@ -64,12 +64,12 @@ export default function UpdateUser(props) {
                     as="form"
                     flex="1"
                     borderRadius={8}
-                    bg="gray.800"
+                    bg="#FFFFFF"
                     p={["6", "8"]}
                     onSubmit={handleSubmit(handleUpdateUser)}
                 >
 
-                    <Heading size="lg" fontWeight="normal"> Atualizar informações </Heading>
+                    <Heading size="lg" fontWeight="normal" color="gray.900"> Atualizar informações </Heading>
                     <Divider my="6" borderColor="gray.700" />
 
                     <VStack spacing="8">
@@ -77,37 +77,40 @@ export default function UpdateUser(props) {
                             <Input
                                 name="name"
                                 label="Nome"
+                                color="gray.900"
                                 error={errors.name}
                                 {...register("name")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.900"
+                                bgColor="#DCDCDC"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.900" }}
+                                _hover={{ bgColor: "#DCDCDC" }}
                                 size="lg"
                             />
                             <Input
                                 name="lastname"
+                                color="gray.900"
                                 label="Sobrenome"
                                 error={errors.lastname}
                                 {...register("lastname")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.900"
+                                bgColor="#DCDCDC"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.900" }}
+                                _hover={{ bgColor: "#DCDCDC" }}
                                 size="lg"
                             />
                         </SimpleGrid>
                         <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
                             <Input
                                 name="email"
+                                color="gray.900"
                                 type="email"
                                 label="E-mail"
                                 error={errors.email}
                                 {...register("email")}
-                                focusBorderColor="pink.500"
-                                bgColor="gray.900"
+                                focusBorderColor="blue.500"
+                                bgColor="#DCDCDC"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.900" }}
+                                _hover={{ bgColor: "#DCDCDC" }}
                                 size="lg"
                             />
                         </SimpleGrid>
