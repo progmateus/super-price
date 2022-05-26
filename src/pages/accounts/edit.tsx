@@ -81,9 +81,9 @@ export default function UpdateUser(props) {
                                 error={errors.name}
                                 {...register("name")}
                                 focusBorderColor="pink.500"
-                                bgColor="#DCDCDC"
+                                bgColor="input"
                                 variant="filled"
-                                _hover={{ bgColor: "#DCDCDC" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                             <Input
@@ -93,9 +93,9 @@ export default function UpdateUser(props) {
                                 error={errors.lastname}
                                 {...register("lastname")}
                                 focusBorderColor="pink.500"
-                                bgColor="#DCDCDC"
+                                bgColor="input"
                                 variant="filled"
-                                _hover={{ bgColor: "#DCDCDC" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                         </SimpleGrid>
@@ -107,10 +107,10 @@ export default function UpdateUser(props) {
                                 label="E-mail"
                                 error={errors.email}
                                 {...register("email")}
-                                focusBorderColor="blue.500"
-                                bgColor="#DCDCDC"
+                                focusBorderColor="brand.500"
+                                bgColor="input"
                                 variant="filled"
-                                _hover={{ bgColor: "#DCDCDC" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                         </SimpleGrid>

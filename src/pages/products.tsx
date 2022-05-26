@@ -17,7 +17,6 @@ interface ProductProps {
 }
 
 export default function Dashboard(props) {
-    console.log(props.products.length)
 
     return (
         <Flex direction="column" w="100vw" >

@@ -84,9 +84,9 @@ export default function UpdateUserPassword() {
                                 error={errors.password}
                                 {...register("password")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.100"
+                                bgColor="input"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.100" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                             <Input
@@ -96,9 +96,9 @@ export default function UpdateUserPassword() {
                                 error={errors.password_confirmation}
                                 {...register("password_confirmation")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.100"
+                                bgColor="input"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.100" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                         </SimpleGrid>
@@ -110,9 +110,9 @@ export default function UpdateUserPassword() {
                                 error={errors.last_password}
                                 {...register("last_password")}
                                 focusBorderColor="pink.500"
-                                bgColor="gray.100"
+                                bgColor="input"
                                 variant="filled"
-                                _hover={{ bgColor: "gray.100" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
 

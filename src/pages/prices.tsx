@@ -1,14 +1,17 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import { api } from "../services/apiClient";
 import Sidebar from "../components/sidebar";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { RiAddLine, RiCreativeCommonsZeroLine, RiPencilLine } from "react-icons/ri";
 import { titleCase } from "../utils/titleCase";
-
-
+import { BrowserRouter, Router, useSearchParams } from "react-router-dom";
+import { useRouter } from "next/router";
+import { SearchBoxProvider, useSearchBox } from "../contexts/SearchBoxContext";
+import { setupAPIClient } from "../services/api";
+import encodeQueryData from "../utils/encodeURL";
 
 interface PriceProps {
     product: {
@@ -36,34 +39,38 @@ interface PriceProps {
 export default function Prices(props) {
     const [prices, setPrices] = useState([])
 
-    useEffect(() => {
-        /// const urlParams = new URLSearchParams(window.location.search);
 
-        try {
-            api.get(`/prices/${window.location.search}`).then((response) => {
-
-                response.data.map((price) => {
-                    price.supermarket.name = titleCase(price.supermarket.name);
-                    price.product.name = price.product.name.toUpperCase();
-                    price.price.price = new Intl.NumberFormat("pt-br", {
-                        style: 'currency',
-                        currency: 'BRL'
-                    }).format(price.price.price);
-                    price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
-                        ("pt-br", {
-                            day: "2-digit",
-                            month: "long",
-                        });
-                })
-                setPrices(response.data)
-            })
-        } catch (err) {
-            console.log(err);
-        }
-    }, [])
+    console.log(props)
+    /*  const { search } = useSearchBox();
+  
+      console.log("Search", search);
+  
+      useEffect(() => {
+          console.log("Entrou no useEffect")
+          api.get(`/prices/${window.location.search}`).then((response) => {
+  
+              console.log("Params", window.location.search)
+  
+              response.data.map((price) => {
+                  price.supermarket.name = titleCase(price.supermarket.name);
+                  price.product.name = price.product.name.toUpperCase();
+                  price.price.price = new Intl.NumberFormat("pt-br", {
+                      style: 'currency',
+                      currency: 'BRL'
+                  }).format(price.price.price);
+                  price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
+                      ("pt-br", {
+                          day: "2-digit",
+                          month: "long",
+                      });
+              })
+              setPrices(response.data)
+          })
+      }, [search]) */
 
     return (
         <Box>
+
             <Header />
 
             <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
@@ -77,7 +84,7 @@ export default function Prices(props) {
                             as="a"
                             size="sm"
                             fontSize="sm"
-                            bg="blue.700"
+                            bg="brand.700"
                             leftIcon={<Icon as={RiAddLine} fontSize="20" />}
                         >
                             Criar preço
@@ -104,8 +111,7 @@ export default function Prices(props) {
                         </Thead>
                         <Tbody>
                             {
-                                prices.map((price: PriceProps) => {
-                                    console.log(price)
+                                props.prices.map((price: PriceProps) => {
                                     return (
                                         <Tr key={price.price.id}>
                                             <Td>
@@ -145,9 +151,34 @@ export default function Prices(props) {
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
 
+    const urlEncoded = encodeQueryData(ctx.query);
+    const apiClient = setupAPIClient(ctx);
+
+    const response = await apiClient.get(`/prices/${urlEncoded}`)
+
+    const { data: prices } = response
+
+    prices.map((price) => {
+        price.supermarket.name = titleCase(price.supermarket.name);
+        price.product.name = price.product.name.toUpperCase();
+        price.price.price = new Intl.NumberFormat("pt-br", {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(price.price.price);
+        price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
+            ("pt-br", {
+                day: "2-digit",
+                month: "long",
+            });
+    })
+
+    console.log(prices);
+
     return {
         props: {
+            prices
         }
     }
+
 });
 

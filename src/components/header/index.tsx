@@ -1,6 +1,7 @@
 import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
 import { useContext } from "react"
 import { RiMenuLine } from "react-icons/ri"
+import { Router } from "react-router-dom"
 import { AuthContext } from "../../contexts/AuthContext"
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext"
 import { withSSRGuest } from "../../utils/withSSRGuest"
@@ -21,16 +22,15 @@ export function Header() {
         lg: true
     })
 
-
     return (
         <Flex
             as="header"
-            bg="blue.600"
+            bg="brand.600"
             w="100%"
             maxWidth={1480}
             h={["16", "20"]}
             mx="auto"
-            mt={["2", "4"]}
+            ///mt={["2", "4"]}
             px="6"
             align="center"
         >
@@ -50,6 +50,7 @@ export function Header() {
             <Logo />
 
             {isWideVersion && <SearchBox />}
+
 
             <Flex align="center" ml="auto" >
                 <NotificationsNav />

@@ -1,10 +1,11 @@
-
-import * as React from "react";
+///import * as React from "react";
+import { useContext } from "react"
 import { Flex, Icon, Input } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { RiSearchLine } from "react-icons/ri";
 import Router from "next/router"
 import encodeQueryData from "../../utils/encodeURL";
+import { useSearchBox } from "../../contexts/SearchBoxContext";
 
 
 type searchFormData = {
@@ -14,9 +15,11 @@ type searchFormData = {
 export function SearchBox() {
 
     const { register, handleSubmit, formState } = useForm();
+    const { search, setSearch } = useSearchBox();
 
     const handleSearch: SubmitHandler<searchFormData> = async (value) => {
         const urlEncoded = encodeQueryData(value);
+        setSearch(value.gtin)
         Router.push(`/prices/${urlEncoded}`)
     }
 
@@ -31,7 +34,7 @@ export function SearchBox() {
             alignSelf="center"
             color="gray.200"
             position="relative"
-            bg="blue.700"
+            bg="brand.700"
             borderRadius="full"
             onSubmit={handleSubmit(handleSearch)}
         >
