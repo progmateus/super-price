@@ -9,7 +9,8 @@ import { titleCase } from "../utils/titleCase";
 import { setupAPIClient } from "../services/api";
 import encodeQueryData from "../utils/encodeURL";
 import { PriceModal } from "../components/priceModal";
-import { PriceModalProvider, usePriceModel } from "../contexts/PriceModalContext";
+import { usePriceModal } from "../contexts/PriceModalContext";
+import { useEffect, useState } from "react";
 
 interface PriceProps {
     product: {
@@ -34,7 +35,17 @@ interface PriceProps {
 
 export default function Prices(props) {
 
-    const { handleOpenPriceModal } = usePriceModel();
+    const { handleOpenPriceModal, price, setPrice } = usePriceModal();
+    /// const [price, setPrice] = useState({})
+
+    function handleSubmitEditPrice(price: any) {
+        setPrice(price)
+        handleOpenPriceModal()
+    }
+    function handleSubmitCreatePrice() {
+        setPrice({})
+        handleOpenPriceModal()
+    }
 
     return (
         <Box>
@@ -47,6 +58,7 @@ export default function Prices(props) {
                         <Heading size="lg" color="gray.900" fontWeight="normal"> Preços</Heading>
 
                         <Button
+                            onClick={handleSubmitCreatePrice}
                             as="a"
                             size="sm"
                             fontSize="sm"
@@ -90,16 +102,17 @@ export default function Prices(props) {
                                         <Td>
                                             <Text as="em" color="gray.800"> {price.price?.updated_at} </Text>
                                         </Td>
-                                        <Td><Button
-                                            as="a"
-                                            size="sm"
-                                            fontSize="sm"
-                                            colorScheme="purple"
-                                            leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                                            onClick={handleOpenPriceModal}
-                                        >
-                                            Editar
-                                        </Button></Td>
+                                        <Td>
+                                            <Button
+                                                as="a"
+                                                size="sm"
+                                                fontSize="sm"
+                                                colorScheme="purple"
+                                                leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
+                                                onClick={() => handleSubmitEditPrice(price)}
+                                            >
+                                                Editar
+                                            </Button></Td>
                                     </Tr>
                                 )
                             })}
@@ -109,7 +122,8 @@ export default function Prices(props) {
 
                 </Box>
 
-                <PriceModal />
+                <PriceModal key={price.price?.id} price={price} />
+
             </Flex>
         </Box>
     )

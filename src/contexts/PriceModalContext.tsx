@@ -9,6 +9,8 @@ type PriceModelContextData = {
     handleOpenPriceModal: () => void;
     handleClosePriceModal: () => void;
     isOpen: boolean;
+    price;
+    setPrice: (value) => void;
 
 };
 
@@ -18,9 +20,10 @@ const PriceModelContext = createContext({} as PriceModelContextData);
 export function PriceModalProvider({ children }: PriceModelProviderProps) {
 
     const [isOpen, setIsOpen] = useState(false)
+    const [price, setPrice] = useState({})
+
 
     async function handleOpenPriceModal() {
-        console.log(isOpen)
         setIsOpen(true)
     }
 
@@ -29,9 +32,9 @@ export function PriceModalProvider({ children }: PriceModelProviderProps) {
     }
 
     return (
-        <PriceModelContext.Provider value={{ handleOpenPriceModal, handleClosePriceModal, isOpen }} >
+        <PriceModelContext.Provider value={{ handleOpenPriceModal, handleClosePriceModal, isOpen, price, setPrice }} >
             {children}
         </PriceModelContext.Provider>
     )
 }
-export const usePriceModel = () => useContext(PriceModelContext);
+export const usePriceModal = () => useContext(PriceModelContext);
