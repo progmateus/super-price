@@ -83,7 +83,7 @@ export default function UpdateUserPassword() {
                                 label="Nova senha"
                                 error={errors.password}
                                 {...register("password")}
-                                focusBorderColor="pink.500"
+                                focusBorderColor="brand.500"
                                 bgColor="input"
                                 variant="filled"
                                 _hover={{ bgColor: "input" }}
@@ -95,7 +95,7 @@ export default function UpdateUserPassword() {
                                 label="Confirmação da nova senha"
                                 error={errors.password_confirmation}
                                 {...register("password_confirmation")}
-                                focusBorderColor="pink.500"
+                                focusBorderColor="brand.500"
                                 bgColor="input"
                                 variant="filled"
                                 _hover={{ bgColor: "input" }}
@@ -109,7 +109,7 @@ export default function UpdateUserPassword() {
                                 label="Senha atual"
                                 error={errors.last_password}
                                 {...register("last_password")}
-                                focusBorderColor="pink.500"
+                                focusBorderColor="brand.500"
                                 bgColor="input"
                                 variant="filled"
                                 _hover={{ bgColor: "input" }}
@@ -130,9 +130,9 @@ export default function UpdateUserPassword() {
                         <HStack spacing="4">
 
                             <Link href="/dashboard" passHref>
-                                <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>
+                                <Button as="a" bg="gray.400" >Cancelar</Button>
                             </Link>
-                            <Button type="submit" colorScheme="pink">Alterar senha</Button>
+                            <Button type="submit" bg="brand.700">Alterar senha</Button>
                         </HStack>
 
                     </Flex>

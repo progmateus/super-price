@@ -1,4 +1,4 @@
-import { Box, Flex, Img, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Img, Link, Text } from "@chakra-ui/react";
 interface ProductProps {
     product: {
         id: string;
@@ -49,7 +49,14 @@ export function Product(props: ProductProps) {
             </Box>
             <Flex
                 w="35%"
+                p="5"
             >
+                <Link
+                    href={`/prices?gtin=${props.product.gtin}`}
+                    alignSelf="center"
+                    ml="auto">
+                    <Button as="a" bg="purple.500">Buscar preços</Button>
+                </Link>
             </Flex>
         </Flex>
     )

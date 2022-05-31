@@ -1,17 +1,15 @@
 import * as React from "react";
-import { useContext, useEffect, useState } from "react";
-import { Box, Button, Checkbox, Flex, Heading, Icon, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, Icon, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
-import { api } from "../services/apiClient";
 import Sidebar from "../components/sidebar";
-import { RiAddLine, RiCreativeCommonsZeroLine, RiPencilLine } from "react-icons/ri";
+import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { titleCase } from "../utils/titleCase";
-import { BrowserRouter, Router, useSearchParams } from "react-router-dom";
-import { useRouter } from "next/router";
-import { SearchBoxProvider, useSearchBox } from "../contexts/SearchBoxContext";
+
 import { setupAPIClient } from "../services/api";
 import encodeQueryData from "../utils/encodeURL";
+import { PriceModal } from "../components/priceModal";
+import { PriceModalProvider, usePriceModel } from "../contexts/PriceModalContext";
 
 interface PriceProps {
     product: {
@@ -21,7 +19,6 @@ interface PriceProps {
         brand: string;
         thumbnail: string;
     }
-
     price: {
         id: string;
         price: number;
@@ -29,7 +26,6 @@ interface PriceProps {
         created_at: string;
         updated_at: string;
     },
-
     supermarket: {
         id: string;
         name: string;
@@ -37,42 +33,12 @@ interface PriceProps {
 }
 
 export default function Prices(props) {
-    const [prices, setPrices] = useState([])
 
-
-    console.log(props)
-    /*  const { search } = useSearchBox();
-  
-      console.log("Search", search);
-  
-      useEffect(() => {
-          console.log("Entrou no useEffect")
-          api.get(`/prices/${window.location.search}`).then((response) => {
-  
-              console.log("Params", window.location.search)
-  
-              response.data.map((price) => {
-                  price.supermarket.name = titleCase(price.supermarket.name);
-                  price.product.name = price.product.name.toUpperCase();
-                  price.price.price = new Intl.NumberFormat("pt-br", {
-                      style: 'currency',
-                      currency: 'BRL'
-                  }).format(price.price.price);
-                  price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
-                      ("pt-br", {
-                          day: "2-digit",
-                          month: "long",
-                      });
-              })
-              setPrices(response.data)
-          })
-      }, [search]) */
+    const { handleOpenPriceModal } = usePriceModel();
 
     return (
         <Box>
-
             <Header />
-
             <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
@@ -110,40 +76,40 @@ export default function Prices(props) {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {
-                                props.prices.map((price: PriceProps) => {
-                                    return (
-                                        <Tr key={price.price.id}>
-                                            <Td>
+                            {props.prices.map((price: PriceProps) => {
 
-                                                <Text fontWeight="bold" color="green.500"> {price.price?.price} </Text>
-                                            </Td>
-                                            <Td>
-                                                <Text color="gray.800"> {price.supermarket?.name} </Text>
-                                            </Td>
-                                            <Td>
-                                                <Text as="em" color="gray.800"> {price.price?.updated_at} </Text>
-                                            </Td>
-                                            <Td><Button
-                                                as="a"
-                                                size="sm"
-                                                fontSize="sm"
-                                                colorScheme="purple"
-                                                leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                                            >
-                                                Editar
-                                            </Button></Td>
+                                return (
+                                    <Tr key={price.price.id}>
+                                        <Td>
 
-
-                                        </Tr>
-                                    )
-                                })
-                            }
+                                            <Text fontWeight="bold" color="green.500"> {price.price?.price} </Text>
+                                        </Td>
+                                        <Td>
+                                            <Text color="gray.800"> {price.supermarket?.name} </Text>
+                                        </Td>
+                                        <Td>
+                                            <Text as="em" color="gray.800"> {price.price?.updated_at} </Text>
+                                        </Td>
+                                        <Td><Button
+                                            as="a"
+                                            size="sm"
+                                            fontSize="sm"
+                                            colorScheme="purple"
+                                            leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
+                                            onClick={handleOpenPriceModal}
+                                        >
+                                            Editar
+                                        </Button></Td>
+                                    </Tr>
+                                )
+                            })}
                         </Tbody>
 
                     </Table>
 
                 </Box>
+
+                <PriceModal />
             </Flex>
         </Box>
     )
@@ -171,9 +137,6 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
                 month: "long",
             });
     })
-
-    console.log(prices);
-
     return {
         props: {
             prices

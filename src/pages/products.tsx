@@ -19,7 +19,7 @@ interface ProductProps {
 export default function Dashboard(props) {
 
     return (
-        <Flex direction="column" w="100vw" >
+        <Flex direction="column">
             <Header />
 
             <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="6">

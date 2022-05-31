@@ -21,7 +21,7 @@ type UpdateUserFormData = {
 const updateUserFormSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um nome é permitido"),
     lastname: yup.string().required("Sobrenome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um sobrenome é permitido"),
-    email: yup.string().required("E-mail obrigatório").matches(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, "Somente letras (a - z), números (0 - 9), pontos ( . ) e símbolos ( _   - ) são permitidos")
+    email: yup.string().required("E-mail obrigatório").matches(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, "Somente letras (a - z), números (0 - 9), pontos ( . ) e símbolos ( _ e - ) são permitidos")
 })
 
 export default function UpdateUser(props) {
@@ -80,7 +80,7 @@ export default function UpdateUser(props) {
                                 color="gray.900"
                                 error={errors.name}
                                 {...register("name")}
-                                focusBorderColor="pink.500"
+                                focusBorderColor="brand.500"
                                 bgColor="input"
                                 variant="filled"
                                 _hover={{ bgColor: "input" }}
@@ -92,7 +92,7 @@ export default function UpdateUser(props) {
                                 label="Sobrenome"
                                 error={errors.lastname}
                                 {...register("lastname")}
-                                focusBorderColor="pink.500"
+                                focusBorderColor="brand.500"
                                 bgColor="input"
                                 variant="filled"
                                 _hover={{ bgColor: "input" }}
@@ -120,22 +120,16 @@ export default function UpdateUser(props) {
                         <HStack spacing="4">
 
                             <Link href="/dashboard" passHref>
-                                <Button as="a" colorScheme="whiteAlpha">Cancelar</Button>
+                                <Button as="a" bg="gray.400">Cancelar</Button>
                             </Link>
                             <Button
                                 type="submit"
-                                colorScheme="pink"
+                                bg="brand.700"
                             >Enviar</Button>
-
-
                         </HStack>
-
                     </Flex>
-
                 </Box>
-
             </Flex>
-
         </Box>
     )
 
