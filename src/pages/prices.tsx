@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, Flex, Heading, Icon, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
+import { Box, Button, Flex, Heading, HStack, Icon, Img, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
@@ -36,7 +36,6 @@ interface PriceProps {
 export default function Prices(props) {
 
     const { handleOpenPriceModal, price, setPrice } = usePriceModal();
-    /// const [price, setPrice] = useState({})
 
     function handleSubmitEditPrice(price: any) {
         setPrice(price)
@@ -46,86 +45,129 @@ export default function Prices(props) {
         setPrice({})
         handleOpenPriceModal()
     }
-
     return (
         <Box>
             <Header />
-            <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
+            <Flex my="6" maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
-                <Box flex="1" borderRadius={8} bg="#FFFFFF" p="8" >
-                    <Flex mb="8" justify="space-between" align="center">
-                        <Heading size="lg" color="gray.900" fontWeight="normal"> Preços</Heading>
+                <Box
+                    flex="1"
+                    bg="#FFFFFF"
+                    borderRadius={6}
+                >
+                    <Flex>
+                        <Box mx="auto" maxWidth="500px" textAlign="center" mt="2">
+                            <Text color="gray.900" fontWeight="bold" mb="2" fontSize={["sm", "lg"]} > PACK BISCOITO INTEGRAL RECHEIO REQUEIJÃO CLUB SOCIAL PACOTE 106G 4 UNIDADES </Text>
+                            {props.prices[0].product.thumbnail && (
+                                <Box
+                                    w={["15", "15"]}
+                                    mx="auto"
+                                    maxWidth="200px"
+                                    maxHeight="200px"
+                                >
+                                    <Img
+                                        src={props.prices[0].product.thumbnail}
+                                    />
+                                </Box>
 
-                        <Button
-                            onClick={handleSubmitCreatePrice}
-                            as="a"
-                            size="sm"
-                            fontSize="sm"
-                            bg="brand.700"
-                            leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-                        >
-                            Criar preço
-                        </Button>
+                            )}
+                            <Text color="gray.800" fontSize="lg" mt="2" w="100%"> União </Text>
+                        </Box>
 
                     </Flex>
 
-                    <Table colorScheme="blackAlpha">
-                        <Thead>
-                            <Tr>
-                                <Th>
-                                    Preço
-                                </Th>
-                                <Th>
-                                    Supermercado
-                                </Th>
-                                <Th>
-                                    Data de atualização
-                                </Th>
-                                <Th width="8">
+                    <Box borderRadius={8} mt="2">
 
-                                </Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {props.prices.map((price: PriceProps) => {
+                        <Flex mb="8" mt="10" align="center">
+                            <Button
+                                mx="auto"
+                                onClick={handleSubmitCreatePrice}
+                                as="a"
+                                size="sm"
+                                fontSize="sm"
+                                bg="brand.700"
+                                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+                            >
+                                Criar preço
+                            </Button>
 
-                                return (
-                                    <Tr key={price.price.id}>
-                                        <Td>
+                        </Flex>
 
-                                            <Text fontWeight="bold" color="green.500"> {price.price?.price} </Text>
-                                        </Td>
-                                        <Td>
-                                            <Text color="gray.800"> {price.supermarket?.name} </Text>
-                                        </Td>
-                                        <Td>
-                                            <Text as="em" color="gray.800"> {price.price?.updated_at} </Text>
-                                        </Td>
-                                        <Td>
-                                            <Button
-                                                as="a"
-                                                size="sm"
-                                                fontSize="sm"
-                                                colorScheme="purple"
-                                                leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                                                onClick={() => handleSubmitEditPrice(price)}
+                        <Flex
+                            w={["70vw", "65vw"]}
+                            justify="space-between"
+                            color="black"
+                            fontWeight="bold"
+                            fontSize={["12", "16"]}
+                            mx={["4", "8"]}
+                            mb="8"
+                        >
+                            <Text > PREÇO </Text>
+                            <Text > SUPERMERCADO </Text>
+                            <Text > ATUALIZAÇÃO </Text>
+
+                        </Flex>
+
+                        <Stack spacing="4" divider={<StackDivider borderColor='gray.200' />} >
+
+
+                            {
+
+                                props.prices.length > 0 ? (
+                                    props.prices.map((price: PriceProps) => {
+                                        return (
+
+                                            <Flex
+                                                key={price.price?.id}
+                                                mr="3"
+                                                ml={["0", "5"]}
+                                                alignItems="center"
                                             >
-                                                Editar
-                                            </Button></Td>
-                                    </Tr>
-                                )
-                            })}
-                        </Tbody>
 
-                    </Table>
+                                                <Flex
+                                                    w={["70vw", "65vw"]}
+                                                    justify="space-between"
+                                                    alignItems="center"
+                                                    textAlign="center"
+                                                    fontSize={["12", "16"]}
+                                                    color="gray.900"
+                                                >
+                                                    <Text ml="2" w={["16", "20"]} textAlign="left" fontWeight="bold" color="green.500" >{price.price.price}</Text>
+                                                    <Text w={["24", "32"]} fontWeight="bold"> {price.supermarket?.name}</Text>
+                                                    <Text w={["16", "20"]}  > {price.price?.updated_at}</Text>
+                                                </Flex>
 
+
+                                                <Button
+                                                    ml="auto"
+                                                    as="a"
+                                                    size="xs"
+                                                    fontSize="sm"
+                                                    colorScheme="purple"
+                                                    onClick={() => handleSubmitEditPrice(price)}
+                                                >
+                                                    <Icon as={RiPencilLine} fontSize={["12", "16"]} />
+                                                </Button>
+                                            </Flex>
+                                        )
+                                    })
+
+                                ) :
+                                    <Box> NENHUM PREÇO ENCONTRADO </Box>
+                            }
+
+                        </Stack>
+
+
+                    </Box>
                 </Box>
+
 
                 <PriceModal key={price.price?.id} price={price} />
 
-            </Flex>
-        </Box>
+            </Flex >
+        </Box >
     )
 }
 

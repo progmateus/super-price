@@ -22,7 +22,7 @@ export default function Dashboard(props) {
         <Flex direction="column">
             <Header />
 
-            <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="6">
+            <Flex my={["4", "6"]} maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
                 <Box>

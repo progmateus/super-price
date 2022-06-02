@@ -11,9 +11,10 @@ interface ProductProps {
 
 export function Product(props: ProductProps) {
     return (
-        <Flex w={["100vw", "70vw"]} bg="#FFFFFF" p="2" h="17vh" minHeight={["14vh", "17vh"]} borderRadius={6}>
+        <Flex w="70" bg="#FFFFFF" p="2" h="4vh" minHeight={["14vh", "17vh"]} borderRadius={6}>
             <Box
                 w={["21%", "10%"]}
+                h="20"
                 m="1"
                 maxWidth="95px"
             >
@@ -55,7 +56,12 @@ export function Product(props: ProductProps) {
                     href={`/prices?gtin=${props.product.gtin}`}
                     alignSelf="center"
                     ml="auto">
-                    <Button as="a" bg="purple.500">Buscar preços</Button>
+                    <Button as="a"
+                        size="sm"
+                        fontSize={["xs", "sm"]}
+                        bg="purple.500"
+                    > Buscar preços
+                    </Button>
                 </Link>
             </Flex>
         </Flex>
