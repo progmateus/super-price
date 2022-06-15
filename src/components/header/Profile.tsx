@@ -22,7 +22,7 @@ export function Profile({
         <Flex align="center">
             {showProfileData && (
                 <Box mr="4" textAlign="right">
-                    <Text mt="4" textAlign="right">{titleCase(`${user?.name} ${user?.lastname}`)}</Text>
+                    <Text mt="4" >{titleCase(`${user?.name} ${user?.lastname}`)}</Text>
                     <Text color="gray.300" fontSize="small">{user?.email}</Text>
                 </Box>
             )}

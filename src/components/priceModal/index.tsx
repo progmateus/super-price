@@ -8,9 +8,12 @@ import {
     ModalBody,
     ModalCloseButton,
 } from '@chakra-ui/react'
+import { replaceBasePath } from "next/dist/server/router";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { usePriceModal } from "../../contexts/PriceModalContext";
+import { api } from "../../services/apiClient";
+import encodeQueryData from "../../utils/encodeURL";
 import { Input } from "../form/Input"
 import { InputMask } from "../form/inputMask";
 
@@ -44,11 +47,10 @@ type CreatePriceFormData = {
 
 export function PriceModal(props) {
 
-    const handleCreatePrice: SubmitHandler<CreatePriceFormData> = async (values) => {
-        console.log(values)
-    }
+    const { handleClosePriceModal, isOpen, price, type } = usePriceModal();
 
-    const { handleClosePriceModal, isOpen, price } = usePriceModal();
+    const [apiError, setApiError] = useState("");
+
 
     const { register, handleSubmit, setError, formState } = useForm(({
         defaultValues: {
@@ -57,6 +59,104 @@ export function PriceModal(props) {
             price: ''
         }
     }));
+
+    const handleCreatePrice: SubmitHandler<CreatePriceFormData> = async (values) => {
+
+        const priceReplaced = values.price.replace(",", ".")
+
+        switch (type) {
+
+            case "create":
+                await api.post("/prices", {
+                    gtin: values.gtin,
+                    supermarket_name: values.supermarket_name,
+                    price: Number(priceReplaced)
+                }).then(() => {
+                    handleClosePriceModal();
+                    window.location.reload();
+                }).catch((err) => {
+                    setApiError(err.response.data.message)
+                    console.log(err);
+                })
+                break;
+
+            case "edit":
+                await api.patch("/prices", {
+                    price_id: price.price?.id,
+                    price: Number(priceReplaced)
+                }).then(() => {
+                    handleClosePriceModal();
+                    window.location.reload();
+                }).catch((err) => {
+                    console.log(err)
+                    setApiError(err.response.data.message)
+                })
+                break;
+
+        }
+
+        // if (type === "create") {
+
+        //     const urlEncoded = encodeQueryData({
+        //         gtin: values.gtin,
+        //         supermarket_name: values.supermarket_name
+        //     });
+
+        //     try {
+        //         const response = await (await api.get(`/prices/${urlEncoded}`))
+
+        //         const { data } = response
+
+        //         console.log(data)
+
+        //         if (data.length > 0) {
+
+        //             await api.patch("/prices", {
+        //                 price_id: data[0].price.id,
+        //                 price: Number(priceReplaced)
+        //             }).then(() => {
+        //                 handleClosePriceModal();
+        //                 window.location.reload();
+        //                 console.log("editou")
+        //             })
+        //         }
+
+        //         if (data.length === 0) {
+        //             await api.post("/prices", {
+        //                 gtin: data[0].price.id,
+        //                 supermarket_name: values.supermarket_name,
+        //                 price: Number(priceReplaced)
+        //             }).then(() => {
+        //                 handleClosePriceModal();
+        //                 window.location.reload();
+        //                 console.log("criou")
+
+        //             })
+        //         }
+        //     } catch (err) {
+        //         if (err.response?.data.message === "Product not found!") {
+        //             alert("Produto não encontrado")
+        //         }
+
+        //         console.log(err);
+        //     }
+
+        // }
+
+        // if (type === "edit") {
+
+        //     await api.patch("/prices", {
+        //         price_id: price.price.id,
+        //         price: Number(priceReplaced)
+        //     }).then(() => {
+        //         handleClosePriceModal();
+        //         window.location.reload();
+        //     }).catch((err) => {
+        //         console.log(err)
+
+        //     })
+        // }
+    }
 
     return (
 
@@ -78,14 +178,15 @@ export function PriceModal(props) {
                             <Input
                                 name="gtin"
                                 color="gray.900"
-                                type="text"
+                                type="number"
                                 label="Código do produto"
                                 focusBorderColor="brand.500"
                                 bgColor="white"
                                 borderColor="gray.500"
                                 variant="outline"
+                                {...type === "edit" && { disabled: true }}
                                 {...register("gtin")}
-                                _hover={{ bgColor: "input" }}
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
                             <Input
@@ -97,8 +198,9 @@ export function PriceModal(props) {
                                 bgColor="white"
                                 borderColor="gray.500"
                                 variant="outline"
+                                {...type === "edit" && { disabled: true }}
                                 {...register("supermarket_name")}
-                                _hover={{ bgColor: "input" }}
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
 
@@ -113,11 +215,11 @@ export function PriceModal(props) {
                                 />
                                 <InputMask
                                     name="price"
+                                    type="text"
                                     color="gray.900"
                                     ml="1"
                                     pl="7"
                                     w="40"
-                                    type="text"
                                     label="Preço"
                                     mask="currency"
                                     focusBorderColor="brand.500"
@@ -125,15 +227,24 @@ export function PriceModal(props) {
                                     borderColor="gray.500"
                                     variant="outline"
                                     {...register("price")}
-                                    _hover={{ bgColor: "input" }}
+                                    _hover={{ bgColor: "gray.100" }}
                                     size="lg"
                                 />
                             </InputGroup>
                         </Stack>
 
+                        {
+                            apiError && apiError === "Product not found" && (
+                                <Box mt="8">
+                                    <Text textAlign="center" color="red"> produto não encontrado </Text>
+                                </Box>
+                            )
+                        }
+
                     </ModalBody>
 
                     <ModalFooter>
+
                         <Button type="submit" bg='brand.600' variant='ghost'
                         >Enviar</Button>
                     </ModalFooter>

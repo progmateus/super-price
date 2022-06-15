@@ -84,9 +84,10 @@ export default function UpdateUserPassword() {
                                 error={errors.password}
                                 {...register("password")}
                                 focusBorderColor="brand.500"
-                                bgColor="input"
-                                variant="filled"
-                                _hover={{ bgColor: "input" }}
+                                bgColor="white"
+                                borderColor="gray.500"
+                                variant="outline"
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
                             <Input
@@ -96,9 +97,10 @@ export default function UpdateUserPassword() {
                                 error={errors.password_confirmation}
                                 {...register("password_confirmation")}
                                 focusBorderColor="brand.500"
-                                bgColor="input"
-                                variant="filled"
-                                _hover={{ bgColor: "input" }}
+                                bgColor="white"
+                                borderColor="gray.500"
+                                variant="outline"
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
                         </SimpleGrid>
@@ -110,9 +112,10 @@ export default function UpdateUserPassword() {
                                 error={errors.last_password}
                                 {...register("last_password")}
                                 focusBorderColor="brand.500"
-                                bgColor="input"
-                                variant="filled"
-                                _hover={{ bgColor: "input" }}
+                                bgColor="white"
+                                borderColor="gray.500"
+                                variant="outline"
+                                _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
 

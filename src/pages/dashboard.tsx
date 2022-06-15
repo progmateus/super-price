@@ -1,10 +1,12 @@
-import { Box, Flex, Stack } from "@chakra-ui/react"
+import { Box, Flex, Icon, Stack } from "@chakra-ui/react"
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
 import { Price } from "../components/price"
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { setupAPIClient } from "../services/api"
 import { titleCase } from "../utils/titleCase"
+import { RiBarcodeLine, RiBarcodeFill } from "react-icons/ri"
+import { BarCode } from "../components/barCode"
 
 
 export default function Dashboard(props) {
@@ -33,7 +35,6 @@ export default function Dashboard(props) {
                         }
                     </Stack>
                 </Box>
-
             </Flex>
         </Flex >
 

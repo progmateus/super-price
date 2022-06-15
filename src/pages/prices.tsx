@@ -1,5 +1,7 @@
 import * as React from "react";
-import { Box, Button, Flex, Heading, HStack, Icon, Img, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr, VStack } from "@chakra-ui/react"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
+import { Box, Button, Flex, Icon, Img, SimpleGrid, Stack, StackDivider, Text } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
@@ -10,7 +12,9 @@ import { setupAPIClient } from "../services/api";
 import encodeQueryData from "../utils/encodeURL";
 import { PriceModal } from "../components/priceModal";
 import { usePriceModal } from "../contexts/PriceModalContext";
-import { useEffect, useState } from "react";
+import { Input } from "../components/form/Input";
+import { useForm } from "react-hook-form";
+import Router from "next/router";
 
 interface PriceProps {
     product: {
@@ -32,21 +36,33 @@ interface PriceProps {
         name: string;
     }
 }
-
+const searchFormSchema = yup.object().shape({
+    gtin: yup.string().required("Campo obrigatório"),
+})
 export default function Prices(props) {
 
-    const { handleOpenPriceModal, price, setPrice } = usePriceModal();
+    const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
 
-    function handleSubmitEditPrice(price: any) {
+    const { register, handleSubmit, formState } = useForm(({
+        resolver: yupResolver(searchFormSchema)
+
+    }));
+
+    const { errors } = formState;
+
+
+    function handleSubmitPrice(price: any, type) {
         setPrice(price)
+        setType(type)
         handleOpenPriceModal()
     }
-    function handleSubmitCreatePrice() {
-        setPrice({})
-        handleOpenPriceModal()
+
+    function handleSubmitSearch(value) {
+        const urlEncoded = encodeQueryData(value);
+        Router.push(`/prices/${urlEncoded}`)
     }
     return (
-        <Box>
+        < Box >
             <Header />
             <Flex my="6" maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
@@ -56,33 +72,89 @@ export default function Prices(props) {
                     bg="#FFFFFF"
                     borderRadius={6}
                 >
-                    <Flex>
-                        <Box mx="auto" maxWidth="500px" textAlign="center" mt="2">
-                            <Text color="gray.900" fontWeight="bold" mb="2" fontSize={["sm", "lg"]} > PACK BISCOITO INTEGRAL RECHEIO REQUEIJÃO CLUB SOCIAL PACOTE 106G 4 UNIDADES </Text>
-                            {props.prices[0].product.thumbnail && (
-                                <Box
-                                    w={["15", "15"]}
-                                    mx="auto"
-                                    maxWidth="200px"
-                                    maxHeight="200px"
-                                >
-                                    <Img
-                                        src={props.prices[0].product.thumbnail}
-                                    />
+                    <Box as="form" m="6" onSubmit={handleSubmit(handleSubmitSearch)}>
+                        <SimpleGrid minChildWidth="240px" mx="auto" spacing={["4", "8"]} w="100%">
+                            <Input
+                                name="gtin"
+                                type="number"
+                                label="Código do produto"
+                                w={["25", "25"]}
+                                color="gray.900"
+                                focusBorderColor="brand.500"
+                                borderColor="gray.500"
+                                bgColor="white"
+                                variant="outline"
+                                _hover={{ bgColor: "gray.100" }}
+                                size="lg"
+                                {...register("gtin", { required: true })}
+                                error={errors.gtin}
+
+                            />
+
+                            <Input
+                                name="supermarket"
+                                color="gray.900"
+                                w="25"
+                                label="Supermercado"
+                                focusBorderColor="brand.500"
+                                borderColor="gray.500"
+                                bgColor="white"
+                                variant="outline"
+                                _hover={{ bgColor: "gray.100" }}
+                                size="lg"
+                                {...register("supermarket_name")}
+                            />
+                            <Button type="submit" mx="auto" mt={["0", "8"]} bg="purple" w="20" > Buscar </Button>
+
+                        </SimpleGrid>
+
+                        {
+                            props.error?.message === "Product not found!" && (
+                                <Text textAlign={["center", "left"]} color="#FF3B2D"> Produto não encontrado </Text>
+                            )
+                        }
+
+                    </Box>
+
+                    {
+                        props.product && (
+                            <Flex>
+                                <Box mx="auto" maxWidth="500px" textAlign="center" mt="2">
+                                    <Text color="gray.900" fontWeight="bold" mb="2" fontSize={["sm", "lg"]} > {props.product.name} </Text>
+
+                                    {props.product.thumbnail ? (
+                                        <Box
+                                            w={["15", "15"]}
+                                            mx="auto"
+                                            maxWidth="200px"
+                                            maxHeight="200px"
+                                        >
+                                            <Img src={props.product.thumbnail} />
+                                        </Box>
+                                    ) :
+                                        <Box
+                                            w={["15", "15"]}
+                                            mx="auto"
+                                            maxWidth="200px"
+                                            maxHeight="200px"
+                                        >
+                                            <Img src="https://cosmos.bluesoft.com.br/assets/product-placeholder-ce4926921923d1e9bc66cd0e1493b49b.png" />
+                                        </Box>
+                                    }
+
+                                    <Text color="gray.800" fontSize="lg" mt="2" w="100%"> {props.product.brand} </Text>
                                 </Box>
 
-                            )}
-                            <Text color="gray.800" fontSize="lg" mt="2" w="100%"> União </Text>
-                        </Box>
+                            </Flex>
+                        )
+                    }
 
-                    </Flex>
-
-                    <Box borderRadius={8} mt="2">
+                    <Box borderRadius={8} mt="2" pb="3">
 
                         <Flex mb="8" mt="10" align="center">
                             <Button
                                 mx="auto"
-                                onClick={handleSubmitCreatePrice}
+                                onClick={() => handleSubmitPrice({}, "create")}
                                 as="a"
                                 size="sm"
                                 fontSize="sm"
@@ -91,7 +163,6 @@ export default function Prices(props) {
                             >
                                 Criar preço
                             </Button>
-
                         </Flex>
 
                         <Flex
@@ -111,11 +182,11 @@ export default function Prices(props) {
 
                         <Stack spacing="4" divider={<StackDivider borderColor='gray.200' />} >
 
-
                             {
 
-                                props.prices.length > 0 ? (
+                                props.prices.length > 0 && (
                                     props.prices.map((price: PriceProps) => {
+
                                         return (
 
                                             <Flex
@@ -123,6 +194,7 @@ export default function Prices(props) {
                                                 mr="3"
                                                 ml={["0", "5"]}
                                                 alignItems="center"
+
                                             >
 
                                                 <Flex
@@ -145,7 +217,7 @@ export default function Prices(props) {
                                                     size="xs"
                                                     fontSize="sm"
                                                     colorScheme="purple"
-                                                    onClick={() => handleSubmitEditPrice(price)}
+                                                    onClick={() => handleSubmitPrice(price, "edit")}
                                                 >
                                                     <Icon as={RiPencilLine} fontSize={["12", "16"]} />
                                                 </Button>
@@ -153,8 +225,7 @@ export default function Prices(props) {
                                         )
                                     })
 
-                                ) :
-                                    <Box> NENHUM PREÇO ENCONTRADO </Box>
+                                )
                             }
 
                         </Stack>
@@ -174,28 +245,62 @@ export default function Prices(props) {
 export const getServerSideProps = withSSRAuth(async (ctx) => {
 
     const urlEncoded = encodeQueryData(ctx.query);
+    const query = ctx.query;
     const apiClient = setupAPIClient(ctx);
+    let error = null
+    let prices = [];
+    let product = null
 
-    const response = await apiClient.get(`/prices/${urlEncoded}`)
+    if (query.gtin) {
 
-    const { data: prices } = response
+        try {
 
-    prices.map((price) => {
-        price.supermarket.name = titleCase(price.supermarket.name);
-        price.product.name = price.product.name.toUpperCase();
-        price.price.price = new Intl.NumberFormat("pt-br", {
-            style: 'currency',
-            currency: 'BRL'
-        }).format(price.price.price);
-        price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
-            ("pt-br", {
-                day: "2-digit",
-                month: "long",
-            });
-    })
+            const productResponse = await apiClient.get(`/products/${query.gtin}`)
+
+            const data = productResponse.data;
+
+            product = {
+                id: data.id,
+                name: data.name.toUpperCase(),
+                gtin: data.gtin,
+                brand: data.brand.toUpperCase(),
+                thumbnail: data.thumbnail,
+                created_at: data.created_at,
+                updated_at: data.updated_at
+            }
+
+            const response = await apiClient.get(`/prices/${urlEncoded}`)
+            const { data: pricesResponse } = response
+
+            pricesResponse.map((price) => {
+                price.supermarket.name = titleCase(price.supermarket.name);
+                price.product.name = price.product.name.toUpperCase();
+                price.price.price = new Intl.NumberFormat("pt-br", {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(price.price.price);
+                price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
+                    ("pt-br", {
+                        day: "2-digit",
+                        month: "2-digit",
+                    });
+            })
+
+            prices = pricesResponse
+
+
+        } catch (err) {
+            error = err.response.data
+        }
+
+    }
+
     return {
         props: {
-            prices
+            error,
+            product,
+            prices,
+            query
         }
     }
 

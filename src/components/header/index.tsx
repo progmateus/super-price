@@ -31,7 +31,7 @@ export function Header() {
             h={["16", "20"]}
             mx="auto"
             ///mt={["2", "4"]}
-            px="6"
+            px={["3", "6"]}
             align="center"
         >
 

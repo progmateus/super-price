@@ -1,5 +1,6 @@
 import { ChakraProvider } from "@chakra-ui/react"
 import { AppProps } from "next/app"
+import { BrowserRouter } from "react-router-dom"
 import { AuthProvider } from "../contexts/AuthContext"
 import { PriceModalProvider } from "../contexts/PriceModalContext"
 import { SearchBoxProvider } from "../contexts/SearchBoxContext"
@@ -19,7 +20,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             </SidebarDrawerProvider>
           </ChakraProvider>
         </PriceModalProvider>
-
       </SearchBoxProvider>
     </AuthProvider>
 

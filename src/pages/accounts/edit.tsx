@@ -81,8 +81,9 @@ export default function UpdateUser(props) {
                                 error={errors.name}
                                 {...register("name")}
                                 focusBorderColor="brand.500"
-                                bgColor="input"
-                                variant="filled"
+                                bgColor="white"
+                                borderColor="gray.500"
+                                variant="outline"
                                 _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
@@ -93,8 +94,9 @@ export default function UpdateUser(props) {
                                 error={errors.lastname}
                                 {...register("lastname")}
                                 focusBorderColor="brand.500"
-                                bgColor="input"
-                                variant="filled"
+                                bgColor="white"
+                                borderColor="gray.500"
+                                variant="outline"
                                 _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
@@ -108,8 +110,9 @@ export default function UpdateUser(props) {
                                 error={errors.email}
                                 {...register("email")}
                                 focusBorderColor="brand.500"
-                                bgColor="input"
-                                variant="filled"
+                                bgColor="white"
+                                borderColor="gray.500"
+                                variant="outline"
                                 _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
@@ -153,7 +156,5 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
         }
     }
 });
-function setError(arg0: string, arg1: { message: any; }) {
-    throw new Error("Function not implemented.");
-}
+
 
