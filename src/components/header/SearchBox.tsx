@@ -44,7 +44,7 @@ export function SearchBox() {
                 variant="unstyled"
                 px="4"
                 mr="4"
-                placeholder="Buscar Produto"
+                placeholder="Código do produto"
                 _placeholder={{ color: "gray.100" }}
                 {...register("gtin")}
             />

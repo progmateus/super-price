@@ -15,6 +15,7 @@ import { usePriceModal } from "../contexts/PriceModalContext";
 import { Input } from "../components/form/Input";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
+import { useState } from "react";
 
 interface PriceProps {
     product: {
@@ -92,7 +93,7 @@ export default function Prices(props) {
                             />
 
                             <Input
-                                name="supermarket"
+                                name="supermarket_name"
                                 color="gray.900"
                                 w="25"
                                 label="Supermercado"
@@ -117,7 +118,7 @@ export default function Prices(props) {
                     </Box>
 
                     {
-                        props.product && (
+                        props.product ? (
                             <Flex>
                                 <Box mx="auto" maxWidth="500px" textAlign="center" mt="2">
                                     <Text color="gray.900" fontWeight="bold" mb="2" fontSize={["sm", "lg"]} > {props.product.name} </Text>
@@ -125,11 +126,15 @@ export default function Prices(props) {
                                     {props.product.thumbnail ? (
                                         <Box
                                             w={["15", "15"]}
+                                            pt="2"
                                             mx="auto"
                                             maxWidth="200px"
                                             maxHeight="200px"
                                         >
-                                            <Img src={props.product.thumbnail} />
+                                            <Img
+                                                h="40"
+                                                mx="auto"
+                                                src={props.product.thumbnail} />
                                         </Box>
                                     ) :
                                         <Box
@@ -142,11 +147,16 @@ export default function Prices(props) {
                                         </Box>
                                     }
 
-                                    <Text color="gray.800" fontSize="lg" mt="2" w="100%"> {props.product.brand} </Text>
+                                    <Text color="gray.500" fontSize="lg" mt="2" w="100%"> {props.product.brand} </Text>
                                 </Box>
 
                             </Flex>
-                        )
+                        ) :
+                            props.error && props.error.message === "Product not found" && (
+                                <Box mt="8">
+                                    <Text textAlign="center" color="#FF3B2D"> Produto não encontrado </Text>
+                                </Box>
+                            )
                     }
 
                     <Box borderRadius={8} mt="2" pb="3">

@@ -87,7 +87,7 @@ export default function UpdateUserPassword() {
                                 bgColor="white"
                                 borderColor="gray.500"
                                 variant="outline"
-                                _hover={{ bgColor: "gray.100" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                             <Input
@@ -100,7 +100,7 @@ export default function UpdateUserPassword() {
                                 bgColor="white"
                                 borderColor="gray.500"
                                 variant="outline"
-                                _hover={{ bgColor: "gray.100" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
                         </SimpleGrid>
@@ -115,7 +115,7 @@ export default function UpdateUserPassword() {
                                 bgColor="white"
                                 borderColor="gray.500"
                                 variant="outline"
-                                _hover={{ bgColor: "gray.100" }}
+                                _hover={{ bgColor: "input" }}
                                 size="lg"
                             />
 

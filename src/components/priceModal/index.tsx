@@ -236,7 +236,7 @@ export function PriceModal(props) {
                         {
                             apiError && apiError === "Product not found" && (
                                 <Box mt="8">
-                                    <Text textAlign="center" color="red"> produto não encontrado </Text>
+                                    <Text textAlign="center" color="#FF3B2D"> produto não encontrado </Text>
                                 </Box>
                             )
                         }

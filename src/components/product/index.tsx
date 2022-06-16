@@ -68,11 +68,13 @@ export function Product(props: ProductProps) {
                     alignSelf="center"
                     ml="auto">
 
-                    <Button as="a"
+                    <Button
                         size="sm"
                         fontSize={["xs", "sm"]}
                         bg="purple.500"
-                    > Buscar preços </Button>
+                    >
+                        Buscar preços
+                    </Button>
                 </Link>
             </Flex>
         </Flex>

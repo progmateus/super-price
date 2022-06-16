@@ -123,12 +123,14 @@ export default function UpdateUser(props) {
                         <HStack spacing="4">
 
                             <Link href="/dashboard" passHref>
-                                <Button as="a" bg="gray.400">Cancelar</Button>
+                                <Button bg="gray.400">Cancelar</Button>
                             </Link>
                             <Button
                                 type="submit"
                                 bg="brand.700"
-                            >Enviar</Button>
+                            >
+                                Enviar
+                            </Button>
                         </HStack>
                     </Flex>
                 </Box>
