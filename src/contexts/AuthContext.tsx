@@ -96,8 +96,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
             })
 
         Router.push("/dashboard");
-
-
     }
 
     return (

@@ -1,4 +1,5 @@
-import { Text } from "@chakra-ui/react";
+import { Link, Text } from "@chakra-ui/react";
+import Router from "next/router";
 
 export function Logo() {
     return (

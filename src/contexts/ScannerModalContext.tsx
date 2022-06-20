@@ -2,15 +2,15 @@ import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { createContext, ReactNode, useContext, useEffect } from "react";
 
-interface SideBarDrawerProviderProps {
+interface ScannerModalProviderProps {
     children: ReactNode;
 }
 
-type SidebarDrawerContextData = UseDisclosureReturn;
+type ScannerModalContextData = UseDisclosureReturn;
 
-const SidebarDrawerContext = createContext({} as SidebarDrawerContextData)
+const ScannerModalContext = createContext({} as ScannerModalContextData)
 
-export function SidebarDrawerProvider({ children }: SideBarDrawerProviderProps) {
+export function ScannerModalProvider({ children }: ScannerModalProviderProps) {
 
     const disclosure = useDisclosure();
     const router = useRouter();
@@ -20,11 +20,10 @@ export function SidebarDrawerProvider({ children }: SideBarDrawerProviderProps) 
     }, [router.asPath])
 
     return (
-        <SidebarDrawerContext.Provider value={disclosure} >
+        <ScannerModalContext.Provider value={disclosure} >
             {children}
-        </SidebarDrawerContext.Provider>
+        </ScannerModalContext.Provider>
     )
 }
 
-export const useSidebarDrawer = () => useContext(SidebarDrawerContext);
-
+export const useScannerModal = () => useContext(ScannerModalContext);

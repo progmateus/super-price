@@ -1,7 +1,7 @@
 import { useDisclosure, UseDisclosureReturn } from "@chakra-ui/react";
 import { createContext, ReactNode, useContext, useState } from "react";
 
-interface PriceModelProviderProps {
+interface PriceModalProviderProps {
     children: ReactNode
 }
 
@@ -19,13 +19,11 @@ type PriceModelContextData = {
 
 const PriceModelContext = createContext({} as PriceModelContextData);
 
-export function PriceModalProvider({ children }: PriceModelProviderProps) {
+export function PriceModalProvider({ children }: PriceModalProviderProps) {
 
     const [isOpen, setIsOpen] = useState(false)
     const [price, setPrice] = useState({})
     const [type, setType] = useState('')
-
-
 
     async function handleOpenPriceModal() {
         setIsOpen(true)

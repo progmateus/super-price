@@ -16,6 +16,7 @@ import { Input } from "../components/form/Input";
 import { useForm } from "react-hook-form";
 import Router from "next/router";
 import { useState } from "react";
+import { ScannerModal } from "../components/scannerModal";
 
 interface PriceProps {
     product: {
@@ -41,6 +42,7 @@ const searchFormSchema = yup.object().shape({
     gtin: yup.string().required("Campo obrigatório"),
 })
 export default function Prices(props) {
+
 
     const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
 
@@ -120,7 +122,7 @@ export default function Prices(props) {
                     {
                         props.product ? (
                             <Flex>
-                                <Box mx="auto" maxWidth="500px" textAlign="center" mt="2">
+                                <Box mx="auto" maxWidth="500px" textAlign="center" mt="2" p="3">
                                     <Text color="gray.900" fontWeight="bold" mb="2" fontSize={["sm", "lg"]} > {props.product.name} </Text>
 
                                     {props.product.thumbnail ? (
@@ -175,20 +177,24 @@ export default function Prices(props) {
                             </Button>
                         </Flex>
 
-                        <Flex
-                            w={["70vw", "65vw"]}
-                            justify="space-between"
-                            color="black"
-                            fontWeight="bold"
-                            fontSize={["12", "16"]}
-                            mx={["4", "8"]}
-                            mb="8"
-                        >
-                            <Text > PREÇO </Text>
-                            <Text > SUPERMERCADO </Text>
-                            <Text > ATUALIZAÇÃO </Text>
+                        {
+                            props.product && (
+                                <Flex
+                                    w={["70vw", "65vw"]}
+                                    justify="space-between"
+                                    color="black"
+                                    fontWeight="bold"
+                                    fontSize={["12", "16"]}
+                                    mx={["4", "8"]}
+                                    mb="8"
+                                >
+                                    <Text > PREÇO </Text>
+                                    <Text > SUPERMERCADO </Text>
+                                    <Text > ATUALIZAÇÃO </Text>
 
-                        </Flex>
+                                </Flex>
+                            )
+                        }
 
                         <Stack spacing="4" divider={<StackDivider borderColor='gray.200' />} >
 
@@ -246,6 +252,7 @@ export default function Prices(props) {
 
 
                 <PriceModal key={price.price?.id} price={price} />
+
 
             </Flex >
         </Box >

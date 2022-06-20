@@ -12,16 +12,12 @@ export function SidebarNav() {
                 <NavLink icon={RiHome3Line} href="/dashboard">Home</NavLink>
                 <NavLink icon={RiShoppingBag3Line} href="/products">Produtos</NavLink>
                 <NavLink icon={RiMoneyDollarCircleLine} href="/prices">Preços</NavLink>
-
-
-
-
             </NavSection>
 
             <NavSection title="CONFIGURAÇÕES">
                 <NavLink icon={RiEditBoxLine} href="/accounts/edit">Editar perfil</NavLink>
                 <NavLink icon={RiContactsLine} href="/accounts/password/change">Alterar senha</NavLink>
-                <Flex alignItems="center" color="brand.900" onClick={() => signOut()} _hover={{
+                <Flex role="button" alignItems="center" color="brand.900" onClick={() => signOut()} _hover={{
                     cursor: "pointer"
                 }}>
                     <Icon as={RiLogoutBoxRLine} fontSize="20" />

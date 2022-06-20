@@ -11,7 +11,7 @@ interface ProductProps {
 
 export function Product(props: ProductProps) {
     return (
-        <Flex w="70" bg="#FFFFFF" p="2" h="28" borderRadius={6}>
+        <Flex w={["90", "60vw"]} p="2" bg="#FFFFFF" h="24" borderRadius={6}>
             <Box
                 w={["21%", "10%"]}
                 h="20"
@@ -44,6 +44,7 @@ export function Product(props: ProductProps) {
                 <Text
                     fontSize={["xs", "1rem"]}
                     color="gray.900"
+                    noOfLines={2}
                     lineHeight="1.1"
                     textAlign="left"
                     fontWeight="bold"
@@ -73,10 +74,11 @@ export function Product(props: ProductProps) {
                         fontSize={["xs", "sm"]}
                         bg="purple.500"
                     >
-                        Buscar preços
+                        Buscar
                     </Button>
                 </Link>
             </Flex>
         </Flex>
     )
+
 }

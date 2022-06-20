@@ -14,7 +14,11 @@ export const theme = extendTheme({
             "800": "#1C4E64",
             "900": "#113953",
         },
-        input: "#DCDCDC",
+        ///input: "#DCDCDC",
+        input: "#e9e9e9",
+        success: "#2BC64D",
+        warning: "#FFBF00",
+        danger: "#FF8772",
         gray: {
             gray: {
                 "900": "#181b23",

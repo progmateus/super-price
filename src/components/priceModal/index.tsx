@@ -163,7 +163,7 @@ export function PriceModal(props) {
         <Modal isOpen={isOpen} onClose={handleClosePriceModal}>
             <ModalOverlay />
 
-            <ModalContent>
+            <ModalContent my="auto" mx="5">
 
                 <Box
                     as="form"

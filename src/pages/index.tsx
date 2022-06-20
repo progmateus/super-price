@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Stack } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Link, Stack, Text } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,6 +6,7 @@ import { Input } from "../components/form/Input";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
+import { RiShoppingCart2Line } from "react-icons/ri";
 
 type SingInFormData = {
   email: string;
@@ -13,7 +14,8 @@ type SingInFormData = {
 }
 
 const signInForSchema = yup.object().shape({
-  email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
+
+  email: yup.string().required("E-mail obrigatório"),
   password: yup.string().required("Senha obrigatória")
 
 })
@@ -48,7 +50,7 @@ export default function SignIn() {
   }
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center" bg="brand.300">
+    <Flex h="100vh" align="center" justify="center" bg="#F1F1F1">
 
       <Flex
         as="form"
@@ -57,9 +59,18 @@ export default function SignIn() {
         bg="white"
         p="8"
         borderRadius={8}
+        borderColor="#E9E9E9"
+        borderWidth={0.1}
         flexDir="column"
         onSubmit={handleSubmit(handleSignIn)}
       >
+
+        <Box textAlign="center" mb="4">
+          <Box mb="2">
+            <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
+          </Box>
+          <Text color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
+        </Box>
 
         <Stack spacing="4">
 
@@ -71,10 +82,9 @@ export default function SignIn() {
             error={errors.email}
             {...register("email")}
             focusBorderColor="brand.500"
-            bgColor="white"
             borderColor="gray.500"
             variant="outline"
-            _hover={{ bgColor: "gray.100" }}
+            _hover={{ bgColor: "#F1F1F1" }}
             size="lg"
           />
 
@@ -89,7 +99,7 @@ export default function SignIn() {
             bgColor="white"
             borderColor="gray.500"
             variant="outline"
-            _hover={{ bgColor: "gray.100" }}
+            _hover={{ bgColor: "#F1F1F1" }}
             size="lg"
           />
         </Stack>
@@ -97,7 +107,7 @@ export default function SignIn() {
         <Button
           type="submit"
           mt="6"
-          bg="brand.600"
+          bg="brand.700"
           size="lg"
           isLoading={formState.isSubmitting}
         >
@@ -107,10 +117,20 @@ export default function SignIn() {
         {errors.apiError &&
           <Box
             mt="2"
-            color="#FF3B2D"
+            color="red.500"
+            fontSize={["12", "16"]}
           >{errors.apiError.message}
           </Box>
         }
+
+        <Flex fontSize="14" mt="4" ml="8" >
+          <Text mr="1" color="gray.900">
+            Não tem uma conta?
+          </Text>
+          <Link href="/signup" color="blue">
+            Cadastre-se
+          </Link>
+        </Flex>
 
       </Flex>
 

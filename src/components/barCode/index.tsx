@@ -1,9 +1,13 @@
 import { Box, Icon } from "@chakra-ui/react";
 import { RiBarcodeLine } from "react-icons/ri";
+import { useScannerModal } from "../../contexts/ScannerModalContext";
 
 export function BarCode() {
+
+    const { onOpen } = useScannerModal();
     return (
         <Box
+            role="button"
             id="barcodediv"
             position="fixed"
             py="1.5"
@@ -13,7 +17,7 @@ export function BarCode() {
             bg="brand.700"
             bottom="5"
             left="43%"
-            onClick={() => console.log("test")}
+            onClick={() => onOpen()}
         >
             <Icon as={RiBarcodeLine} fontSize="40" />
         </Box >
