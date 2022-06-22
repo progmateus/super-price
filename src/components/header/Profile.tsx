@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Link, Text } from "@chakra-ui/react";
 import { titleCase } from "../../utils/titleCase";
 
 interface ProfileProps {
@@ -19,7 +19,7 @@ export function Profile({
 }: ProfileProps) {
 
     return (
-        <Flex align="center">
+        <Flex align="center" >
             {showProfileData && (
                 <Box mr="4" textAlign="right">
                     <Text mt="4" >{titleCase(`${user?.name} ${user?.lastname}`)}</Text>
@@ -28,6 +28,7 @@ export function Profile({
             )}
 
             <Avatar size="md" name={`${user?.name} ${user?.lastname}`} src={user?.avatar} />
-        </Flex>
+
+        </Flex >
     )
 }

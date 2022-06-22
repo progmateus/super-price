@@ -17,7 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <PriceModalProvider>
           <ChakraProvider theme={theme}>
             <SidebarDrawerProvider>
-              <Component {...pageProps} />
+              <ScannerModalProvider>
+                <Component {...pageProps} />
+              </ScannerModalProvider>
             </SidebarDrawerProvider>
           </ChakraProvider>
         </PriceModalProvider>

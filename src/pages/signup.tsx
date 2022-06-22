@@ -55,19 +55,31 @@ export default function SignUp() {
             })
 
         } catch (err) {
-            console.log(err.response.data.message)
-            setApiError(err.response.data.message)
+
+            if (err.response.status === 409) {
+                setError("email", { message: "Este e-mail já está sendo ultilizado" })
+            }
+            else {
+                console.log(err)
+            }
         }
     }
 
 
     return (
-        <Flex h="100vh" align="center" justify="center" bg="#F1F1F1">
+        <Flex
+            w="100%"
+            h="100%"
+            position="absolute"
+            top={0}
+            left={0}
+            align="center"
+            justify="center"
+            bg="#F1F1F1">
 
             <Box
                 width="80"
-                mx="auto"
-                /// h={["38rem", "34rem"]}
+                /// mx="auto"
                 p="8"
                 bg="white"
                 borderRadius={8}
@@ -94,6 +106,7 @@ export default function SignUp() {
                                     name="name"
                                     type="text"
                                     placeholder="Nome"
+                                    borderColor="black"
                                     bgColor="#F1F1F1"
                                     variant="outline"
                                     size="md"
@@ -119,29 +132,9 @@ export default function SignUp() {
                                     bgColor="#F1F1F1"
                                     variant="outline"
                                     size="md"
+                                    error={errors.email}
                                     {...register("email")}
-                                    {...apiError && ({ mb: "0", borderColor: "#E53E3E", borderWidth: "revert" })}
                                 />
-
-                                {apiError && apiError === "User already exists!" && (
-                                    <Box role="alert" mt="0" >
-                                        <Text
-                                            color="red.500"
-                                            fontSize={["12", "14"]}
-
-                                        > Este e-mail já está sendo ultilizado</Text>
-                                    </Box>
-                                )}
-
-                                {apiError && apiError === "Invalid Email" && (
-                                    <Box role="alert" mt="0" >
-                                        <Text
-                                            color="red.500"
-                                            fontSize={["12", "14"]}
-
-                                        > E-mail Invalido</Text>
-                                    </Box>
-                                )}
 
                                 <Input
                                     name="password"

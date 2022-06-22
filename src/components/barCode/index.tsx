@@ -8,7 +8,6 @@ export function BarCode() {
     return (
         <Box
             role="button"
-            id="barcodediv"
             position="fixed"
             py="1.5"
             px="2"
@@ -17,7 +16,7 @@ export function BarCode() {
             bg="brand.700"
             bottom="5"
             left="43%"
-            onClick={() => onOpen()}
+            onClick={onOpen}
         >
             <Icon as={RiBarcodeLine} fontSize="40" />
         </Box >

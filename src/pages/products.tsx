@@ -1,14 +1,13 @@
-import { Box, Input, Button, Flex, Icon, InputGroup, InputRightElement, Stack, Text } from "@chakra-ui/react"
-import axios from "axios";
+import { Box, Input, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react"
+import dynamic from "next/dynamic"
 import Router from "next/router";
 import { useForm } from "react-hook-form";
 import { RiAlertLine, RiSearchLine } from "react-icons/ri";
 import { BarCode } from "../components/barCode";
 import { Header } from "../components/header";
-import { Price } from "../components/price";
 import { Product } from "../components/product";
-import { ScannerModal } from "../components/scannerModal";
 import Sidebar from "../components/sidebar";
+import { useScannerModal } from "../contexts/ScannerModalContext";
 import { setupAPIClient } from "../services/api";
 import { titleCase } from "../utils/titleCase";
 import { withSSRAuth } from "../utils/withSSRAuth";
@@ -22,9 +21,14 @@ interface ProductProps {
 
 }
 
+const ScannerModal = dynamic(() => {
+    return import("../components/scannerModal/index").then(mod => mod.ScannerModal)
+})
+
 export default function Dashboard(props) {
 
     const { register, handleSubmit, formState } = useForm(({}));
+    const { isOpen } = useScannerModal();
 
 
     function handleSearchProduct(data) {
@@ -111,6 +115,15 @@ export default function Dashboard(props) {
                                 </Flex>
                         }
                     </Stack>
+
+                    <BarCode />
+
+                    {
+                        isOpen === true && (
+                            <ScannerModal />
+
+                        )
+                    }
                 </Box>
 
             </Flex>

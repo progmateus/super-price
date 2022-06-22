@@ -50,7 +50,16 @@ export default function SignIn() {
   }
 
   return (
-    <Flex h="100vh" align="center" justify="center" bg="#F1F1F1">
+    <Flex
+      w="100%"
+      h="100%"
+      position="absolute"
+      top={0}
+      left={0}
+      align="center"
+      justify="center"
+      bg="#F1F1F1"
+    >
 
       <Flex
         as="form"
@@ -123,11 +132,21 @@ export default function SignIn() {
           </Box>
         }
 
-        <Flex fontSize="14" mt="4" ml="8" >
+        <Flex fontSize="14" mt="2" justify="center" >
+          <Box>
+            <Link color="blue.700" href="/accounts/password/reset">
+              Esqueceu a senha?
+            </Link>
+          </Box>
+        </Flex>
+
+
+
+        <Flex fontSize="14" mt="7" justify="center" >
           <Text mr="1" color="gray.900">
             Não tem uma conta?
           </Text>
-          <Link href="/signup" color="blue">
+          <Link fontWeight="bold" href="/signup" color="blue">
             Cadastre-se
           </Link>
         </Flex>
