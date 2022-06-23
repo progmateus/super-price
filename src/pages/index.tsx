@@ -15,8 +15,8 @@ type SingInFormData = {
 
 const signInForSchema = yup.object().shape({
 
-  email: yup.string().required("E-mail obrigatório"),
-  password: yup.string().required("Senha obrigatória")
+  email: yup.string().required("E-mail obrigatório").max(80, "Limite de caracteres excedido."),
+  password: yup.string().required("Senha obrigatória").max(80, "Limite de caracteres excedido.")
 
 })
 
@@ -68,8 +68,10 @@ export default function SignIn() {
         bg="white"
         p="8"
         borderRadius={8}
-        borderColor="#E9E9E9"
-        borderWidth={0.1}
+        // borderColor="#E9E9E9"
+        // borderWidth={0.1}
+        boxShadow='md'
+        rounded='md'
         flexDir="column"
         onSubmit={handleSubmit(handleSignIn)}
       >
@@ -117,6 +119,7 @@ export default function SignIn() {
           type="submit"
           mt="6"
           bg="brand.700"
+          _hover={{ bgColor: "brand.800" }}
           size="lg"
           isLoading={formState.isSubmitting}
         >

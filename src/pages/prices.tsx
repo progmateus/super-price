@@ -13,7 +13,7 @@ import encodeQueryData from "../utils/encodeURL";
 import { PriceModal } from "../components/priceModal";
 import { usePriceModal } from "../contexts/PriceModalContext";
 import { Input } from "../components/form/Input";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Router from "next/router";
 import { useState } from "react";
 import { ScannerModal } from "../components/scannerModal";
@@ -38,11 +38,19 @@ interface PriceProps {
         name: string;
     }
 }
-const searchFormSchema = yup.object().shape({
-    gtin: yup.string().required("Campo obrigatório"),
-})
-export default function Prices(props) {
 
+type searchProductFormData = {
+    gtin: string;
+    supermarket_name?: string;
+}
+
+const searchFormSchema = yup.object().shape({
+    gtin: yup.string().required("Campo obrigatório").max(50, "Limite de caracteres excedido."),
+    supermarket_name: yup.string().max(50, "Limite de caracteres excedido.")
+})
+
+
+export default function Prices(props) {
 
     const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
 
@@ -54,16 +62,17 @@ export default function Prices(props) {
     const { errors } = formState;
 
 
-    function handleSubmitPrice(price: any, type) {
+    function handleEditPrice(price: any, type) {
         setPrice(price)
         setType(type)
         handleOpenPriceModal()
     }
 
-    function handleSubmitSearch(value) {
+    const handleSubmitSearch: SubmitHandler<searchProductFormData> = async (value) => {
         const urlEncoded = encodeQueryData(value);
         Router.push(`/prices/${urlEncoded}`)
     }
+
     return (
         < Box >
             <Header />
@@ -106,8 +115,18 @@ export default function Prices(props) {
                                 _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                                 {...register("supermarket_name")}
+                                error={errors.supermarket_name}
                             />
-                            <Button type="submit" mx="auto" mt={["0", "8"]} bg="purple" w="20" > Buscar </Button>
+                            <Button
+                                type="submit"
+                                mx="auto"
+                                mt={["0", "8"]}
+                                bg="purple"
+                                w="20"
+                                isLoading={formState.isSubmitting}
+
+                            > Buscar
+                            </Button>
 
                         </SimpleGrid>
 
@@ -166,11 +185,13 @@ export default function Prices(props) {
                         <Flex mb="8" mt="10" align="center">
                             <Button
                                 mx="auto"
-                                onClick={() => handleSubmitPrice({}, "create")}
+                                onClick={() => handleEditPrice({}, "create")}
                                 as="a"
                                 size="sm"
                                 fontSize="sm"
                                 bg="brand.700"
+                                _hover={{ bgColor: "brand.800" }}
+                                isLoading={formState.isSubmitting}
                                 leftIcon={<Icon as={RiAddLine} fontSize="20" />}
                             >
                                 Criar preço
@@ -233,7 +254,7 @@ export default function Prices(props) {
                                                     size="xs"
                                                     fontSize="sm"
                                                     colorScheme="purple"
-                                                    onClick={() => handleSubmitPrice(price, "edit")}
+                                                    onClick={() => handleEditPrice(price, "edit")}
                                                 >
                                                     <Icon as={RiPencilLine} fontSize={["12", "16"]} />
                                                 </Button>

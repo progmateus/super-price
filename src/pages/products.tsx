@@ -1,9 +1,12 @@
-import { Box, Input, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react"
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 import dynamic from "next/dynamic"
 import Router from "next/router";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { RiAlertLine, RiSearchLine } from "react-icons/ri";
 import { BarCode } from "../components/barCode";
+import { Input } from "../components/form/Input";
 import { Header } from "../components/header";
 import { Product } from "../components/product";
 import Sidebar from "../components/sidebar";
@@ -21,20 +24,33 @@ interface ProductProps {
 
 }
 
+type SearchProductFormData = {
+    product_name: string;
+}
+
+const SearchProductFormSchema = yup.object().shape({
+    product_name: yup.string().required("Nome do produto obrigatório").max(100, "Limite de caracteres excedido."),
+})
+
 const ScannerModal = dynamic(() => {
     return import("../components/scannerModal/index").then(mod => mod.ScannerModal)
 })
 
 export default function Dashboard(props) {
 
-    const { register, handleSubmit, formState } = useForm(({}));
+    const { register, handleSubmit, formState } = useForm(({
+        resolver: yupResolver(SearchProductFormSchema)
+    }));
+
+    const { errors } = formState;
+
     const { isOpen } = useScannerModal();
 
 
-    function handleSearchProduct(data) {
+    const handleSearchProduct: SubmitHandler<SearchProductFormData> = async (values) => {
 
         const payload = {
-            product_name: data.product_name
+            product_name: values.product_name
         }
 
         const queryString = Object.keys(payload)
@@ -54,15 +70,15 @@ export default function Dashboard(props) {
             <Flex my={["4", "6"]} px="6" maxWidth={1480}>
                 <Sidebar />
 
-                <Box mx={["auto", "0"]}>
-                    <Flex as="form" alignItems="center" py="3" onSubmit={handleSubmit(handleSearchProduct)}>
+
+                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }}>
+                    <Flex as="form" alignItems="center" pb="3" onSubmit={handleSubmit(handleSearchProduct)}>
 
                         <Input
                             name="product_name"
                             type="search"
                             bg="white"
                             placeholder="Nome do produto"
-                            mr="2"
                             color="gray.900"
                             _focus={{
                                 bgColor: "white",
@@ -70,10 +86,12 @@ export default function Dashboard(props) {
 
                             }}
                             size="md"
-                            {...register("product_name")}
+                            {...register("product_name", { maxLength: 100, })}
+                            error={errors.product_name}
                         />
 
                         <Button
+                            ml="2"
                             type="submit"
                             colorScheme="purple"
                             size="sm"

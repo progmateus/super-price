@@ -15,11 +15,11 @@ type UpdateUserPasswordFormData = {
 }
 
 const updateUserPasswordFormSchema = yup.object().shape({
-    password: yup.string().required("Senha Obrigatória"),
+    password: yup.string().required("Senha Obrigatória").max(80, "Limite de caracteres excedido."),
     password_confirmation: yup.string().oneOf([
         null, yup.ref("password")
-    ], "As senhas precisam ser iguais"),
-    last_password: yup.string().required("Senha atual obrigatória").min(6, "No mínimo 6 caracteres"),
+    ], "As senhas precisam ser iguais").max(80, "Limite de caracteres excedido."),
+    last_password: yup.string().required("Senha atual obrigatória").min(6, "No mínimo 6 caracteres").max(80, "Limite de caracteres excedido."),
 })
 
 export default function UpdateUserPassword() {
@@ -135,7 +135,13 @@ export default function UpdateUserPassword() {
                             <Link href="/dashboard" passHref>
                                 <Button as="a" bg="gray.400" >Cancelar</Button>
                             </Link>
-                            <Button type="submit" bg="brand.700">Alterar senha</Button>
+                            <Button
+                                type="submit"
+                                bg="brand.700"
+                                _hover={{ bgColor: "brand.800" }}
+                            >
+                                Alterar senha
+                            </Button>
                         </HStack>
 
                     </Flex>

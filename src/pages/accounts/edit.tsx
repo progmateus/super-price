@@ -19,9 +19,9 @@ type UpdateUserFormData = {
 }
 
 const updateUserFormSchema = yup.object().shape({
-    name: yup.string().required("Nome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um nome é permitido"),
-    lastname: yup.string().required("Sobrenome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um sobrenome é permitido"),
-    email: yup.string().required("E-mail obrigatório").matches(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, "Somente letras (a - z), números (0 - 9), pontos ( . ) e símbolos ( _ e - ) são permitidos")
+    name: yup.string().required("Nome obrigatório").max(50, "Limite de caracteres excedido.").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um nome é permitido"),
+    lastname: yup.string().required("Sobrenome obrigatório").max(50, "Limite de caracteres excedido.").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um sobrenome é permitido"),
+    email: yup.string().required("E-mail obrigatório").max(80, "Limite de caracteres excedido.").matches(/^[a-z0-9_-]+(?:\.[a-z0-9_-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i, "Somente letras (a - z), números (0 - 9), pontos ( . ) e símbolos ( _ e - ) são permitidos")
 })
 
 export default function UpdateUser(props) {
@@ -128,6 +128,7 @@ export default function UpdateUser(props) {
                             <Button
                                 type="submit"
                                 bg="brand.700"
+                                _hover={{ bgColor: "brand.800" }}
                             >
                                 Enviar
                             </Button>

@@ -67,12 +67,17 @@ export function Product(props: ProductProps) {
                 <Link
                     href={`/prices?gtin=${props.product.gtin}`}
                     alignSelf="center"
-                    ml="auto">
+                    ml="auto"
+                    _hover={{ textDecoration: "none" }}
+                >
 
                     <Button
                         size="sm"
                         fontSize={["xs", "sm"]}
                         bg="purple.500"
+                        textDecoration="none"
+                        _hover={{ bgColor: "purple.600", textDecoration: "none" }}
+
                     >
                         Buscar
                     </Button>

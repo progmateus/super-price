@@ -1,4 +1,6 @@
 import { Box, Button, Flex, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react";
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup"
 import {
     Modal,
     ModalOverlay,
@@ -10,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { replaceBasePath } from "next/dist/server/router";
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { appendErrors, SubmitHandler, useForm } from "react-hook-form";
 import { usePriceModal } from "../../contexts/PriceModalContext";
 import { api } from "../../services/apiClient";
 import encodeQueryData from "../../utils/encodeURL";
@@ -45,6 +47,12 @@ type CreatePriceFormData = {
     price: string;
 }
 
+const priceFormSchema = yup.object().shape({
+    gtin: yup.string().required("Campo obrigatório").max(50, "Limite de caracteres excedido"),
+    supermarket_name: yup.string().required("Campo obrigatório").max(50, "Limite de caracteres excedido"),
+    price: yup.string().required("Campo obrigatório").max(12, "Limite de caracteres excedido").min(1)
+})
+
 export function PriceModal(props) {
 
     const { handleClosePriceModal, isOpen, price, type } = usePriceModal();
@@ -57,12 +65,16 @@ export function PriceModal(props) {
             gtin: price.product?.gtin,
             supermarket_name: price.supermarket?.name,
             price: ''
-        }
+        },
+        resolver: yupResolver(priceFormSchema)
     }));
+
+    const { errors } = formState;
 
     const handleCreatePrice: SubmitHandler<CreatePriceFormData> = async (values) => {
 
-        const priceReplaced = values.price.replace(",", ".")
+        let priceReplaced = values.price.replace(".", "")
+        priceReplaced = priceReplaced.replace(",", ".")
 
         switch (type) {
 
@@ -186,6 +198,7 @@ export function PriceModal(props) {
                                 variant="outline"
                                 {...type === "edit" && { disabled: true }}
                                 {...register("gtin")}
+                                error={errors.gtin}
                                 _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
@@ -200,6 +213,7 @@ export function PriceModal(props) {
                                 variant="outline"
                                 {...type === "edit" && { disabled: true }}
                                 {...register("supermarket_name")}
+                                error={errors.supermarket_name}
                                 _hover={{ bgColor: "gray.100" }}
                                 size="lg"
                             />
@@ -226,7 +240,8 @@ export function PriceModal(props) {
                                     bgColor="white"
                                     borderColor="gray.500"
                                     variant="outline"
-                                    {...register("price")}
+                                    {...register("price", { required: true })}
+                                    error={errors.price}
                                     _hover={{ bgColor: "gray.100" }}
                                     size="lg"
                                 />
@@ -245,8 +260,15 @@ export function PriceModal(props) {
 
                     <ModalFooter>
 
-                        <Button type="submit" bg='brand.600' variant='ghost'
-                        >Enviar</Button>
+                        <Button
+                            type="submit"
+                            bg='brand.600'
+                            variant='ghost'
+                            _hover={{ bgColor: "brand.500" }}
+                            isLoading={formState.isSubmitting}
+                        >
+                            Enviar
+                        </Button>
                     </ModalFooter>
                 </Box >
 

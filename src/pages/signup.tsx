@@ -18,11 +18,10 @@ type CreateUserFormData = {
 }
 
 const signUpForSchema = yup.object().shape({
-
-    name: yup.string().required("Nome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Caracteres inválidos"),
-    lastname: yup.string().required("Sobrenome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Caracteres inválidos"),
-    email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
-    password: yup.string().required("Senha obrigatória")
+    name: yup.string().required("Nome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Caracteres inválidos").max(50, "Limite de caracteres excedido."),
+    lastname: yup.string().required("Sobrenome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Caracteres inválidos").max(50, "Limite de caracteres excedido."),
+    email: yup.string().required("E-mail obrigatório").email("E-mail inválido").max(80, "Limite de caracteres excedido."),
+    password: yup.string().required("Senha obrigatória").max(80, "Limite de caracteres excedido.")
 
 })
 
@@ -83,8 +82,11 @@ export default function SignUp() {
                 p="8"
                 bg="white"
                 borderRadius={8}
-                borderColor="gray.300"
-                borderWidth={0.2}
+                // borderColor="gray.300"
+                // borderWidth={0.2}
+                boxShadow='md'
+                rounded='md'
+
             >
 
                 <Box>
@@ -106,7 +108,6 @@ export default function SignUp() {
                                     name="name"
                                     type="text"
                                     placeholder="Nome"
-                                    borderColor="black"
                                     bgColor="#F1F1F1"
                                     variant="outline"
                                     size="md"
@@ -154,7 +155,9 @@ export default function SignUp() {
                                     type="submit"
                                     w="64"
                                     bg="brand.700"
+                                    _hover={{ bgColor: "brand.800" }}
                                     color="white"
+                                    isLoading={formState.isSubmitting}
                                     onClick={handleSubmit(handleCreateUser)}
                                 >
                                     Cadastre-se

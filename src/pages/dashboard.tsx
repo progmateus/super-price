@@ -17,7 +17,7 @@ export default function Dashboard(props) {
             <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
-                <Box>
+                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }}>
                     <Stack spacing="2" >
                         {
                             props.prices.length > 0 ? (

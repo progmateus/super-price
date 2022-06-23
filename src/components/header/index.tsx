@@ -1,4 +1,4 @@
-import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
 import { useContext } from "react"
 import { RiMenuLine } from "react-icons/ri"
 import { Router } from "react-router-dom"
@@ -52,8 +52,8 @@ export function Header() {
             {isWideVersion && <SearchBox />}
 
 
-            <Flex align="center" ml="auto" >
-                <NotificationsNav />
+            <Flex ml="auto" >
+                {/* <NotificationsNav /> */}
                 <Profile
                     showProfileData={isWideVersion}
                     user={user}
