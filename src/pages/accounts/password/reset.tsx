@@ -19,7 +19,6 @@ export default function ResetUserPassword() {
         event.preventDefault();
 
         if (email.length > 80) {
-            console.log("entrou no length")
             setError({ message: "Limite de caracteres excedido." })
             return
         }
