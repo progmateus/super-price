@@ -1,5 +1,4 @@
-import { Flex, Link, Text } from "@chakra-ui/react";
-import Router from "next/router";
+import { Text } from "@chakra-ui/react";
 
 export function Logo() {
     return (

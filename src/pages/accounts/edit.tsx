@@ -1,8 +1,9 @@
-import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { BsFillCheckCircleFill } from "react-icons/bs";
 import { Input } from "../../components/form/Input";
 import { Header } from "../../components/header";
 import Sidebar from "../../components/sidebar";
@@ -10,6 +11,8 @@ import { setupAPIClient } from "../../services/api";
 import { withSSRAuth } from "../../utils/withSSRAuth";
 import { titleCase } from "../../utils/titleCase";
 import { api } from "../../services/apiClient";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext, useState } from "react";
 
 
 type UpdateUserFormData = {
@@ -26,7 +29,12 @@ const updateUserFormSchema = yup.object().shape({
 
 export default function UpdateUser(props) {
 
-    const { register, handleSubmit, setError, formState } = useForm(({
+    const { setProfileUser, user } = useContext(AuthContext);
+
+    const [success, setSuccess] = useState(false)
+
+
+    const { register, handleSubmit, setError, formState, } = useForm(({
         defaultValues: {
             name: props.name,
             lastname: props.lastname,
@@ -36,7 +44,7 @@ export default function UpdateUser(props) {
         resolver: yupResolver(updateUserFormSchema)
     }));
 
-    const { errors } = formState;
+    const { errors, isDirty } = formState;
 
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
 
@@ -47,10 +55,13 @@ export default function UpdateUser(props) {
                 email: values.email,
             });
 
-            window.location.reload();
+            setProfileUser();
+            setSuccess(true)
 
         } catch (err) {
-            console.log(err);
+            if (err.response.data.message === 'User already exists!') {
+                setError("email", { message: "E-mail já está sendo ultilizado" })
+            }
         }
     }
 
@@ -68,7 +79,6 @@ export default function UpdateUser(props) {
                     p={["6", "8"]}
                     onSubmit={handleSubmit(handleUpdateUser)}
                 >
-
                     <Heading size="lg" fontWeight="normal" color="gray.900"> Atualizar informações </Heading>
                     <Divider my="6" borderColor="gray.700" />
 
@@ -120,20 +130,36 @@ export default function UpdateUser(props) {
                     </VStack>
 
                     <Flex mt="8" justify="flex-end" >
-                        <HStack spacing="4">
 
-                            <Link href="/dashboard" passHref>
-                                <Button bg="gray.400">Cancelar</Button>
-                            </Link>
-                            <Button
-                                type="submit"
-                                bg="brand.700"
-                                _hover={{ bgColor: "brand.800" }}
-                            >
-                                Enviar
-                            </Button>
-                        </HStack>
+                        <Button
+                            type="submit"
+                            bg="brand.700"
+                            _hover={{ bgColor: "brand.800" }}
+                            {...isDirty === false && ({ disabled: true })}
+                        >
+                            Enviar
+                        </Button>
+
                     </Flex>
+                    {
+                        success && (
+                            <Flex
+                                justify="center"
+                                color="green"
+                                mt={["8", "4"]}
+                                fontSize={18}
+                            >
+                                <HStack spacing="1">
+
+                                    <Icon as={BsFillCheckCircleFill} />
+                                    <Text
+                                        alignSelf="center">
+                                        Informações atualizadas.
+                                    </Text>
+                                </HStack>
+                            </Flex>
+                        )
+                    }
                 </Box>
             </Flex>
         </Box>

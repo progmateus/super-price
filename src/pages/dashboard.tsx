@@ -1,15 +1,19 @@
 import { Box, Flex, Icon, Stack } from "@chakra-ui/react"
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
-import { Price } from "../components/price"
+import { PriceItem } from "../components/priceItem"
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { setupAPIClient } from "../services/api"
 import { titleCase } from "../utils/titleCase"
-import { RiBarcodeLine, RiBarcodeFill } from "react-icons/ri"
 import { BarCode } from "../components/barCode"
+import { ScannerModal } from "../components/scannerModal"
+import { useScannerModal } from "../contexts/ScannerModalContext"
 
 
 export default function Dashboard(props) {
+
+    const { isOpen } = useScannerModal();
+
     return (
         <Flex direction="column" >
             <Header />
@@ -23,7 +27,7 @@ export default function Dashboard(props) {
                             props.prices.length > 0 ? (
                                 props.prices.map((price) => {
                                     return (
-                                        <Price
+                                        <PriceItem
                                             key={price.price.id}
                                             price={price}
                                         />
@@ -36,6 +40,15 @@ export default function Dashboard(props) {
                     </Stack>
                 </Box>
             </Flex>
+
+            <BarCode />
+
+            {
+                isOpen === true && (
+                    < ScannerModal />
+                )
+            }
+
         </Flex >
 
     )

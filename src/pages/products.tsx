@@ -8,7 +8,7 @@ import { RiAlertLine, RiSearchLine } from "react-icons/ri";
 import { BarCode } from "../components/barCode";
 import { Input } from "../components/form/Input";
 import { Header } from "../components/header";
-import { Product } from "../components/product";
+import { ProductItem } from "../components/productItem";
 import Sidebar from "../components/sidebar";
 import { useScannerModal } from "../contexts/ScannerModalContext";
 import { setupAPIClient } from "../services/api";
@@ -110,7 +110,7 @@ export default function Dashboard(props) {
                             props.products.length > 0 ? (
                                 props.products.map((product: ProductProps) => {
                                     return (
-                                        <Product
+                                        <ProductItem
                                             key={product.id}
                                             product={product}
                                         />
@@ -134,17 +134,19 @@ export default function Dashboard(props) {
                         }
                     </Stack>
 
-                    <BarCode />
 
-                    {
-                        isOpen === true && (
-                            <ScannerModal />
 
-                        )
-                    }
                 </Box>
 
             </Flex>
+            <BarCode />
+
+            {
+                isOpen === true && (
+                    < ScannerModal />
+                )
+            }
+
         </Flex >
 
     )

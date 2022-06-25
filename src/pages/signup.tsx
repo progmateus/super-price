@@ -27,9 +27,6 @@ const signUpForSchema = yup.object().shape({
 
 export default function SignUp() {
 
-    const [apiError, setApiError] = useState(null)
-
-
     const { register, handleSubmit, setError, formState } = useForm(({
         resolver: yupResolver(signUpForSchema)
     }));

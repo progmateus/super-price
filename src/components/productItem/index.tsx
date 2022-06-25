@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Img, Link, Text } from "@chakra-ui/react";
-interface ProductProps {
+interface ProductItemProps {
     product: {
         id: string;
         name: string;
@@ -9,7 +9,7 @@ interface ProductProps {
     }
 }
 
-export function Product(props: ProductProps) {
+export function ProductItem(props: ProductItemProps) {
     return (
         <Flex w={["90", "60vw"]} p="2" bg="#FFFFFF" h="24" borderRadius={6}>
             <Box

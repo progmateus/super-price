@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as yup from "yup"
+import Router from "next/router";
+import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Box, Button, Flex, Icon, Img, SimpleGrid, Stack, StackDivider, Text } from "@chakra-ui/react"
 import { Header } from "../components/header";
@@ -7,16 +9,17 @@ import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { titleCase } from "../utils/titleCase";
-
 import { setupAPIClient } from "../services/api";
 import encodeQueryData from "../utils/encodeURL";
 import { PriceModal } from "../components/priceModal";
 import { usePriceModal } from "../contexts/PriceModalContext";
 import { Input } from "../components/form/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Router from "next/router";
-import { useState } from "react";
+
+import { ValidatorGTIN } from "../utils/validatorGTIN";
+import { BarCode } from "../components/barCode";
 import { ScannerModal } from "../components/scannerModal";
+import { useScannerModal } from "../contexts/ScannerModalContext";
 
 interface PriceProps {
     product: {
@@ -54,12 +57,23 @@ export default function Prices(props) {
 
     const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
 
-    const { register, handleSubmit, formState } = useForm(({
-        resolver: yupResolver(searchFormSchema)
+    const { isOpen } = useScannerModal();
 
+
+    const validatorGTIN = new ValidatorGTIN();
+
+    const { register, handleSubmit, formState, setError, setValue } = useForm(({
+        resolver: yupResolver(searchFormSchema)
     }));
 
     const { errors } = formState;
+
+    useEffect(() => {
+
+        setValue("gtin", props.query.gtin)
+        setValue("supermarket_name", props.query.supermarket_name)
+
+    }, [props.query])
 
 
     function handleEditPrice(price: any, type) {
@@ -69,14 +83,22 @@ export default function Prices(props) {
     }
 
     const handleSubmitSearch: SubmitHandler<searchProductFormData> = async (value) => {
+
+        const isValidGTIN = validatorGTIN.validateGTIN(value.gtin);
+
+        if (isValidGTIN === false) {
+            setError("gtin", { message: "Código inválido" })
+            return
+        }
+
         const urlEncoded = encodeQueryData(value);
         Router.push(`/prices/${urlEncoded}`)
     }
 
     return (
-        < Box >
+        < Flex direction="column" >
             <Header />
-            <Flex my="6" maxWidth={1480} mx="auto" px="6">
+            <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
                 <Box
@@ -105,9 +127,9 @@ export default function Prices(props) {
 
                             <Input
                                 name="supermarket_name"
+                                label="Supermercado"
                                 color="gray.900"
                                 w="25"
-                                label="Supermercado"
                                 focusBorderColor="brand.500"
                                 borderColor="gray.500"
                                 bgColor="white"
@@ -276,7 +298,16 @@ export default function Prices(props) {
 
 
             </Flex >
-        </Box >
+
+            <BarCode />
+
+            {
+                isOpen === true && (
+                    < ScannerModal />
+                )
+            }
+
+        </Flex >
     )
 }
 

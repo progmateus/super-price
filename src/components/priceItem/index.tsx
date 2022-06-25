@@ -4,7 +4,7 @@ import { ProductInfo } from "./ProductInfo";
 import { SupermarketName } from "./supermarketName";
 
 
-interface PriceProps {
+interface PriceItemProps {
     price: {
         product: {
             id: string;
@@ -30,7 +30,7 @@ interface PriceProps {
 
 }
 
-export function Price(props: PriceProps) {
+export function PriceItem(props: PriceItemProps) {
     return (
         <Flex w={["90", "60vw"]} p="2" bg="#FFFFFF" h="28" borderRadius={6} >
             <ProductImage thumbnail={props.price.product.thumbnail} />

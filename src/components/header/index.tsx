@@ -13,8 +13,6 @@ import { SearchBox } from "./SearchBox"
 
 export function Header() {
 
-    const { user } = useContext(AuthContext);
-
     const { onOpen } = useSidebarDrawer();
 
     const isWideVersion = useBreakpointValue({
@@ -47,7 +45,10 @@ export function Header() {
 
                 </IconButton>
             )}
-            <Logo />
+            <Flex>
+                <Logo />
+            </Flex>
+
 
             {isWideVersion && <SearchBox />}
 
@@ -56,7 +57,6 @@ export function Header() {
                 {/* <NotificationsNav /> */}
                 <Profile
                     showProfileData={isWideVersion}
-                    user={user}
                 />
             </Flex>
         </Flex >

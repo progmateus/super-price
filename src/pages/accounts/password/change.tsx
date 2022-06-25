@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Icon, Text } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import Link from "next/link";
@@ -8,6 +8,8 @@ import Sidebar from "../../../components/sidebar";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { api } from "../../../services/apiClient";
 import { withSSRAuth } from "../../../utils/withSSRAuth";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { useState } from "react";
 
 type UpdateUserPasswordFormData = {
     password: string;
@@ -24,6 +26,8 @@ const updateUserPasswordFormSchema = yup.object().shape({
 
 export default function UpdateUserPassword() {
 
+    const [success, setSuccess] = useState(false)
+
     const { register, handleSubmit, setError, formState } = useForm(({
         resolver: yupResolver(updateUserPasswordFormSchema)
     }));
@@ -39,7 +43,7 @@ export default function UpdateUserPassword() {
                 last_password: values.last_password
             });
 
-            window.location.reload();
+            setSuccess(true)
 
         } catch (err) {
 
@@ -145,6 +149,25 @@ export default function UpdateUserPassword() {
                         </HStack>
 
                     </Flex>
+                    {
+                        success && (
+                            <Flex
+                                justify="center"
+                                color="green"
+                                mt="8"
+                                fontSize={18}
+                            >
+                                <HStack spacing="1">
+
+                                    <Icon as={BsFillCheckCircleFill} />
+                                    <Text
+                                        alignSelf="center">
+                                        Senha atualizada.
+                                    </Text>
+                                </HStack>
+                            </Flex>
+                        )
+                    }
 
                 </Box>
 

@@ -1,10 +1,11 @@
-import { Flex, Icon, Input } from "@chakra-ui/react";
-import * as yup from "yup"
+
+import { useEffect } from "react";
+import Router from "next/router";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Flex, Icon, Input } from "@chakra-ui/react";
 import { RiSearchLine } from "react-icons/ri";
-import Router from "next/router"
+import * as yup from "yup"
 import encodeQueryData from "../../utils/encodeURL";
-import { useSearchBox } from "../../contexts/SearchBoxContext";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 
@@ -18,17 +19,16 @@ const searchFormSchema = yup.object().shape({
 
 export function SearchBox() {
 
-    const { register, handleSubmit, formState } = useForm(({
+    const { register, handleSubmit, formState, setValue } = useForm(({
         resolver: yupResolver(searchFormSchema)
     }));
 
-    const { errors } = formState;
-
-    const { search, setSearch } = useSearchBox();
+    useEffect(() => {
+        setValue("gtin", "")
+    }, [Router.asPath])
 
     const handleSearch: SubmitHandler<searchFormData> = async (value) => {
         const urlEncoded = encodeQueryData(value);
-        setSearch(value.gtin)
         Router.push(`/prices/${urlEncoded}`)
     }
 

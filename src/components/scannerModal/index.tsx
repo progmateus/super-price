@@ -1,8 +1,10 @@
 
-import { Box, Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react"
+import { Box, Button, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react"
 import { useScannerModal } from "../../contexts/ScannerModalContext";
 import Quagga from 'quagga';
 import { ValidatorGTIN } from "../../utils/validatorGTIN";
+import encodeQueryData from "../../utils/encodeURL";
+import Router from "next/router";
 
 export function ScannerModal() {
 
@@ -10,22 +12,23 @@ export function ScannerModal() {
 
     const validatorGTIN = new ValidatorGTIN();
 
-    async function handleCloseScannerModal() {
-        await Quagga.stop();
+    function handleCloseScannerModal() {
+        Quagga.stop();
+        console.log("entrou")
         onClose();
     }
 
-    if (typeof window !== "undefined") {
+    if (navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function') {
 
         setTimeout(() => {
 
-            navigator.mediaDevices.enumerateDevices()
-                .then(function (devices) {
-                    devices.forEach(function (device) {
-                        console.log(device.kind + ": " + device.label +
-                            " id = " + device.deviceId);
-                    });
-                })
+            // navigator.mediaDevices.enumerateDevices()
+            //     .then(function (devices) {
+            //         devices.forEach(function (device) {
+            //             console.log(device.kind + ": " + device.label +
+            //                 " id = " + device.deviceId);
+            //         });
+            //     })
 
             Quagga.init({
                 locate: true,
@@ -91,6 +94,10 @@ export function ScannerModal() {
                     if (isValidGTIN === true) {
                         console.log(data.codeResult.code, data.codeResult.format)
                         Quagga.stop();
+
+                        const urlEncoded = encodeQueryData({ gtin: data.codeResult.code });
+                        onClose();
+                        Router.push(`/prices/${urlEncoded}`)
                     }
                 }
             })
@@ -108,37 +115,52 @@ export function ScannerModal() {
 
                     return codeResult.format === "ean_13"
 
-                    return false
                 }
             });
 
             Quagga.registerResultCollector(resultCollector);
 
         }, 500);
+    } else {
+        alert("Seu navegador não tem suporte para ultilizar o Scanner")
+        onClose();
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
+        <>
+            {
+                navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === 'function' && (
+                    <Modal isOpen={isOpen} onClose={handleCloseScannerModal}>
+                        <ModalOverlay />
 
-            <ModalContent my="auto" mx="5">
+                        <ModalContent my="auto" mx="5">
 
-                <Box >
-                    <ModalHeader bg="blue.300"> </ModalHeader>
+                            <Box >
+                                <ModalHeader mb="3"> </ModalHeader>
 
-                    <ModalCloseButton color="gray.900" />
+                                <ModalCloseButton color="gray.900" />
 
-                    <ModalBody id="scanner" bg="green.300" >
+                                <ModalBody >
+
+                                    <Flex align="center">
+                                        <Box id="scanner"  >
+
+                                        </Box>
+                                    </Flex>
 
 
-                    </ModalBody>
+                                </ModalBody>
 
-                    <ModalFooter bg="pink.300">
-                    </ModalFooter>
-                </Box >
+                                <ModalFooter >
+                                </ModalFooter>
+                            </Box >
 
-            </ModalContent>
-        </Modal >
+                        </ModalContent>
+                    </Modal >
+                )
+            }
+        </>
+
     )
 
 }

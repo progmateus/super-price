@@ -20,6 +20,7 @@ type AuthContextData = {
     signIn(credentials: SignInCredentials): Promise<void>;
     isAuthenticated: boolean;
     user: User;
+    setProfileUser: () => void
 }
 
 type AuthProviderProps = {
@@ -82,6 +83,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
         api.defaults.headers['Authorization'] = `Bearer ${token}`
 
+        await setProfileUser();
+
+        Router.push("/dashboard");
+
+    }
+
+    async function setProfileUser() {
         api.get("/users/profile")
             .then(response => {
                 const { id, name, lastname, email, avatar } = response.data;
@@ -94,12 +102,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     avatar
                 })
             })
-
-        Router.push("/dashboard");
     }
 
     return (
-        <AuthContext.Provider value={{ signIn, isAuthenticated, user }} >
+        <AuthContext.Provider value={{ signIn, isAuthenticated, user, setProfileUser }} >
             {children}
         </AuthContext.Provider>
     )
