@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^1.8.8",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@ericblade/quagga2": "^1.7.0",
     "@fontsource/roboto": "^4.5.7",
     "@hookform/resolvers": "^2.8.8",
     "@types/react-router-dom": "^5.3.3",

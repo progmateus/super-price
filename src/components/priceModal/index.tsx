@@ -79,18 +79,44 @@ export function PriceModal(props) {
         switch (type) {
 
             case "create":
-                await api.post("/prices", {
-                    gtin: values.gtin,
-                    supermarket_name: values.supermarket_name,
-                    price: Number(priceReplaced)
-                }).then(() => {
-                    handleClosePriceModal();
-                    window.location.reload();
-                }).catch((err) => {
-                    setApiError(err.response.data.message)
-                    console.log(err);
-                })
-                break;
+
+                const urlEncoded = encodeQueryData(values);
+                const getResponse = await api.get(`/prices/${urlEncoded}`)
+
+                // if price does not exists, create
+                if (getResponse.data.length !== 1) {
+
+                    await api.post("/prices", {
+                        gtin: values.gtin,
+                        supermarket_name: values.supermarket_name,
+                        price: Number(priceReplaced)
+                    }).then(() => {
+                        handleClosePriceModal();
+                        window.location.reload();
+                    }).catch((err) => {
+                        setApiError(err.response.data.message)
+                        console.log(err);
+                    })
+
+                    break;
+                }
+
+                // if price already exists, edit
+                if (getResponse.data.length !== 0) {
+
+                    await api.patch("/prices", {
+                        price_id: getResponse.data[0].price.id,
+                        price: Number(priceReplaced)
+                    }).then(() => {
+                        handleClosePriceModal();
+                        window.location.reload();
+                    }).catch((err) => {
+                        console.log(err)
+                        setApiError(err.response.data.message)
+                    })
+
+                    break;
+                }
 
             case "edit":
                 await api.patch("/prices", {
@@ -103,71 +129,9 @@ export function PriceModal(props) {
                     console.log(err)
                     setApiError(err.response.data.message)
                 })
+
                 break;
-
         }
-
-        // if (type === "create") {
-
-        //     const urlEncoded = encodeQueryData({
-        //         gtin: values.gtin,
-        //         supermarket_name: values.supermarket_name
-        //     });
-
-        //     try {
-        //         const response = await (await api.get(`/prices/${urlEncoded}`))
-
-        //         const { data } = response
-
-        //         console.log(data)
-
-        //         if (data.length > 0) {
-
-        //             await api.patch("/prices", {
-        //                 price_id: data[0].price.id,
-        //                 price: Number(priceReplaced)
-        //             }).then(() => {
-        //                 handleClosePriceModal();
-        //                 window.location.reload();
-        //                 console.log("editou")
-        //             })
-        //         }
-
-        //         if (data.length === 0) {
-        //             await api.post("/prices", {
-        //                 gtin: data[0].price.id,
-        //                 supermarket_name: values.supermarket_name,
-        //                 price: Number(priceReplaced)
-        //             }).then(() => {
-        //                 handleClosePriceModal();
-        //                 window.location.reload();
-        //                 console.log("criou")
-
-        //             })
-        //         }
-        //     } catch (err) {
-        //         if (err.response?.data.message === "Product not found!") {
-        //             alert("Produto não encontrado")
-        //         }
-
-        //         console.log(err);
-        //     }
-
-        // }
-
-        // if (type === "edit") {
-
-        //     await api.patch("/prices", {
-        //         price_id: price.price.id,
-        //         price: Number(priceReplaced)
-        //     }).then(() => {
-        //         handleClosePriceModal();
-        //         window.location.reload();
-        //     }).catch((err) => {
-        //         console.log(err)
-
-        //     })
-        // }
     }
 
     return (
@@ -180,8 +144,19 @@ export function PriceModal(props) {
                 <Box
                     as="form"
                     onSubmit={handleSubmit(handleCreatePrice)}>
-                    <ModalHeader
-                        color="gray.900"> Cadastrar Preço</ModalHeader>
+                    {
+                        type === "create" ? (
+                            <ModalHeader
+                                color="gray.900">
+                                Cadastrar Preço
+                            </ModalHeader>
+                        ) :
+                            < ModalHeader
+                                color="gray.900">
+                                Atualizar Preço
+                            </ModalHeader>
+
+                    }
                     <ModalCloseButton color="gray.900" />
                     <ModalBody>
 

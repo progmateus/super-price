@@ -6,7 +6,7 @@ import { withSSRAuth } from "../utils/withSSRAuth"
 import { setupAPIClient } from "../services/api"
 import { titleCase } from "../utils/titleCase"
 import { BarCode } from "../components/barCode"
-import { ScannerModal } from "../components/scannerModal"
+import { ScannerModal } from "../components/scannerModal/"
 import { useScannerModal } from "../contexts/ScannerModalContext"
 
 

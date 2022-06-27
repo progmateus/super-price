@@ -38,7 +38,7 @@ export default function SignIn() {
 
       if (err.response.status === 500) {
         setError('apiError', {
-          message: "Erro",
+          message: "Ocorreu algum erro",
         });
       }
       else {

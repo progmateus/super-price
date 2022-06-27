@@ -14,6 +14,7 @@ import { useScannerModal } from "../contexts/ScannerModalContext";
 import { setupAPIClient } from "../services/api";
 import { titleCase } from "../utils/titleCase";
 import { withSSRAuth } from "../utils/withSSRAuth";
+import { ScannerModal } from "../components/scannerModal/";
 
 interface ProductProps {
     id: string;
@@ -30,10 +31,6 @@ type SearchProductFormData = {
 
 const SearchProductFormSchema = yup.object().shape({
     product_name: yup.string().required("Nome do produto obrigatório").max(100, "Limite de caracteres excedido."),
-})
-
-const ScannerModal = dynamic(() => {
-    return import("../components/scannerModal/index").then(mod => mod.ScannerModal)
 })
 
 export default function Dashboard(props) {
@@ -98,8 +95,6 @@ export default function Dashboard(props) {
                         >
                             <Icon as={RiSearchLine} />
                         </Button>
-
-
                     </Flex>
 
 
@@ -140,6 +135,8 @@ export default function Dashboard(props) {
 
             </Flex>
             <BarCode />
+
+
 
             {
                 isOpen === true && (
