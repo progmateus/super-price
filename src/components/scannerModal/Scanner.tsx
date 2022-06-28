@@ -67,7 +67,10 @@ export function Scanner(props) {
                                 onClose();
                                 setOnDetected(data.codeResult.code)
                                 const urlEncoded = encodeQueryData({ gtin: data.codeResult.code });
+                                console.log("antes: ", data.codeResult.code)
                                 Router.push(`/prices/${urlEncoded}`)
+                                console.log("depois: ", data.codeResult.code)
+
                             }
                         }
                     })
@@ -111,6 +114,7 @@ export function Scanner(props) {
                 return console.log('Error starting Quagga:', err);
             }
             if (props.scannerRef && props.scannerRef.current) {
+                console.log("start")
                 Quagga.start();
                 if (props.onScannerReady) {
                     props.onScannerReady();

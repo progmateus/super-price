@@ -18,7 +18,8 @@ export const theme = extendTheme({
         input: "#e9e9e9",
         success: "#2BC64D",
         warning: "#FFBF00",
-        danger: "#FF8772",
+        /// danger: "#FF8772",
+        danger: "#FF3B2D",
         gray: {
             gray: {
                 "900": "#181b23",
