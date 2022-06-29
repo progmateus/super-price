@@ -116,9 +116,6 @@ export function Scanner(props) {
             if (props.scannerRef && props.scannerRef.current) {
                 console.log("start")
                 Quagga.start();
-                if (props.onScannerReady) {
-                    props.onScannerReady();
-                }
             }
         });
 

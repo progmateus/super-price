@@ -1,9 +1,9 @@
-import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon, Img } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BsFillCheckCircleFill } from "react-icons/bs";
+import { BsFillCheckCircleFill, BsPencil } from "react-icons/bs";
 import { Input } from "../../components/form/Input";
 import { Header } from "../../components/header";
 import Sidebar from "../../components/sidebar";
@@ -46,6 +46,40 @@ export default function UpdateUser(props) {
 
     const { errors, isDirty } = formState;
 
+    const { register: registerFile, formState: { errors: errorsFile }, handleSubmit: handleSubmitFile, getValues, getFieldState } = useForm({});
+
+
+    const onChangeInputFile = () => {
+        // const formInputFile: HTMLFormElement = document.querySelector("#form_avatar_file")
+        // formInputFile.submit();
+
+        const fileState = getValues("avatar_file");
+        handleUploadUserAvatar(fileState);
+    }
+
+    const handleClickImageProfile = () => {
+        const inputFile: HTMLElement = document.querySelector("#upload_avatar")
+        inputFile.click();
+    }
+
+    const handleUploadUserAvatar = async (file) => {
+        console.log("deu submit")
+
+        console.log(file)
+        // try {
+        //     const response = await api.patch("/users/avatar", file[0], {
+        //         headers: {
+        //             'Content-Type': 'multipart/form-data'
+        //         }
+        //     });
+        //     console.log(response);
+
+        // } catch (err) {
+        //     console.log(err);
+        // }
+
+    }
+
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
 
         try {
@@ -72,17 +106,45 @@ export default function UpdateUser(props) {
                 <Sidebar />
 
                 <Box
-                    as="form"
+
                     flex="1"
                     borderRadius={8}
                     bg="#FFFFFF"
                     p={["6", "8"]}
-                    onSubmit={handleSubmit(handleUpdateUser)}
+
                 >
                     <Heading size="lg" fontWeight="normal" color="gray.900"> Atualizar informações </Heading>
                     <Divider my="6" borderColor="gray.700" />
 
-                    <VStack spacing="8">
+                    <Flex justify="center" mb="6">
+                        <Box>
+                            <Box id="form_avatar_file" as="form" onSubmit={handleSubmitFile(handleUploadUserAvatar)}>
+
+                                <Input
+                                    id="upload_avatar"
+                                    name="file"
+                                    type="file"
+                                    hidden={true}
+                                    {...registerFile("avatar_file")}
+                                    onChange={onChangeInputFile} />
+                            </Box>
+
+                            <Box role="button" onClick={handleClickImageProfile}>
+                                <Img
+                                    w={200}
+                                    h={200}
+                                    mx="auto"
+                                    src={user?.avatar}
+                                    borderRadius={100}
+                                />
+
+                                <Box color="blue" mt="1" fontSize={18} textAlign="center"> Atualizar imagem </Box>
+                            </Box>
+
+                        </Box>
+                    </Flex>
+
+                    <VStack spacing="8" as="form" onSubmit={handleSubmit(handleUpdateUser)}>
                         <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
                             <Input
                                 name="name"
