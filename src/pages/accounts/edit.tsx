@@ -12,7 +12,8 @@ import { withSSRAuth } from "../../utils/withSSRAuth";
 import { titleCase } from "../../utils/titleCase";
 import { api } from "../../services/apiClient";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useContext, useState } from "react";
+import { FormEvent, FormEventHandler, useContext, useState } from "react";
+import { setTimeout } from "timers/promises";
 
 
 type UpdateUserFormData = {
@@ -20,6 +21,7 @@ type UpdateUserFormData = {
     lastname: string
     email: string
 }
+
 
 const updateUserFormSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório").max(50, "Limite de caracteres excedido.").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Apenas um nome é permitido"),
@@ -29,12 +31,15 @@ const updateUserFormSchema = yup.object().shape({
 
 export default function UpdateUser(props) {
 
+
     const { setProfileUser, user } = useContext(AuthContext);
 
     const [success, setSuccess] = useState(false)
 
+    const [avatar, setAvatar] = useState(null)
 
-    const { register, handleSubmit, setError, formState, } = useForm(({
+
+    const { register, handleSubmit, setError, formState } = useForm(({
         defaultValues: {
             name: props.name,
             lastname: props.lastname,
@@ -44,44 +49,44 @@ export default function UpdateUser(props) {
         resolver: yupResolver(updateUserFormSchema)
     }));
 
+    const { register: registerFile, handleSubmit: handleSubmitFile } = useForm(({}));
+
     const { errors, isDirty } = formState;
 
-    const { register: registerFile, formState: { errors: errorsFile }, handleSubmit: handleSubmitFile, getValues, getFieldState } = useForm({});
-
-
-    const onChangeInputFile = () => {
-        // const formInputFile: HTMLFormElement = document.querySelector("#form_avatar_file")
-        // formInputFile.submit();
-
-        const fileState = getValues("avatar_file");
-        handleUploadUserAvatar(fileState);
+    const handleClickImage = async () => {
+        const input: HTMLElement = document.querySelector("#input_upload_avatar");
+        input.click();
     }
 
-    const handleClickImageProfile = () => {
-        const inputFile: HTMLElement = document.querySelector("#upload_avatar")
-        inputFile.click();
+
+    const handleChangeInput = async (event) => {
+        const file = event.target.files[0];
+
+        let data = new FormData();
+
+        data.append("avatar", file, file.name);
+
+        console.log("file: ", file)
+
+        try {
+            const response = await api.patch("/users/avatar", data, {
+                headers: {
+                    "Content-Type": "multipart/form-data; boundary=MyBoundary"
+                },
+            });
+
+            console.log(response)
+
+            // setProfileUser();
+            // setSuccess(true)
+
+        } catch (err) {
+            console.log(err)
+        }
     }
 
-    const handleUploadUserAvatar = async (file) => {
-        console.log("deu submit")
-
-        console.log(file)
-        // try {
-        //     const response = await api.patch("/users/avatar", file[0], {
-        //         headers: {
-        //             'Content-Type': 'multipart/form-data'
-        //         }
-        //     });
-        //     console.log(response);
-
-        // } catch (err) {
-        //     console.log(err);
-        // }
-
-    }
 
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
-
         try {
             await api.put("/users", {
                 name: values.name,
@@ -106,30 +111,28 @@ export default function UpdateUser(props) {
                 <Sidebar />
 
                 <Box
-
                     flex="1"
                     borderRadius={8}
                     bg="#FFFFFF"
                     p={["6", "8"]}
-
                 >
                     <Heading size="lg" fontWeight="normal" color="gray.900"> Atualizar informações </Heading>
                     <Divider my="6" borderColor="gray.700" />
 
                     <Flex justify="center" mb="6">
                         <Box>
-                            <Box id="form_avatar_file" as="form" onSubmit={handleSubmitFile(handleUploadUserAvatar)}>
-
+                            <Box>
                                 <Input
-                                    id="upload_avatar"
-                                    name="file"
+                                    id="input_upload_avatar"
+                                    name="avatar"
                                     type="file"
+                                    {...registerFile("avatar")}
                                     hidden={true}
-                                    {...registerFile("avatar_file")}
-                                    onChange={onChangeInputFile} />
+                                    onChange={(event) => handleChangeInput(event)}
+                                />
                             </Box>
 
-                            <Box role="button" onClick={handleClickImageProfile}>
+                            <Box role="button" onClick={handleClickImage}>
                                 <Img
                                     w={200}
                                     h={200}
@@ -138,71 +141,74 @@ export default function UpdateUser(props) {
                                     borderRadius={100}
                                 />
 
-                                <Box color="blue" mt="1" fontSize={18} textAlign="center"> Atualizar imagem </Box>
+                                <Box color="blue.500" mt="1" fontSize={18} textAlign="center"> Atualizar imagem </Box>
                             </Box>
 
                         </Box>
                     </Flex>
 
-                    <VStack spacing="8" as="form" onSubmit={handleSubmit(handleUpdateUser)}>
-                        <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
-                            <Input
-                                name="name"
-                                label="Nome"
-                                color="gray.900"
-                                error={errors.name}
-                                {...register("name")}
-                                focusBorderColor="brand.500"
-                                bgColor="white"
-                                borderColor="gray.500"
-                                variant="outline"
-                                _hover={{ bgColor: "input" }}
-                                size="lg"
-                            />
-                            <Input
-                                name="lastname"
-                                color="gray.900"
-                                label="Sobrenome"
-                                error={errors.lastname}
-                                {...register("lastname")}
-                                focusBorderColor="brand.500"
-                                bgColor="white"
-                                borderColor="gray.500"
-                                variant="outline"
-                                _hover={{ bgColor: "input" }}
-                                size="lg"
-                            />
-                        </SimpleGrid>
-                        <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
-                            <Input
-                                name="email"
-                                color="gray.900"
-                                type="email"
-                                label="E-mail"
-                                error={errors.email}
-                                {...register("email")}
-                                focusBorderColor="brand.500"
-                                bgColor="white"
-                                borderColor="gray.500"
-                                variant="outline"
-                                _hover={{ bgColor: "input" }}
-                                size="lg"
-                            />
-                        </SimpleGrid>
-                    </VStack>
+                    <Box as="form" onSubmit={handleSubmit(handleUpdateUser)}>
+                        <VStack spacing="8" >
+                            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+                                <Input
+                                    name="name"
+                                    label="Nome"
+                                    color="gray.900"
+                                    error={errors.name}
+                                    {...register("name")}
+                                    focusBorderColor="brand.500"
+                                    bgColor="white"
+                                    borderColor="gray.500"
+                                    variant="outline"
+                                    _hover={{ bgColor: "input" }}
+                                    size="lg"
+                                />
+                                <Input
+                                    name="lastname"
+                                    color="gray.900"
+                                    label="Sobrenome"
+                                    error={errors.lastname}
+                                    {...register("lastname")}
+                                    focusBorderColor="brand.500"
+                                    bgColor="white"
+                                    borderColor="gray.500"
+                                    variant="outline"
+                                    _hover={{ bgColor: "input" }}
+                                    size="lg"
+                                />
+                            </SimpleGrid>
+                            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+                                <Input
+                                    name="email"
+                                    color="gray.900"
+                                    type="email"
+                                    label="E-mail"
+                                    error={errors.email}
+                                    {...register("email")}
+                                    focusBorderColor="brand.500"
+                                    bgColor="white"
+                                    borderColor="gray.500"
+                                    variant="outline"
+                                    _hover={{ bgColor: "input" }}
+                                    size="lg"
+                                />
+                            </SimpleGrid>
+                        </VStack>
 
-                    <Flex mt="8" justify="flex-end" >
 
-                        <Button
-                            type="submit"
-                            bg="brand.700"
-                            _hover={{ bgColor: "brand.800" }}
-                            {...isDirty === false && ({ disabled: true })}
-                        >
-                            Enviar
-                        </Button>
+                        <Flex mt="8" justify="flex-end" >
 
-                    </Flex>
+                            <Button
+                                type="submit"
+                                bg="brand.700"
+                                _hover={{ bgColor: "brand.800" }}
+                                {...isDirty === false && ({ disabled: true })}
+                            >
+                                Enviar
+                            </Button>
+
+                        </Flex>
+                    </Box>
                     {
                         success && (
                             <Flex
