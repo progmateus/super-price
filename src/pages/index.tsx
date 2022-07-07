@@ -128,9 +128,10 @@ export default function SignIn() {
 
         {errors.apiError &&
           <Box
-            mt="2"
+            mt="1"
+            mb="2"
             color="red.500"
-            fontSize={["12", "16"]}
+            fontSize={[14, 16]}
           >{errors.apiError.message}
           </Box>
         }

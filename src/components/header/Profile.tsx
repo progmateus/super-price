@@ -13,7 +13,6 @@ export function Profile({
 
     const { user } = useContext(AuthContext);
 
-
     return (
         <Flex align="center" >
             {showProfileData && (

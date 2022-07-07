@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon, Img } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon, Img, Avatar } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import Link from "next/link";
@@ -34,10 +34,9 @@ export default function UpdateUser(props) {
 
     const { setProfileUser, user } = useContext(AuthContext);
 
+    console.log(user)
+
     const [success, setSuccess] = useState(false)
-
-    const [avatar, setAvatar] = useState(null)
-
 
     const { register, handleSubmit, setError, formState } = useForm(({
         defaultValues: {
@@ -48,8 +47,6 @@ export default function UpdateUser(props) {
         },
         resolver: yupResolver(updateUserFormSchema)
     }));
-
-    const { register: registerFile, handleSubmit: handleSubmitFile } = useForm(({}));
 
     const { errors, isDirty } = formState;
 
@@ -77,7 +74,7 @@ export default function UpdateUser(props) {
 
             console.log(response)
 
-            // setProfileUser();
+            setProfileUser();
             // setSuccess(true)
 
         } catch (err) {
@@ -126,22 +123,31 @@ export default function UpdateUser(props) {
                                     id="input_upload_avatar"
                                     name="avatar"
                                     type="file"
-                                    {...registerFile("avatar")}
+                                    accept="image/png, image/jpeg, image/pjpeg, image/jpg"
                                     hidden={true}
                                     onChange={(event) => handleChangeInput(event)}
                                 />
                             </Box>
 
                             <Box role="button" onClick={handleClickImage}>
-                                <Img
+                                {/* <Img
                                     w={200}
                                     h={200}
                                     mx="auto"
-                                    src={user?.avatar}
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                                     borderRadius={100}
-                                />
+                                /> */}
 
-                                <Box color="blue.500" mt="1" fontSize={18} textAlign="center"> Atualizar imagem </Box>
+                                <Flex justify="center">
+                                    <Avatar
+                                        w={["8rem", "12.5rem"]}
+                                        h={["8rem", "12.5rem"]}
+                                        size="xl"
+                                        name={`${user?.name} ${user?.lastname}`}
+                                        src={user?.avatar} />
+                                </Flex>
+
+                                <Box color="blue.500" mt="1" fontSize={18} textAlign="center"> Atualizar foto de perfil </Box>
                             </Box>
 
                         </Box>

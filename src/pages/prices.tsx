@@ -1,104 +1,34 @@
 import * as React from "react";
-import * as yup from "yup"
-import Router from "next/router";
-import { useEffect } from "react";
-import { yupResolver } from "@hookform/resolvers/yup"
-import { Box, Button, Flex, Icon, Img, SimpleGrid, Stack, StackDivider, Text } from "@chakra-ui/react"
+import { Box, Flex, Text } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { titleCase } from "../utils/titleCase";
 import { setupAPIClient } from "../services/api";
 import encodeQueryData from "../utils/encodeURL";
 import { PriceModal } from "../components/priceModal";
-import { usePriceModal } from "../contexts/PriceModalContext";
-import { Input } from "../components/form/Input";
-import { SubmitHandler, useForm } from "react-hook-form";
 
-import { ValidatorGTIN } from "../utils/validatorGTIN";
-import { BarCode } from "../components/barCode";
 import { ScannerModal } from "../components/scannerModal";
 import { useScannerModal } from "../contexts/ScannerModalContext";
-
-interface PriceProps {
-    product: {
-        id: string;
-        name: string;
-        gtin: string;
-        brand: string;
-        thumbnail: string;
-    }
-    price: {
-        id: string;
-        price: number;
-        user_id: string;
-        created_at: string;
-        updated_at: string;
-    },
-    supermarket: {
-        id: string;
-        name: string;
-    }
-}
-
-type searchProductFormData = {
-    gtin: string;
-    supermarket_name?: string;
-}
-
-const searchFormSchema = yup.object().shape({
-    gtin: yup.string().required("Campo obrigatório").max(50, "Limite de caracteres excedido."),
-    supermarket_name: yup.string().max(50, "Limite de caracteres excedido.")
-})
+import { usePriceModal } from "../contexts/PriceModalContext";
+import { FormSearchPrice } from "../components/sectionPrice/formSearchPrice";
+import { TablePrices } from "../components/sectionPrice/tablePrices";
+import { ProductInfo } from "../components/sectionPrice/productInfo";
+import { BarCode } from "../components/barCode";
 
 
 export default function Prices(props) {
 
-    const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
 
     const { isOpen } = useScannerModal();
 
+    const { price } = usePriceModal();
 
-    const validatorGTIN = new ValidatorGTIN();
-
-    const { register, handleSubmit, formState, setError, setValue } = useForm(({
-        resolver: yupResolver(searchFormSchema)
-    }));
-
-    const { errors } = formState;
-
-    useEffect(() => {
-
-        setValue("gtin", props.query.gtin)
-        setValue("supermarket_name", props.query.supermarket_name)
-
-    }, [props.query])
-
-
-    function handleEditPrice(price: any, type) {
-        setPrice(price)
-        setType(type)
-        handleOpenPriceModal()
-    }
-
-    const handleSubmitSearch: SubmitHandler<searchProductFormData> = async (value) => {
-
-        const isValidGTIN = validatorGTIN.validateGTIN(value.gtin);
-
-        if (isValidGTIN === false) {
-            setError("gtin", { message: "Código inválido" })
-            return
-        }
-
-        const urlEncoded = encodeQueryData(value);
-        Router.push(`/prices/${urlEncoded}`)
-    }
 
     return (
         < Flex direction="column" >
             <Header />
-            <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
+            <Flex w="100%" my={["2", "6"]} maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
 
                 <Box
@@ -106,94 +36,20 @@ export default function Prices(props) {
                     bg="#FFFFFF"
                     borderRadius={6}
                 >
-                    <Box as="form" m="6" onSubmit={handleSubmit(handleSubmitSearch)}>
-                        <SimpleGrid minChildWidth="240px" mx="auto" spacing={["4", "8"]} w="100%">
-                            <Input
-                                name="gtin"
-                                type="number"
-                                label="Código do produto"
-                                w={["25", "25"]}
-                                color="gray.900"
-                                focusBorderColor="brand.500"
-                                borderColor="gray.500"
-                                bgColor="white"
-                                variant="outline"
-                                _hover={{ bgColor: "gray.100" }}
-                                size="lg"
-                                {...register("gtin", { required: true })}
-                                error={errors.gtin}
 
-                            />
-
-                            <Input
-                                name="supermarket_name"
-                                label="Supermercado"
-                                color="gray.900"
-                                w="25"
-                                focusBorderColor="brand.500"
-                                borderColor="gray.500"
-                                bgColor="white"
-                                variant="outline"
-                                _hover={{ bgColor: "gray.100" }}
-                                size="lg"
-                                {...register("supermarket_name")}
-                                error={errors.supermarket_name}
-                            />
-                            <Button
-                                type="submit"
-                                mx="auto"
-                                mt={["0", "8"]}
-                                bg="purple"
-                                w="20"
-                                isLoading={formState.isSubmitting}
-
-                            > Buscar
-                            </Button>
-
-                        </SimpleGrid>
-
-                        {
-                            props.error?.message === "Product not found!" && (
-                                <Text textAlign={["center", "left"]} color="#FF3B2D"> Produto não encontrado </Text>
-                            )
-                        }
-
-                    </Box>
+                    <FormSearchPrice
+                        query={props.query}
+                        error={props.error}
+                    />
 
                     {
                         props.product ? (
-                            <Flex>
-                                <Box mx="auto" maxWidth="500px" textAlign="center" mt="2" p="3">
-                                    <Text color="gray.900" fontWeight="bold" mb="2" fontSize={["sm", "lg"]} > {props.product.name} </Text>
+                            <ProductInfo
+                                name={props.product.name}
+                                brand={props.product.brand}
+                                thumbnail={props.product.thumbnail}
 
-                                    {props.product.thumbnail ? (
-                                        <Box
-                                            w={["15", "15"]}
-                                            pt="2"
-                                            mx="auto"
-                                            maxWidth="200px"
-                                            maxHeight="200px"
-                                        >
-                                            <Img
-                                                h="40"
-                                                mx="auto"
-                                                src={props.product.thumbnail} />
-                                        </Box>
-                                    ) :
-                                        <Box
-                                            w={["15", "15"]}
-                                            mx="auto"
-                                            maxWidth="200px"
-                                            maxHeight="200px"
-                                        >
-                                            <Img src="https://cosmos.bluesoft.com.br/assets/product-placeholder-ce4926921923d1e9bc66cd0e1493b49b.png" />
-                                        </Box>
-                                    }
-
-                                    <Text color="gray.500" fontSize="lg" mt="2" w="100%"> {props.product.brand} </Text>
-                                </Box>
-
-                            </Flex>
+                            />
                         ) :
                             props.error && props.error.message === "Product not found" && (
                                 <Box mt="8">
@@ -202,100 +58,14 @@ export default function Prices(props) {
                             )
                     }
 
-                    <Box borderRadius={8} mt="2" pb="3">
+                    <TablePrices
+                        product={props.product}
+                        prices={props.prices}
+                    />
 
-                        <Flex mb="8" mt="10" align="center">
-                            <Button
-                                mx="auto"
-                                onClick={() => handleEditPrice({}, "create")}
-                                as="a"
-                                size="sm"
-                                fontSize="sm"
-                                bg="brand.700"
-                                _hover={{ bgColor: "brand.800" }}
-                                isLoading={formState.isSubmitting}
-                                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-                            >
-                                Criar preço
-                            </Button>
-                        </Flex>
-
-                        {
-                            props.product && (
-                                <Flex
-                                    w={["70vw", "65vw"]}
-                                    justify="space-between"
-                                    color="black"
-                                    fontWeight="bold"
-                                    fontSize={["12", "16"]}
-                                    mx={["4", "8"]}
-                                    mb="8"
-                                >
-                                    <Text > PREÇO </Text>
-                                    <Text > SUPERMERCADO </Text>
-                                    <Text > ATUALIZAÇÃO </Text>
-
-                                </Flex>
-                            )
-                        }
-
-                        <Stack spacing="4" divider={<StackDivider borderColor='gray.200' />} >
-
-                            {
-
-                                props.prices.length > 0 && (
-                                    props.prices.map((price: PriceProps) => {
-
-                                        return (
-
-                                            <Flex
-                                                key={price.price?.id}
-                                                mr="3"
-                                                ml={["0", "5"]}
-                                                alignItems="center"
-
-                                            >
-
-                                                <Flex
-                                                    w={["70vw", "65vw"]}
-                                                    justify="space-between"
-                                                    alignItems="center"
-                                                    textAlign="center"
-                                                    fontSize={["12", "16"]}
-                                                    color="gray.900"
-                                                >
-                                                    <Text ml="2" w={["16", "20"]} textAlign="left" fontWeight="bold" color="green.500" >{price.price.price}</Text>
-                                                    <Text w={["24", "32"]} fontWeight="bold"> {price.supermarket?.name}</Text>
-                                                    <Text w={["16", "20"]}  > {price.price?.updated_at}</Text>
-                                                </Flex>
-
-
-                                                <Button
-                                                    ml="auto"
-                                                    as="a"
-                                                    size="xs"
-                                                    fontSize="sm"
-                                                    colorScheme="purple"
-                                                    onClick={() => handleEditPrice(price, "edit")}
-                                                >
-                                                    <Icon as={RiPencilLine} fontSize={["12", "16"]} />
-                                                </Button>
-                                            </Flex>
-                                        )
-                                    })
-
-                                )
-                            }
-
-                        </Stack>
-
-
-                    </Box>
                 </Box>
 
-
                 <PriceModal key={price.price?.id} price={price} />
-
 
             </Flex >
 

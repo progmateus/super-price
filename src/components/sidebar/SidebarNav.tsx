@@ -17,7 +17,7 @@ export function SidebarNav() {
             <NavSection title="CONFIGURAÇÕES">
                 <NavLink icon={RiEditBoxLine} href="/accounts/edit">Editar perfil</NavLink>
                 <NavLink icon={RiContactsLine} href="/accounts/password/change">Alterar senha</NavLink>
-                <Flex role="button" alignItems="center" color="brand.900" onClick={() => signOut()} _hover={{
+                <Flex role="button" alignItems="center" color="brand.900" onClick={async () => await signOut()} _hover={{
                     cursor: "pointer"
                 }}>
                     <Icon as={RiLogoutBoxRLine} fontSize="20" />
