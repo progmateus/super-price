@@ -47,7 +47,7 @@ export default function Products(props) {
 
     const cache = useRef(new CellMeasurerCache({
         fixedHeight: true,
-        defaultHeight: 100
+        defaultHeight: 102
     }))
 
     const isWideVersion = useBreakpointValue({
@@ -89,7 +89,7 @@ export default function Products(props) {
                 <Sidebar />
 
 
-                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }} w={["100%", "65%"]} h="100vh">
+                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }} w={["100%", "100%", "65%"]} h="100vh">
                     <Flex as="form" alignItems="center" pb="3" onSubmit={handleSubmit(handleSearchProduct)}>
 
                         <Input

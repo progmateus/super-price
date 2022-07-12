@@ -11,7 +11,7 @@ interface ProductItemProps {
 
 export function ProductItem(props: ProductItemProps) {
     return (
-        <Flex w={["90", "60vw"]} p="2" bg="#FFFFFF" h="24" borderRadius={6}>
+        <Flex w={["90", "60vw"]} p="2" bg="#FFFFFF" h="24" borderRadius={4}>
             <Box
                 w={["21%", "10%"]}
                 h="20"
