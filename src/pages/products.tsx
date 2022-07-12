@@ -1,8 +1,7 @@
-import { Box, Button, Flex, Icon, Stack, Text } from "@chakra-ui/react"
-import * as yup from "yup"
-import { yupResolver } from "@hookform/resolvers/yup"
-import dynamic from "next/dynamic"
 import Router from "next/router";
+import * as yup from "yup"
+import { Box, Button, Flex, Icon, Stack, Text, useBreakpointValue } from "@chakra-ui/react"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
 import { RiAlertLine, RiSearchLine } from "react-icons/ri";
 import { BarCode } from "../components/barCode";
@@ -43,20 +42,22 @@ export default function Dashboard(props) {
 
     const { isOpen } = useScannerModal();
 
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg: true
+    })
+
 
     const handleSearchProduct: SubmitHandler<SearchProductFormData> = async (values) => {
-
         const payload = {
             product_name: values.product_name
         }
-
         const queryString = Object.keys(payload)
             .map(key =>
                 `${encodeURIComponent(key)}=${encodeURIComponent(payload[key])}`
             ).join("&")
 
         const urlEncoded = `?${queryString}`
-
         Router.push(`/products/${urlEncoded}`)
     }
 
@@ -100,6 +101,7 @@ export default function Dashboard(props) {
 
 
                     <Stack spacing="2" >
+
                         {
 
                             props.products.length > 0 ? (
@@ -134,9 +136,12 @@ export default function Dashboard(props) {
                 </Box>
 
             </Flex>
-            <BarCode />
 
-
+            {
+                !isWideVersion && (
+                    <BarCode />
+                )
+            }
 
             {
                 isOpen === true && (

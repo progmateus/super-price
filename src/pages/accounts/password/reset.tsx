@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { Input } from "../../../components/form/Input";
 import { api } from "../../../services/apiClient";
+import { withSSRGuest } from "../../../utils/withSSRGuest";
 
 export default function ResetUserPassword() {
 
@@ -151,3 +152,11 @@ export default function ResetUserPassword() {
     )
 
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+
+    return {
+        props: {
+        }
+    }
+});

@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Stack } from "@chakra-ui/react"
+import { Box, Flex, Icon, Stack, useBreakpointValue } from "@chakra-ui/react"
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
 import { PriceItem } from "../components/priceItem"
@@ -13,6 +13,11 @@ import { useScannerModal } from "../contexts/ScannerModalContext"
 export default function Dashboard(props) {
 
     const { isOpen } = useScannerModal();
+
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg: true
+    })
 
     return (
         <Flex direction="column" >
@@ -41,7 +46,11 @@ export default function Dashboard(props) {
                 </Box>
             </Flex>
 
-            <BarCode />
+            {
+                !isWideVersion && (
+                    <BarCode />
+                )
+            }
 
             {
                 isOpen === true && (

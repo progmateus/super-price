@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Flex, Text } from "@chakra-ui/react"
+import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
@@ -24,11 +24,16 @@ export default function Prices(props) {
 
     const { price } = usePriceModal();
 
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg: true
+    })
+
 
     return (
         < Flex direction="column" >
             <Header />
-            <Flex w="100%" my={["2", "6"]} maxWidth={1480} mx="auto" px="6">
+            <Flex w="100%" my={["2", "6"]} maxWidth={1480} mx="auto" px={["2", "6"]}>
                 <Sidebar />
 
                 <Box
@@ -58,10 +63,13 @@ export default function Prices(props) {
                             )
                     }
 
-                    <TablePrices
-                        product={props.product}
-                        prices={props.prices}
-                    />
+                    {
+                        props.product && (
+                            <TablePrices
+                                prices={props.prices}
+                            />
+                        )
+                    }
 
                 </Box>
 
@@ -69,7 +77,11 @@ export default function Prices(props) {
 
             </Flex >
 
-            <BarCode />
+            {
+                !isWideVersion && (
+                    <BarCode />
+                )
+            }
 
             {
                 isOpen === true && (
