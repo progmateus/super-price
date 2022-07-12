@@ -1,5 +1,7 @@
 import Router from "next/router";
 import * as yup from "yup"
+import { List, ListRowRenderer, AutoSizer, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
+import 'react-virtualized/styles.css';
 import { Box, Button, Flex, Icon, Stack, Text, useBreakpointValue } from "@chakra-ui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -14,6 +16,7 @@ import { setupAPIClient } from "../services/api";
 import { titleCase } from "../utils/titleCase";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import { ScannerModal } from "../components/scannerModal/";
+import { useRef } from "react";
 
 interface ProductProps {
     id: string;
@@ -32,7 +35,7 @@ const SearchProductFormSchema = yup.object().shape({
     product_name: yup.string().required("Nome do produto obrigatório").max(100, "Limite de caracteres excedido."),
 })
 
-export default function Dashboard(props) {
+export default function Products(props) {
 
     const { register, handleSubmit, formState } = useForm(({
         resolver: yupResolver(SearchProductFormSchema)
@@ -42,10 +45,27 @@ export default function Dashboard(props) {
 
     const { isOpen } = useScannerModal();
 
+    const cache = useRef(new CellMeasurerCache({
+        fixedHeight: true,
+        defaultHeight: 100
+    }))
+
     const isWideVersion = useBreakpointValue({
         base: false,
         lg: true
     })
+
+    const rowRenderer: ListRowRenderer = ({ index, key, style, parent }) => {
+        return (
+            <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>
+                <Box style={style}>
+                    <ProductItem
+                        product={props.products[index]}
+                    />
+                </Box>
+            </CellMeasurer>
+        )
+    }
 
 
     const handleSearchProduct: SubmitHandler<SearchProductFormData> = async (values) => {
@@ -69,7 +89,7 @@ export default function Dashboard(props) {
                 <Sidebar />
 
 
-                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }}>
+                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }} w={["100%", "65%"]} h="100vh">
                     <Flex as="form" alignItems="center" pb="3" onSubmit={handleSubmit(handleSearchProduct)}>
 
                         <Input
@@ -99,8 +119,49 @@ export default function Dashboard(props) {
                     </Flex>
 
 
+                    <WindowScroller>
+                        {({ isScrolling, onChildScroll, scrollTop }) => (
+                            <AutoSizer>
+                                {({ height, width }) => (
+                                    <List
+                                        autoHeight
+                                        height={height}
+                                        isScrolling={isScrolling}
+                                        onScroll={onChildScroll}
+                                        rowCount={props.products.length}
+                                        overscanRowCount={15}
+                                        rowHeight={cache.current.rowHeight}
+                                        deferredMeasurementCache={cache.current}
+                                        rowRenderer={rowRenderer}
+                                        scrollTop={scrollTop}
+                                        width={width}
+                                    />
+                                )}
+                            </AutoSizer>
+                        )}
+                    </WindowScroller>
 
-                    <Stack spacing="2" >
+
+                    {/* <WindowScroller>
+                            {({ height, isScrolling, registerChild, scrollTop }) => (
+
+                                <List
+                                    autoHeight
+                                    height={height}
+                                    isScrolling={isScrolling}
+                                    rowCount={props.products.length}
+                                    rowHeight={80}
+                                    rowRenderer={rowRenderer}
+                                    scrollTop={scrollTop}
+                                    width={600}
+                                />
+                            )}
+                        </WindowScroller> */}
+
+
+
+
+                    {/* <Stack spacing="2" >
 
                         {
 
@@ -129,7 +190,7 @@ export default function Dashboard(props) {
                                     <Text > Nenhum Resultado Encontrado </Text>
                                 </Flex>
                         }
-                    </Stack>
+                    </Stack> */}
 
 
 
