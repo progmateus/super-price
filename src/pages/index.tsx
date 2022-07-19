@@ -1,10 +1,23 @@
-import { Box, Button, Flex, Heading, HStack, Icon, Img, Link, SimpleGrid, Text, VStack } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import { Box, Button, Flex, Heading, HStack, Icon, Img, Link, SimpleGrid, Text, useBreakpointValue, VStack } from "@chakra-ui/react";
+import { AiOutlineInfoCircle, AiOutlineLineChart } from "react-icons/ai";
+import { BsSearch } from "react-icons/bs";
+import { FaFacebookSquare } from "react-icons/fa";
+import { BsInstagram, BsTwitter, BsCurrencyDollar } from "react-icons/bs";
+
+
+
+
+
 
 
 
 export default function Home() {
+
+
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg: true
+    })
 
 
     // if (typeof window) {
@@ -95,13 +108,16 @@ export default function Home() {
                     <Box textAlign="center">
                         <Button
                             color="white"
-                            bg="#EB86C3"
+                            w="80"
+                            h="16"
+                            bg="#E879AB"
                             _hover={{
-                                bgColor: "#CA61AB"
+                                bgColor: "#C75895"
                             }}
+                            fontSize={24}
                             size="lg"
                             borderRadius={100}
-                            w="60"
+
                         > COMEÇAR JÁ
                         </Button>
                     </Box>
@@ -155,30 +171,76 @@ export default function Home() {
 
             <Box as="section" bg="#20546A" minHeight="100vh" pt="12" >
                 <Flex justify="center">
-                    <Box>
-                        <Flex align="center">
+                    <Box pt="4rem">
+                        <Flex align="center" >
                             <Heading size="lg">
                                 Um jeito inteligente e econômico <br /> de fazer compras!
                             </Heading>
-                            <Text ml="18rem" fontSize={16}>
+                            <Text ml="16rem" fontSize={16}>
                                 O Superprice é a melhor ferramenta colaborativa de <br />
                                 decisão de compras. Consulte, compare e economize!
                             </Text>
                         </Flex>
-                        <SimpleGrid minChildWidth="360px" w="100%">
-                            <Box w="14rem" h="15rem" borderWidth={2} borderColor="white" bg="#20546A" >
-                                a
+
+                        <SimpleGrid columns={3} minChildWidth="360px" w="100%" mt="4rem">
+                            <Box w="17rem" h="19rem" borderWidth={1} borderRadius={10} borderColor="white" bg="#20546A" p="6" >
+                                <Icon as={BsSearch} fontSize={60} />
+                                <Heading size="md" mt="6"> Consulte </Heading>
+                                <Text fontSize={14} mt="4" >
+                                    Conseguimos dizer para você por quanto um produto
+                                    está sendo vendido em um determinado supermercado
+                                    com base nas sugestões de outros usuários
+                                </Text>
                             </Box>
-                            <Box w="14rem" h="15rem" borderWidth={2} borderColor="white" bg="#20546A" >
-                                a
+
+                            <Box w="17rem" h="19rem" borderWidth={1} borderRadius={10} borderColor="white" bg="#20546A" p="6"  >
+                                <Icon as={AiOutlineLineChart} fontSize={60} />
+                                <Heading size="md" mt="6"> Compare </Heading>
+                                <Text fontSize={14} mt="4" >
+                                    Compare o preço de um produto em outros supermercados da sua cidade
+                                </Text>
                             </Box>
-                            <Box w="14rem" h="15rem" borderWidth={2} borderColor="white" bg="#20546A" >
-                                a
+
+                            <Box w="17rem" h="19rem" borderWidth={1} borderRadius={10} borderColor="white" bg="#20546A" p="6"  >
+                                <Icon as={BsCurrencyDollar} fontSize={60} />
+                                <Heading size="md" mt="6"> Economize </Heading>
+                                <Text fontSize={14} mt="4" >
+                                    Encontre o produto com o preço que mais cabe no seu bolso
+                                </Text>
                             </Box>
                         </SimpleGrid>
                     </Box>
                 </Flex>
             </Box>
+
+            <Flex
+                as="footer"
+                bg="#2C6A7C"
+                minHeight="47vh"
+                textAlign="center"
+                px="15rem"
+                pt="6"
+            >
+                <Box>
+                    <Heading size="2xl"> SuperPrice </Heading>
+                    <Text mt="6" fontSize={16}> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type
+                        specimen book. It has survived not only five centuries, but also the leap
+                        into electronic typesetting, remaining essentially unchanged. It was
+                        popularised in the 1960s with the release of Letraset sheets containing
+                        Lorem Ipsum passages, and more recently with desktop publishing software
+                        like Aldus PageMaker including versions of Lorem Ipsum.
+                    </Text>
+                    <Flex justify="center" mt="6">
+                        <HStack spacing="12">
+                            <Icon as={FaFacebookSquare} fontSize={40} opacity={0.4} />
+                            <Icon as={BsInstagram} fontSize={40} opacity={0.4} />
+                            <Icon as={BsTwitter} fontSize={40} opacity={0.4} />
+                        </HStack>
+                    </Flex>
+                </Box>
+            </Flex>
         </Box >
     )
 }
