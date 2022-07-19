@@ -31,6 +31,7 @@ export function Header() {
             ///mt={["2", "4"]}
             px={["3", "6"]}
             align="center"
+            id="header"
         >
 
             {!isWideVersion && (

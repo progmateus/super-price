@@ -1,169 +1,184 @@
-import { Box, Button, Flex, Icon, Link, Stack, Text } from "@chakra-ui/react";
-import * as yup from "yup"
-import { yupResolver } from "@hookform/resolvers/yup"
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Input } from "../components/form/Input";
-import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-import { withSSRGuest } from "../utils/withSSRGuest";
-import { RiShoppingCart2Line } from "react-icons/ri";
+import { Box, Button, Flex, Heading, HStack, Icon, Img, Link, SimpleGrid, Text, VStack } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
-type SingInFormData = {
-  email: string;
-  password: string;
+
+
+export default function Home() {
+
+
+    // if (typeof window) {
+
+    //     const header = document.querySelector("#header")
+
+    //     window.onscroll = () => {
+    //         let top = window.scrollY;
+    //         if (top > 100) {
+    //             console.log("Teste")
+    //         }
+    //     }
+    // }
+
+    return (
+        <Box bg="white">
+            <Box
+                position="fixed"
+                w="100%"
+                bg="brand.600"
+                h={["16", "20"]}
+                mx="auto"
+                px={["3", "6"]}
+                py="4"
+                zIndex={1}
+            >
+                <Flex align="center">
+                    <Text
+                        fontSize={["2xl", "3xl"]}
+                        fontWeight="bold"
+                        letterSpacing="tight"
+                        w="64"> Superprice
+                        <Text as="span" ml="1" color="pink.500">.</Text>
+                    </Text>
+
+                    <Flex ml="auto">
+                        <HStack spacing="12">
+
+                            <Link href="/signin" textDecoration="none" >
+
+                                <Button
+                                    fontSize={14}
+                                    size="sm"
+                                    variant="unstyled"
+                                    _hover={{
+                                        fontStyle: "sublime"
+                                    }}
+                                >
+                                    ENTRAR
+                                </Button>
+                            </Link>
+                            <Link href="/signup" textDecoration="none">
+                                <Button
+                                    fontSize={14}
+                                    size="sm"
+                                    variant="outline"
+                                    textDecoration="none"
+                                    _hover={{
+                                        bgColor: "#EB86C3",
+                                        color: "white",
+                                    }}
+                                >
+                                    CRIAR CONTA
+                                </Button>
+                            </Link>
+                        </HStack>
+                    </Flex>
+                </Flex>
+            </Box>
+            <Flex as="section" color="gray.900" minHeight="100vh">
+
+                <Box mt="auto" >
+                    <Img w="45rem" src="/images/hands.png" />
+                </Box>
+
+
+                <Box mr="auto" my="auto">
+                    <Heading mb="4" size="3xl" >
+                        Preços em <br />
+                        Supermercados
+                    </Heading>
+                    <Text mb="4" fontSize={28}>
+                        Consulte, Compare e Economize<br />
+                        nas suas Compras em <br />
+                        Supermercados da sua cidade
+                    </Text>
+
+                    <Box textAlign="center">
+                        <Button
+                            color="white"
+                            bg="#EB86C3"
+                            _hover={{
+                                bgColor: "#CA61AB"
+                            }}
+                            size="lg"
+                            borderRadius={100}
+                            w="60"
+                        > COMEÇAR JÁ
+                        </Button>
+                    </Box>
+                </Box>
+            </Flex>
+
+            <Box as="section" bg="#2C6A7C" minHeight="100vh" pt="12" >
+
+                <Box textAlign="center" >
+                    <Text fontWeight="bold" mb="4" opacity={0.7}> S O B R E</Text>
+                    <Heading size="lg">
+                        O que é o <br />
+                        Super Price?
+                    </Heading>
+                </Box>
+
+
+                <Flex justify="center" align="center" mt="8">
+                    <Flex align="center" >
+                        <Box fontSize={14}>
+                            <Text mb="4">
+                                Lorem Ipsum is simply dummy text of the
+                                printing and typesetting industry. <br />
+                                Lorem Ipsum has been the industry's
+                                standard dummy text ever since the <br />
+                                1500s, when an unknown printer took a galley of type and scrambled it to <br />
+                                make a type specimen book. It has survived not only five centuries, but also <br />
+                                the leap into electronic typesetting, remaining essentially unchanged. It was <br />
+                                popularised in the 1960s with the release of Letraset sheets containing <br />
+                                Lorem Ipsum passages, and more recently with desktop publishing <br />
+                                software like Aldus PageMaker including versions of Lorem Ipsum. <br />
+                            </Text>
+                            <Text>
+                                Why do we use it? < br />
+                                It is a long established fact that a reader will be distracted by the readable <br />
+                                content of a page when looking at its layout. The point of using Lorem <br />
+                                Ipsum is that it has a more-or-less normal distribution of letters, as <br />
+                                opposed to using 'Content here, content here', making it look like readable <br />
+                                English. Many desktop publishing packages and web page editors now use <br />
+                                Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will <br />
+                                uncover many web sites still in their infancy. Various versions have evolved <br />
+                                over the years, sometimes by accident, sometimes on purpose (injected <br />
+                                humour and the like).
+                            </Text>
+                        </Box>
+                        <Icon ml="20" as={AiOutlineInfoCircle} fontSize={300} opacity={0.3} />
+                    </Flex>
+                </Flex>
+
+            </Box>
+
+            <Box as="section" bg="#20546A" minHeight="100vh" pt="12" >
+                <Flex justify="center">
+                    <Box>
+                        <Flex align="center">
+                            <Heading size="lg">
+                                Um jeito inteligente e econômico <br /> de fazer compras!
+                            </Heading>
+                            <Text ml="18rem" fontSize={16}>
+                                O Superprice é a melhor ferramenta colaborativa de <br />
+                                decisão de compras. Consulte, compare e economize!
+                            </Text>
+                        </Flex>
+                        <SimpleGrid minChildWidth="360px" w="100%">
+                            <Box w="14rem" h="15rem" borderWidth={2} borderColor="white" bg="#20546A" >
+                                a
+                            </Box>
+                            <Box w="14rem" h="15rem" borderWidth={2} borderColor="white" bg="#20546A" >
+                                a
+                            </Box>
+                            <Box w="14rem" h="15rem" borderWidth={2} borderColor="white" bg="#20546A" >
+                                a
+                            </Box>
+                        </SimpleGrid>
+                    </Box>
+                </Flex>
+            </Box>
+        </Box >
+    )
 }
-
-const signInForSchema = yup.object().shape({
-
-  email: yup.string().required("E-mail obrigatório").max(80, "Limite de caracteres excedido."),
-  password: yup.string().required("Senha obrigatória").max(80, "Limite de caracteres excedido.")
-
-})
-
-export default function SignIn() {
-
-  const { signIn } = useContext(AuthContext);
-
-  const { register, handleSubmit, setError, formState } = useForm(({
-    resolver: yupResolver(signInForSchema)
-  }));
-
-  const { errors } = formState;
-
-  const handleSignIn: SubmitHandler<SingInFormData> = async (credentials: SingInFormData) => {
-
-    try {
-      await signIn(credentials);
-    } catch (err) {
-
-      if (err.response.status === 500) {
-        setError('apiError', {
-          message: "Ocorreu algum erro",
-        });
-      }
-      else {
-        setError('apiError', {
-          message: "E-mail ou senha inválidos",
-        });
-      }
-    }
-  }
-
-  return (
-    <Flex
-      w="100%"
-      h="100%"
-      position="absolute"
-      top={0}
-      left={0}
-      align="center"
-      justify="center"
-      bg="#F1F1F1"
-    >
-
-      <Flex
-        as="form"
-        width="100%"
-        maxWidth={360}
-        bg="white"
-        p="8"
-        borderRadius={8}
-        // borderColor="#E9E9E9"
-        // borderWidth={0.1}
-        boxShadow='md'
-        rounded='md'
-        flexDir="column"
-        onSubmit={handleSubmit(handleSignIn)}
-      >
-
-        <Box textAlign="center" mb="4">
-          <Box mb="2">
-            <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
-          </Box>
-          <Text color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
-        </Box>
-
-        <Stack spacing="4">
-
-          <Input
-            name="email"
-            type="email"
-            label="E-mail"
-            color="gray.900"
-            error={errors.email}
-            {...register("email")}
-            focusBorderColor="brand.500"
-            borderColor="gray.500"
-            variant="outline"
-            _hover={{ bgColor: "#F1F1F1" }}
-            size="lg"
-          />
-
-          <Input
-            name="password"
-            type="password"
-            label="Senha"
-            color="gray.900"
-            error={errors.password}
-            {...register("password")}
-            focusBorderColor="brand.500"
-            bgColor="white"
-            borderColor="gray.500"
-            variant="outline"
-            _hover={{ bgColor: "#F1F1F1" }}
-            size="lg"
-          />
-        </Stack>
-
-        <Button
-          type="submit"
-          mt="6"
-          bg="brand.700"
-          _hover={{ bgColor: "brand.800" }}
-          size="lg"
-          isLoading={formState.isSubmitting}
-        >
-          Entrar
-        </Button>
-
-        {errors.apiError &&
-          <Box
-            mt="1"
-            mb="2"
-            color="red.500"
-            fontSize={[14, 16]}
-          >{errors.apiError.message}
-          </Box>
-        }
-
-        <Flex fontSize="14" mt="2" justify="center" >
-          <Box>
-            <Link color="blue.700" href="/accounts/password/reset">
-              Esqueceu a senha?
-            </Link>
-          </Box>
-        </Flex>
-
-
-
-        <Flex fontSize="14" mt="7" justify="center" >
-          <Text mr="1" color="gray.900">
-            Não tem uma conta?
-          </Text>
-          <Link fontWeight="bold" href="/signup" color="blue">
-            Cadastre-se
-          </Link>
-        </Flex>
-
-      </Flex>
-
-    </Flex >
-  )
-}
-
-export const getServerSideProps = withSSRGuest(async (ctx) => {
-  return {
-    props: {}
-  }
-})
-
