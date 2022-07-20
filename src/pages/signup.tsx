@@ -88,12 +88,15 @@ export default function SignUp() {
 
                 <Box>
                     <Box mb="4">
-                        <Box mx="auto" mb="2" textAlign="center" >
+                        {/* <Box mx="auto" mb="2" textAlign="center" >
                             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
+                        </Box> */}
+                        <Box mt="0">
+                            <Img w="8rem" mx="auto" src="/images/completed.png" />
                         </Box>
 
                         <Box >
-                            <Text textAlign="center" color="gray.500" fontWeight="bold"> Cadastre-se para encontrar o menor preço</Text>
+                            <Text mt="6" textAlign="center" color="gray.500" fontWeight="bold"> Cadastre-se para encontrar o menor preço</Text>
                         </Box>
                     </Box>
 
@@ -164,7 +167,7 @@ export default function SignUp() {
                                     <Text mr="1">
                                         Tem uma conta?
                                     </Text>
-                                    <Link href="/" color="blue">
+                                    <Link href="/signin" color="blue">
                                         Conecte-se
                                     </Link>
                                 </Flex>

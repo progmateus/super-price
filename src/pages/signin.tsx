@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Icon, Link, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Img, Link, Stack, Text } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -77,10 +77,13 @@ export default function SignIn() {
       >
 
         <Box textAlign="center" mb="4">
-          <Box mb="2">
+          {/* <Box mb="2">
             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
+          </Box> */}
+          <Box mt="0">
+            <Img w="10rem" mx="auto" src="/images/completed.png" />
           </Box>
-          <Text color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
+          <Text mt={["4", "6"]} color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
         </Box>
 
         <Stack spacing="4">
