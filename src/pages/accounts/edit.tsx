@@ -130,13 +130,6 @@ export default function UpdateUser(props) {
                             </Box>
 
                             <Box role="button" onClick={handleClickImage}>
-                                {/* <Img
-                                    w={200}
-                                    h={200}
-                                    mx="auto"
-                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                                    borderRadius={100}
-                                /> */}
 
                                 <Flex justify="center">
                                     <Avatar

@@ -16,9 +16,7 @@ import { TablePrices } from "../components/sectionPrice/tablePrices";
 import { ProductInfo } from "../components/sectionPrice/productInfo";
 import { BarCode } from "../components/barCode";
 
-
 export default function Prices(props) {
-
 
     const { isOpen } = useScannerModal();
 
@@ -28,7 +26,6 @@ export default function Prices(props) {
         base: false,
         lg: true
     })
-
 
     return (
         < Flex direction="column" >

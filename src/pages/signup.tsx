@@ -91,9 +91,9 @@ export default function SignUp() {
                         {/* <Box mx="auto" mb="2" textAlign="center" >
                             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
                         </Box> */}
-                        <Box mt="0">
-                            <Img w="8rem" mx="auto" src="/images/completed.png" />
-                        </Box>
+                        <Link href="/" mt="0">
+                            <Img w="7rem" mx="auto" src="/images/completed.png" />
+                        </Link>
 
                         <Box >
                             <Text mt="6" textAlign="center" color="gray.500" fontWeight="bold"> Cadastre-se para encontrar o menor preço</Text>

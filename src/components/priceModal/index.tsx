@@ -9,7 +9,8 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import Router from "next/router";
 import { replaceBasePath } from "next/dist/server/router";
 import { useEffect, useState } from "react";
 import { appendErrors, SubmitHandler, useForm } from "react-hook-form";
@@ -18,6 +19,7 @@ import { api } from "../../services/apiClient";
 import encodeQueryData from "../../utils/encodeURL";
 import { Input } from "../form/Input"
 import { InputMask } from "../form/inputMask";
+import { useRouter } from "next/router";
 
 
 interface PriceModalProps {
@@ -55,12 +57,14 @@ const priceFormSchema = yup.object().shape({
 
 export function PriceModal(props) {
 
+    const { asPath } = useRouter();
+
     const { handleClosePriceModal, isOpen, price, type } = usePriceModal();
 
     const [apiError, setApiError] = useState("");
 
 
-    const { register, handleSubmit, setError, formState } = useForm(({
+    const { register, handleSubmit, formState } = useForm(({
         defaultValues: {
             gtin: price.product?.gtin,
             supermarket_name: price.supermarket?.name,
@@ -109,7 +113,7 @@ export function PriceModal(props) {
                         price: Number(priceReplaced)
                     }).then(() => {
                         handleClosePriceModal();
-                        window.location.reload();
+                        Router.push(asPath)
                     }).catch((err) => {
                         console.log(err)
                         setApiError(err.response.data.message)

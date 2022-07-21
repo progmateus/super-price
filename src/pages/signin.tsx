@@ -80,9 +80,9 @@ export default function SignIn() {
           {/* <Box mb="2">
             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
           </Box> */}
-          <Box mt="0">
-            <Img w="10rem" mx="auto" src="/images/completed.png" />
-          </Box>
+          <Link href="/" mt="0">
+            <Img w={["8rem", "9rem"]} mx="auto" src="/images/completed.png" />
+          </Link>
           <Text mt={["4", "6"]} color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
         </Box>
 

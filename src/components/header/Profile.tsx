@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Link, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { titleCase } from "../../utils/titleCase";

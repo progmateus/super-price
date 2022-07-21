@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, Heading, Icon, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, Heading, Icon, Img, Link, Text } from "@chakra-ui/react";
 import { FiCheckCircle } from "react-icons/fi";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { FormEvent, useState } from "react";
@@ -82,9 +82,11 @@ export default function ResetUserPassword() {
                         <Flex justify="center">
                             <Box px="4" py="7">
                                 <Flex justify="center">
-                                    <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.700" />
+                                    <Link href="/" mt="0">
+                                        <Img w={["8rem", "8rem"]} mx="auto" src="/images/completed.png" />
+                                    </Link>
                                 </Flex>
-                                <Box textAlign="center" color="gray.900" my="4">
+                                <Box textAlign="center" color="gray.900" my="8">
                                     <Box>
                                         <Heading mb="2" as="h1" size='lg' >Redefinir senha</Heading>
                                     </Box>
