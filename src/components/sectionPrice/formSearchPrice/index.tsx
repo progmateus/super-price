@@ -8,6 +8,8 @@ import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
 import { ValidatorGTIN } from "../../../utils/validatorGTIN";
 import encodeQueryData from "../../../utils/encodeURL";
 import { Input } from "../../form/Input";
+import { api } from "../../../services/apiClient";
+import { titleCase } from "../../../utils/titleCase";
 
 interface IFormSearchPrice {
     query: {
@@ -18,6 +20,8 @@ interface IFormSearchPrice {
     error: {
         message: string;
     }
+
+    ///  setPriceList: (prices) => void;
 }
 
 type searchProductFormData = {
@@ -55,6 +59,32 @@ export function FormSearchPrice(props: IFormSearchPrice) {
             setError("gtin", { message: "Código inválido" })
             return
         }
+
+
+        // const response = await api.get("/prices", {
+        //     params: {
+        //         gtin: props.query.gtin,
+        //         supermarket_name: props.query.supermarket_name
+        //     }
+        // })
+
+        // const { data } = response;
+
+        // data.map((price) => {
+        //     price.supermarket.name = titleCase(price.supermarket.name);
+        //     price.product.name = price.product.name.toUpperCase();
+        //     price.price.price = new Intl.NumberFormat("pt-br", {
+        //         style: 'currency',
+        //         currency: 'BRL'
+        //     }).format(price.price.price);
+        //     price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
+        //         ("pt-br", {
+        //             day: "2-digit",
+        //             month: "2-digit",
+        //         });
+        // });
+
+        /// props.setPriceList(data);
 
         const urlEncoded = encodeQueryData(value);
         Router.push(`/prices/${urlEncoded}`)

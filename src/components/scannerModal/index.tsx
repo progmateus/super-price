@@ -1,30 +1,31 @@
-import { Box, Button, Flex, HStack, Icon, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, HStack, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
 import { useScannerModal } from "../../contexts/ScannerModalContext";
-import Quagga from '@ericblade/quagga2';
-import { ValidatorGTIN } from "../../utils/validatorGTIN";
-import encodeQueryData from "../../utils/encodeURL";
 import { RiErrorWarningFill } from "react-icons/ri"
-import Router from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { Scanner } from "./Scanner";
+import React from "react";
+
 
 export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
-    const [scanning, setScanning] = useState(false);
-    const [results, setResults] = useState([]);
-    const scannerRef = useRef(null);
+    const [isScanning, setIsScanning] = useState(false);
+    const scannerRef = React.useRef(null);
 
     async function handleCloseModal() {
         // Quagga.offProcessed();
         // Quagga.offDetected();
         // Quagga.pause();
-        // await Quagga.stop();
+        /// Quagga.stop();
         onClose();
     }
 
     useEffect(() => {
-        setScanning(true)
+        setTimeout(() => {
+            setIsScanning(true)
+        }, 100)
     }, [])
+
+
 
     return (
         <>
@@ -52,7 +53,7 @@ export function ScannerModal() {
                                             // width: '100%',
                                             ///border: '3px solid',
                                         }} />
-                                        {scanning ? <Scanner scannerRef={scannerRef} /> : null}
+                                        {isScanning ? <Scanner scannerRef={scannerRef} /> : null}
                                     </Box>
 
                                 </ModalBody>

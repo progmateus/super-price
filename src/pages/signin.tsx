@@ -141,7 +141,7 @@ export default function SignIn() {
 
         <Flex fontSize="14" mt="2" justify="center" >
           <Box>
-            <Link color="blue.700" href="/accounts/password/reset">
+            <Link color="blue.700" href="/accounts/password/recovery">
               Esqueceu a senha?
             </Link>
           </Box>

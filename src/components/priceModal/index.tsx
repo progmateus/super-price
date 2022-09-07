@@ -20,6 +20,7 @@ import encodeQueryData from "../../utils/encodeURL";
 import { Input } from "../form/Input"
 import { InputMask } from "../form/inputMask";
 import { useRouter } from "next/router";
+import { titleCase } from "../../utils/titleCase";
 
 
 interface PriceModalProps {
@@ -85,7 +86,12 @@ export function PriceModal(props) {
             case "create":
 
                 const urlEncoded = encodeQueryData(values);
-                const getResponse = await api.get(`/prices/${urlEncoded}`)
+                const getResponse = await api.get("/prices", {
+                    params: {
+                        gtin: values.gtin,
+                        supermarket_name: values.supermarket_name
+                    }
+                })
 
                 // if price does not exists, create
                 if (getResponse.data.length !== 1) {
@@ -96,7 +102,7 @@ export function PriceModal(props) {
                         price: Number(priceReplaced)
                     }).then(() => {
                         handleClosePriceModal();
-                        window.location.reload();
+                        Router.push(asPath)
                     }).catch((err) => {
                         setApiError(err.response.data.message)
                         console.log(err);
@@ -128,14 +134,41 @@ export function PriceModal(props) {
                     price: Number(priceReplaced)
                 }).then(() => {
                     handleClosePriceModal();
-                    window.location.reload();
+                    Router.push(asPath)
                 }).catch((err) => {
                     console.log(err)
                     setApiError(err.response.data.message)
-                })
+                });
 
                 break;
         }
+
+
+
+        // const response = await api.get("/prices", {
+        //     params: {
+        //         gtin: props.query.gtin,
+        //         supermarket_name: props.query.supermarket_name
+        //     }
+        // })
+
+        // const { data } = response
+
+        // data.map((price) => {
+        //     price.supermarket.name = titleCase(price.supermarket.name);
+        //     price.product.name = price.product.name.toUpperCase();
+        //     price.price.price = new Intl.NumberFormat("pt-br", {
+        //         style: 'currency',
+        //         currency: 'BRL'
+        //     }).format(price.price.price);
+        //     price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
+        //         ("pt-br", {
+        //             day: "2-digit",
+        //             month: "2-digit",
+        //         });
+        // });
+
+        // props.setPriceList(data);
     }
 
     return (

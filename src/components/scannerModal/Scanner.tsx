@@ -21,8 +21,6 @@ function getMedianOfCodeErrors(decodedCodes) {
     return medianOfErrors;
 }
 
-
-
 export function Scanner(props) {
 
     function scannerEnd() {
@@ -50,8 +48,6 @@ export function Scanner(props) {
         }
     }, [onDetected]);
 
-
-
     const handleProcessed = (result) => {
         if (result) {
             console.warn('* quagga onProcessed', result);
@@ -67,9 +63,7 @@ export function Scanner(props) {
                                 onClose();
                                 setOnDetected(data.codeResult.code)
                                 const urlEncoded = encodeQueryData({ gtin: data.codeResult.code });
-                                console.log("antes: ", data.codeResult.code)
                                 Router.push(`/prices/${urlEncoded}`)
-                                console.log("depois: ", data.codeResult.code)
 
                             }
                         }
@@ -77,9 +71,12 @@ export function Scanner(props) {
                 }
             }
         }
-    };
+    }
 
     useLayoutEffect(() => {
+
+        console.log("Começou");
+
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -88,8 +85,8 @@ export function Scanner(props) {
                 constraints: {
                     width: 400,
                     height: 200,
-                    facingMode: "user",
-                    deviceId: "7832475934759384534"
+                    facingMode: "environment",
+                    /// deviceId: "7832475934759384534"
                 },
                 singleChannel: false
             },

@@ -1,6 +1,8 @@
 import { Box, Button, Flex, Icon, Stack, StackDivider, Table, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
+import { useState } from "react";
 import { RiPencilLine } from "react-icons/ri";
 import { usePriceModal } from "../../../contexts/PriceModalContext";
+import { api } from "../../../services/apiClient";
 
 interface iPrice {
     product: {
@@ -27,15 +29,12 @@ interface ITablePriceProps {
     prices: iPrice[]
 }
 
-
-
 export function TablePrices(props: ITablePriceProps) {
 
 
     const { handleOpenPriceModal, setPrice, setType } = usePriceModal();
 
-
-    function handleEditPrice(price: any, type) {
+    async function handleEditPrice(price: any, type) {
         setPrice(price)
         setType(type)
         handleOpenPriceModal()

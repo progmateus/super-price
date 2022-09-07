@@ -15,6 +15,7 @@ import { FormSearchPrice } from "../components/sectionPrice/formSearchPrice";
 import { TablePrices } from "../components/sectionPrice/tablePrices";
 import { ProductInfo } from "../components/sectionPrice/productInfo";
 import { BarCode } from "../components/barCode";
+import { useState } from "react";
 
 export default function Prices(props) {
 
@@ -70,15 +71,16 @@ export default function Prices(props) {
 
                 </Box>
 
-                <PriceModal key={price.price?.id} price={price} />
+                <PriceModal
+                    key={price.price?.id}
+                    price={price}
+                    query={props.query}
+                />
 
             </Flex >
 
-            {
-                !isWideVersion && (
-                    <BarCode />
-                )
-            }
+
+            <BarCode />
 
             {
                 isOpen === true && (
@@ -91,6 +93,8 @@ export default function Prices(props) {
 }
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
+
+    console.log(ctx.query)
 
     const urlEncoded = encodeQueryData(ctx.query);
     const query = ctx.query;
@@ -105,7 +109,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
             const productResponse = await apiClient.get(`/products/${query.gtin}`)
 
-            const data = productResponse.data;
+            const { data } = productResponse;
 
             product = {
                 id: data.id,
@@ -117,7 +121,13 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
                 updated_at: data.updated_at
             }
 
-            const response = await apiClient.get(`/prices/${urlEncoded}`)
+            const response = await apiClient.get("/prices", {
+                params: {
+                    gtin: query.gtin,
+                    supermarket_name: query.supermarket_name
+                }
+            })
+
             const { data: pricesResponse } = response
 
             pricesResponse.map((price) => {
