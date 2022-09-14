@@ -38,7 +38,7 @@ export default function SignIn() {
 
       if (err.response.status === 500) {
         setError('apiError', {
-          message: "Ocorreu algum erro",
+          message: "Ocorreu um erro",
         });
       }
       else {
@@ -80,7 +80,7 @@ export default function SignIn() {
           {/* <Box mb="2">
             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
           </Box> */}
-          <Link href="/" mt="0">
+          <Link href="/" mt="0" _focus={{ outline: "none" }}>
             <Img w={["8rem", "9rem"]} mx="auto" src="/images/completed.png" />
           </Link>
           <Text mt={["4", "6"]} color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
@@ -141,7 +141,7 @@ export default function SignIn() {
 
         <Flex fontSize="14" mt="2" justify="center" >
           <Box>
-            <Link color="blue.700" href="/accounts/password/recovery">
+            <Link href="/accounts/password/recovery" _focus={{ outline: "none" }} color="blue.700">
               Esqueceu a senha?
             </Link>
           </Box>

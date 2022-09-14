@@ -1,14 +1,17 @@
-import { Box, Button, Flex, FormControl, Heading, Icon, Img, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, Heading, HStack, Icon, Img, Link, Text, VStack } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { FiCheckCircle } from "react-icons/fi";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { VscError } from "react-icons/vsc";
+
 import { FormEvent, useState } from "react";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { Input } from "../../../components/form/Input";
 import { api } from "../../../services/apiClient";
 import { withSSRGuest } from "../../../utils/withSSRGuest";
 import { SubmitHandler, useForm } from "react-hook-form";
+import axios from "axios";
 
 
 interface IResetUserPasswordProps {
@@ -29,25 +32,39 @@ const resetPasswordFormSchema = yup.object().shape({
 
 export default function ResetUserPassword(props: IResetUserPasswordProps) {
 
-    const { register, handleSubmit, setError, formState } = useForm(({
+    const { register, handleSubmit, setError, formState, reset } = useForm(({
         resolver: yupResolver(resetPasswordFormSchema)
     }));
 
     const { errors, isSubmitting, isSubmitted } = formState;
 
+    const [apiStatus, setApiStatus] = useState(null)
+    const [apiError, setApiError] = useState(null)
+
+
 
     const handleResetPassword: SubmitHandler<ResetPasswordFormData> = async (values) => {
 
-        console.log(values);
+        try {
+            // const response = await api.post(`/password/reset?token=${props.token}`, {
+            //     password: values.password,
+            // })
 
-        // try {
-        //     await api.post(`/password/reset/token?token=${props.token}`, {
-        //         password: values.password,
-        //     })
+            const response = await axios.post(`http://192.166.17.165:3333/password/reset?token=${props.token}`, {
+                password: values.password,
 
-        // } catch (err) {
-        //     console.log(err);
-        // }
+            })
+
+            reset();
+            setApiStatus(response.status);
+            setApiError(null)
+
+        } catch (err) {
+            setApiError(err.response.status)
+            setApiStatus(null);
+
+            console.log(err);
+        }
 
     }
 
@@ -73,7 +90,7 @@ export default function ResetUserPassword(props: IResetUserPasswordProps) {
                     <Flex justify="center">
                         <Box px="4" py="7">
                             <Flex justify="center">
-                                <Link href="/" mt="0">
+                                <Link href="/" mt="0" _focus={{ outline: "none" }}>
                                     <Img w={["8rem", "8rem"]} mx="auto" src="/images/completed.png" />
                                 </Link>
                             </Flex>
@@ -124,6 +141,65 @@ export default function ResetUserPassword(props: IResetUserPasswordProps) {
                                     </Flex>
                                 </VStack>
                             </Box>
+
+                            {
+                                apiStatus === 200 && (
+                                    <Flex
+                                        justify="center"
+                                        color="green"
+                                        mt="8"
+                                        fontSize={18}
+                                    >
+                                        <HStack spacing="1">
+
+                                            <Icon as={BsFillCheckCircleFill} />
+                                            <Text
+                                                alignSelf="center">
+                                                Senha atualizada.
+                                            </Text>
+                                        </HStack>
+                                    </Flex>
+                                )
+                            }
+
+                            {
+                                apiError === 401 && (
+                                    <Flex
+                                        justify="center"
+                                        color="red.500"
+                                        mt="6"
+                                        fontSize={18}
+                                    >
+                                        <HStack spacing="1">
+                                            <Icon as={VscError} />
+                                            <Text
+                                                alignSelf="center">
+                                                Token Inválido
+                                            </Text>
+                                        </HStack>
+                                    </Flex>
+                                )
+                            }
+
+                            {
+                                apiError === 500 && (
+                                    <Flex
+                                        justify="center"
+                                        color="red.500"
+                                        mt="8"
+                                        fontSize={18}
+                                    >
+                                        <HStack spacing="1">
+
+                                            <Icon as={VscError} />
+                                            <Text
+                                                alignSelf="center">
+                                                Ocorreu um erro
+                                            </Text>
+                                        </HStack>
+                                    </Flex>
+                                )
+                            }
 
                         </Box>
                     </Flex>

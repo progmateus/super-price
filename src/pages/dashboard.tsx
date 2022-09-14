@@ -14,8 +14,6 @@ import { useRef } from "react";
 
 export default function Dashboard(props) {
 
-    console.log(props.prices)
-
     const { isOpen } = useScannerModal();
 
     const cache = useRef(new CellMeasurerCache({

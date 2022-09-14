@@ -24,11 +24,11 @@ export function HeaderGuest(props) {
                 {
                     isWideVersion ? (
 
-                        <Link href="/">
+                        <Link href="/" _focus={{ outline: "none" }}>
                             <Img w="12rem" src="images/letters-white.png" />
                         </Link>
                     ) :
-                        <Link href="/">
+                        <Link href="/" _focus={{ outline: "none" }}>
                             <Img w="2rem" src="images/icon-white.png" />
                         </Link>
 
@@ -38,17 +38,18 @@ export function HeaderGuest(props) {
                     isWideVersion && (
 
                         <HStack
+                            color="white"
                             spacing="8"
                             ml="auto"
                             w="15rem"
                             justify="center"
-                            fontSize={16}
-                            opacity={.9}
+                            fontSize={17}
+                            opacity={0.95}
 
                         >
-                            <Link href="#about" > Sobre</Link>
-                            <Link href="#benefits" > Vantagens</Link>
-                            <Link href="#contact" > Contato</Link>
+                            <Link href="#about" _focus={{ outline: "none" }} > Sobre</Link>
+                            <Link href="#benefits" _focus={{ outline: "none" }} > Vantagens</Link>
+                            <Link href="#contact" _focus={{ outline: "none" }} > Contato</Link>
                         </HStack>
                     )
                 }
@@ -72,6 +73,8 @@ export function HeaderGuest(props) {
                                     _hover={{
                                         fontStyle: "sublime"
                                     }}
+                                    _focus={{ outline: "none" }}
+
                                 >
                                     ENTRAR
                                 </Button>
@@ -90,6 +93,9 @@ export function HeaderGuest(props) {
                                     _hover={{
                                         bgColor: "#EB86C3",
                                         color: "white",
+                                    }}
+                                    _focus={{
+                                        outline: "none"
                                     }}
                                 >
                                     CRIAR CONTA

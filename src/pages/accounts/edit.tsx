@@ -34,8 +34,6 @@ export default function UpdateUser(props) {
 
     const { setProfileUser, user } = useContext(AuthContext);
 
-    console.log(user)
-
     const [success, setSuccess] = useState(false)
 
     const { register, handleSubmit, setError, formState } = useForm(({
@@ -63,16 +61,12 @@ export default function UpdateUser(props) {
 
         data.append("avatar", file, file.name);
 
-        console.log("file: ", file)
-
         try {
             const response = await api.patch("/users/avatar", data, {
                 headers: {
                     "Content-Type": "multipart/form-data; boundary=MyBoundary"
                 },
             });
-
-            console.log(response)
 
             setProfileUser();
             // setSuccess(true)

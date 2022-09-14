@@ -94,8 +94,6 @@ export default function Prices(props) {
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
 
-    console.log(ctx.query)
-
     const urlEncoded = encodeQueryData(ctx.query);
     const query = ctx.query;
     const apiClient = setupAPIClient(ctx);

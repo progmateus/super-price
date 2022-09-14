@@ -33,7 +33,7 @@ export function signOut() {
     destroyCookie(undefined, "super-price.token")
     destroyCookie(undefined, "super-price.refreshToken")
 
-    Router.push("/")
+    Router.push("/signin")
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {

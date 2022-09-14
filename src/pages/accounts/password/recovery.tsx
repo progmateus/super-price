@@ -82,7 +82,7 @@ export default function ResetUserPassword() {
                         <Flex justify="center">
                             <Box px="4" py="7">
                                 <Flex justify="center">
-                                    <Link href="/" mt="0">
+                                    <Link href="/" mt="0" color="blue.700" _focus={{ outline: "none" }}>
                                         <Img w={["8rem", "8rem"]} mx="auto" src="/images/completed.png" />
                                     </Link>
                                 </Flex>
@@ -138,14 +138,19 @@ export default function ResetUserPassword() {
                     rounded='md'
                     alignItems="center" >
 
-                    <Flex justify="center" >
+                    <Flex justify="center">
                         <Icon as={BsFillCheckCircleFill} fontSize="40" color="green" />
                     </Flex>
-                    <Box mt="6">
+                    <Box mt="4">
                         <Text color="gray.900" fontSize={[16, 17]} textAlign="center">
                             E-mail enviado com sucesso
                         </Text>
                     </Box>
+                    <Flex mt="1.4rem">
+                        <Link href="/" color="blue.700" mt="auto" mx="auto" fontSize={12}>
+                            Voltar à página inicial
+                        </Link>
+                    </Flex>
                 </Box>
             )
             }

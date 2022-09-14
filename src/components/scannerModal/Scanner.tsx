@@ -75,8 +75,6 @@ export function Scanner(props) {
 
     useLayoutEffect(() => {
 
-        console.log("Começou");
-
         Quagga.init({
             inputStream: {
                 name: "Live",

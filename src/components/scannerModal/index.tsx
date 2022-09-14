@@ -12,10 +12,6 @@ export function ScannerModal() {
     const scannerRef = React.useRef(null);
 
     async function handleCloseModal() {
-        // Quagga.offProcessed();
-        // Quagga.offDetected();
-        // Quagga.pause();
-        /// Quagga.stop();
         onClose();
     }
 
