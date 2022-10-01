@@ -1,4 +1,4 @@
-import { Box, Button, Flex, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, InputGroup, InputLeftElement, Stack, Text } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import {
@@ -11,16 +11,14 @@ import {
     ModalCloseButton,
 } from '@chakra-ui/react';
 import Router from "next/router";
-import { replaceBasePath } from "next/dist/server/router";
-import { useEffect, useState } from "react";
-import { appendErrors, SubmitHandler, useForm } from "react-hook-form";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { usePriceModal } from "../../contexts/PriceModalContext";
 import { api } from "../../services/apiClient";
 import encodeQueryData from "../../utils/encodeURL";
 import { Input } from "../form/Input"
 import { InputMask } from "../form/inputMask";
 import { useRouter } from "next/router";
-import { titleCase } from "../../utils/titleCase";
 
 
 interface PriceModalProps {
