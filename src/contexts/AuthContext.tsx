@@ -78,6 +78,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 case "signOut":
                     signOut(false);
                     break;
+                case 'signIn':
+                    const { 'super-price.token': token } = parseCookies()
+                    if (token) {
+                        Router.push('/dashboard')
+                    }
                 default:
                     break
             }
@@ -104,6 +109,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         });
 
         api.defaults.headers['Authorization'] = `Bearer ${token}`
+
+        authChannel.postMessage('signIn')
 
         await setProfileUser();
 
