@@ -15,7 +15,6 @@ interface iPrice {
     price: {
         id: string;
         price: number;
-        user_id: string;
         created_at: string;
         updated_at: string;
     },

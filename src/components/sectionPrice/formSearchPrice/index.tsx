@@ -50,6 +50,16 @@ export function FormSearchPrice(props: IFormSearchPrice) {
 
         const isValidGTIN = validatorGTIN.validateGTIN(value.gtin);
 
+
+       const xssRegex = /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig
+
+       const isInvalidSupermarket_name = xssRegex.test(value.supermarket_name)
+
+       if(isInvalidSupermarket_name === true){
+        setError("supermarket_name", { message: "Caracteres inválidos" })
+
+       }
+
         if (isValidGTIN === false) {
             setError("gtin", { message: "Código inválido" })
             return
