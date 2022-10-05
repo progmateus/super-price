@@ -92,7 +92,7 @@ export default function SignUp() {
                             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
                         </Box> */}
                         <Link href="/" mt="0" _focus={{ outline: "none" }}>
-                            <Img w="7rem" mx="auto" src="/images/completed.png" />
+                            <Img w="5rem" mx="auto" src="logo-super-price-icon.png" />
                         </Link>
 
                         <Box >

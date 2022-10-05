@@ -58,7 +58,7 @@ export function PriceModal(props) {
 
     const { asPath } = useRouter();
 
-    const { handleClosePriceModal, isOpen, price, type } = usePriceModal();
+    const { handleClosePriceModal, isOpen, price, setPrice, type } = usePriceModal();
 
     const [apiError, setApiError] = useState("");
 
@@ -84,47 +84,69 @@ export function PriceModal(props) {
             case "create":
 
                 const urlEncoded = encodeQueryData(values);
-                const getResponse = await api.get("/prices", {
-                    params: {
-                        gtin: values.gtin,
-                        supermarket_name: values.supermarket_name
+                
+
+                try{
+                    const getResponse = await api.get("/prices", {
+                        params: {
+                            gtin: values.gtin,
+                            supermarket_name: values.supermarket_name
+                        }
+                    })
+
+                    // if price does not exists, create
+                    if (getResponse.data.length !== 1) {
+
+                        await api.post("/prices", {
+                            gtin: values.gtin,
+                            supermarket_name: values.supermarket_name,
+                            price: Number(priceReplaced)
+                        }).then(() => {
+                            handleClosePriceModal();
+                            Router.push(asPath)
+                        }).catch((err) => {
+                            setApiError(err.response.data.message)
+                            console.log(err);
+                        })
+
+                        break;
                     }
-                })
 
-                // if price does not exists, create
-                if (getResponse.data.length !== 1) {
+                    // if price already exists, edit
+                    if (getResponse.data.length !== 0) {
 
-                    await api.post("/prices", {
-                        gtin: values.gtin,
-                        supermarket_name: values.supermarket_name,
-                        price: Number(priceReplaced)
-                    }).then(() => {
-                        handleClosePriceModal();
-                        Router.push(asPath)
-                    }).catch((err) => {
-                        setApiError(err.response.data.message)
-                        console.log(err);
-                    })
+                        await api.patch("/prices", {
+                            price_id: getResponse.data[0].price.id,
+                            price: Number(priceReplaced)
+                        }).then(() => {
+                            handleClosePriceModal();
+                            Router.push(asPath)
+                        }).catch((err) => {
+                            console.log(err)
+                            setApiError(err.response.data.message)
+                        })
 
-                    break;
+                        break;
+                    }
+                }catch(err){
+                    if(err.response.data.message === "Product not found!" ){
+                        await api.post("/prices", {
+                            gtin: values.gtin,
+                            supermarket_name: values.supermarket_name,
+                            price: Number(priceReplaced)
+                        }).then(() => {
+                            handleClosePriceModal();
+                            Router.push(asPath)
+                        }).catch((err) => {
+                            setApiError(err.response.data.message)
+                            console.log(err);
+                        })
+
+                        break;
+                    }
                 }
 
-                // if price already exists, edit
-                if (getResponse.data.length !== 0) {
-
-                    await api.patch("/prices", {
-                        price_id: getResponse.data[0].price.id,
-                        price: Number(priceReplaced)
-                    }).then(() => {
-                        handleClosePriceModal();
-                        Router.push(asPath)
-                    }).catch((err) => {
-                        console.log(err)
-                        setApiError(err.response.data.message)
-                    })
-
-                    break;
-                }
+              
 
             case "edit":
                 await api.patch("/prices", {
@@ -141,32 +163,7 @@ export function PriceModal(props) {
                 break;
         }
 
-
-
-        // const response = await api.get("/prices", {
-        //     params: {
-        //         gtin: props.query.gtin,
-        //         supermarket_name: props.query.supermarket_name
-        //     }
-        // })
-
-        // const { data } = response
-
-        // data.map((price) => {
-        //     price.supermarket.name = titleCase(price.supermarket.name);
-        //     price.product.name = price.product.name.toUpperCase();
-        //     price.price.price = new Intl.NumberFormat("pt-br", {
-        //         style: 'currency',
-        //         currency: 'BRL'
-        //     }).format(price.price.price);
-        //     price.price.updated_at = new Date(price.price.updated_at).toLocaleDateString
-        //         ("pt-br", {
-        //             day: "2-digit",
-        //             month: "2-digit",
-        //         });
-        // });
-
-        // props.setPriceList(data);
+        setPrice({});
     }
 
     return (

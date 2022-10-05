@@ -30,7 +30,6 @@ interface ITablePriceProps {
 
 export function TablePrices(props: ITablePriceProps) {
 
-
     const { handleOpenPriceModal, setPrice, setType } = usePriceModal();
 
     async function handleEditPrice(price: any, type) {

@@ -10,8 +10,8 @@ export function CallToActionGuest() {
     return (
         <>
             {isWideVersion && (
-                <Box mt="auto" >
-                    <Img w="45rem" src="/images/hands.png" />
+                <Box mt="auto" ml="4rem" mr="12rem" >
+                    <Img w="30rem" src="handsphone.png" />
                 </Box>
             )}
 
@@ -24,7 +24,7 @@ export function CallToActionGuest() {
             >
                 {!isWideVersion && (
                     <Box mt="0">
-                        <Img w="12rem" mx="auto" src="/images/completed.png" />
+                        <Img w="12rem" mx="auto" src="logo-super-price-completed.png" />
                     </Box>
                 )}
 

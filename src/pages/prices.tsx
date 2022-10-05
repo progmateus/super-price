@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Button, Flex, Text, useBreakpointValue } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
@@ -21,12 +21,19 @@ export default function Prices(props) {
 
     const { isOpen } = useScannerModal();
 
-    const { price } = usePriceModal();
-
     const isWideVersion = useBreakpointValue({
         base: false,
         lg: true
     })
+
+    const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
+
+
+    async function handleCreatePrice(price: any, type) {
+        setPrice(price)
+        setType(type)
+        handleOpenPriceModal()
+    }
 
     return (
         < Flex direction="column" >
@@ -44,6 +51,16 @@ export default function Prices(props) {
                         query={props.query}
                         error={props.error}
                     />
+
+                    <Flex>
+                        <Button
+                         onClick={() => handleCreatePrice({}, "create")}
+                         bg="pink.500"
+                         _hover={{bgColor: "pink.600"}}
+                         >
+                            Criar preço
+                        </Button>
+                    </Flex>
 
                     {
                         props.product ? (

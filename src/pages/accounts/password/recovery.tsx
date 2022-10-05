@@ -1,8 +1,6 @@
-import { Box, Button, Flex, FormControl, Heading, Icon, Img, Link, Text } from "@chakra-ui/react";
-import { FiCheckCircle } from "react-icons/fi";
+import { Box, Button, Flex, Heading, Icon, Img, Link, Text } from "@chakra-ui/react";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { FormEvent, useState } from "react";
-import { RiShoppingCart2Line } from "react-icons/ri";
 import { Input } from "../../../components/form/Input";
 import { api } from "../../../services/apiClient";
 import { withSSRGuest } from "../../../utils/withSSRGuest";
@@ -45,6 +43,7 @@ export default function ResetUserPassword() {
 
             } catch (err) {
                 setIsSubmitting(false)
+                setSuccess(false)
 
                 if (err.response.status === 404) {
                     setError({ message: "Endereço de e-mail inválido." })
@@ -83,7 +82,7 @@ export default function ResetUserPassword() {
                             <Box px="4" py="7">
                                 <Flex justify="center">
                                     <Link href="/" mt="0" color="blue.700" _focus={{ outline: "none" }}>
-                                        <Img w={["8rem", "8rem"]} mx="auto" src="/images/completed.png" />
+                                        <Img w={["6rem", "5rem"]} mx="auto" src="../../logo-super-price-icon.png"  />
                                     </Link>
                                 </Flex>
                                 <Box textAlign="center" color="gray.900" my="8">

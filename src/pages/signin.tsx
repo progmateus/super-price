@@ -81,7 +81,7 @@ export default function SignIn() {
             <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
           </Box> */}
           <Link href="/" mt="0" _focus={{ outline: "none" }}>
-            <Img w={["8rem", "9rem"]} mx="auto" src="/images/completed.png" />
+            <Img w={["6rem", "5rem"]} mx="auto" src="logo-super-price-icon.png" />
           </Link>
           <Text mt={["4", "6"]} color="gray.500" fontWeight="bold"> Faça login para economizar</Text>
         </Box>

@@ -25,11 +25,11 @@ export function HeaderGuest(props) {
                     isWideVersion ? (
 
                         <Link href="/" _focus={{ outline: "none" }}>
-                            <Img w="12rem" src="images/letters-white.png" />
+                            <Img w="12rem" src="logo-super-price-letters-white.png" />
                         </Link>
                     ) :
                         <Link href="/" _focus={{ outline: "none" }}>
-                            <Img w="2rem" src="images/icon-white.png" />
+                            <Img w="2rem" src="logo-super-price-icon-white.png" />
                         </Link>
 
                 }
