@@ -74,7 +74,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         authChannel = new BroadcastChannel("auth");
 
         authChannel.onmessage = (message) => {
-            switch (message.data){
+            switch (message.data) {
                 case "signOut":
                     signOut(false);
                     break;
@@ -87,7 +87,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     break
             }
         }
-    },[])
+    }, [])
 
     async function signIn({ email, password }: SignInCredentials) {
 
@@ -134,7 +134,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
 
     return (
-        <AuthContext.Provider value={{signOut, signIn, isAuthenticated, user, setProfileUser }} >
+        <AuthContext.Provider value={{ signOut, signIn, isAuthenticated, user, setProfileUser }} >
             {children}
         </AuthContext.Provider>
     )
