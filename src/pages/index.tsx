@@ -65,8 +65,8 @@ export default function Home() {
             <Flex
                 as="footer"
                 id="contact"
-                bg="#2C6A7C"
-                minHeight="30vh"
+                bg="#10324C"
+                minHeight="5vh"
                 textAlign="center"
                 px={["2rem", "15rem"]}
                 pt="4"
