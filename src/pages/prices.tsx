@@ -28,13 +28,6 @@ export default function Prices(props) {
 
     const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
 
-
-    async function handleCreatePrice(price: any, type) {
-        setPrice(price)
-        setType(type)
-        handleOpenPriceModal()
-    }
-
     return (
         < Flex direction="column" >
             <Header />
@@ -52,15 +45,7 @@ export default function Prices(props) {
                         error={props.error}
                     />
 
-                    <Flex>
-                        <Button
-                         onClick={() => handleCreatePrice({}, "create")}
-                         bg="pink.500"
-                         _hover={{bgColor: "pink.600"}}
-                         >
-                            Criar preço
-                        </Button>
-                    </Flex>
+
 
                     {
                         props.product ? (

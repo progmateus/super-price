@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Stack, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Flex, Icon, Stack, useBreakpointValue, Text } from "@chakra-ui/react"
 import { List, ListRowRenderer, AutoSizer, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
@@ -29,11 +29,17 @@ export default function Dashboard(props) {
     const rowRenderer: ListRowRenderer = ({ index, key, style, parent }) => {
         return (
             <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>
-                <Box style={style}>
+                <Box mb={2}>
                     <PriceItem
                         price={props.prices[index]}
                     />
                 </Box>
+
+                {/* <Box style={style}>
+                    <PriceItem
+                        price={props.prices[index]}
+                    />
+                </Box> */}
             </CellMeasurer>
         )
     }
@@ -42,26 +48,18 @@ export default function Dashboard(props) {
         <Flex direction="column" >
             <Header />
 
-            <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px="6">
+            <Flex w="100%" my={["4", "6"]} maxWidth={1480} mx="auto" px={["4", "6"]}>
                 <Sidebar />
 
-                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }} w={["100%", "65%"]} h="100vh">
-                    {/* <Stack spacing="2" >
-                        {
-                            props.prices.length > 0 ? (
-                                props.prices.map((price) => {
-                                    return (
-                                        <PriceItem
-                                            key={price.price.id}
-                                            price={price}
-                                        />
-                                    )
-                                })
+                <Box
+                    mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }}
+                    w={["100%", "100%", "65%"]}
+                    h="100vh"
+                >
 
-                            ) :
-                                <Box> NENHUM PREÇO ENCONTRADO </Box>
-                        }
-                    </Stack> */}
+                    <Box mb="2">
+                        <Text color="gray.400"> Atualizações recentes</Text>
+                    </Box>
 
                     <WindowScroller>
                         {({ isScrolling, onChildScroll, scrollTop }) => (

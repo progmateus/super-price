@@ -39,7 +39,8 @@ export const theme = extendTheme({
                 bg: "#E5E5E5",
                 color: "gray.50",
                 width: "100%",
-                height: "100%"
+                height: "100%",
+                boxSizing: "border-box"
             },
             html: {
                 width: "100%",

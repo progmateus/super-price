@@ -3,10 +3,11 @@ import Router from "next/router";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Box, Button, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
 import { ValidatorGTIN } from "../../../utils/validatorGTIN";
 import encodeQueryData from "../../../utils/encodeURL";
 import { Input } from "../../form/Input";
+import { usePriceModal } from "../../../contexts/PriceModalContext";
 
 interface IFormSearchPrice {
     query: {
@@ -39,6 +40,15 @@ export function FormSearchPrice(props: IFormSearchPrice) {
 
     const { errors } = formState;
 
+    const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
+
+
+    async function handleCreatePrice(price: any, type) {
+        setPrice(price)
+        setType(type)
+        handleOpenPriceModal()
+    }
+
     useEffect(() => {
 
         setValue("gtin", props.query.gtin)
@@ -51,14 +61,14 @@ export function FormSearchPrice(props: IFormSearchPrice) {
         const isValidGTIN = validatorGTIN.validateGTIN(value.gtin);
 
 
-       const xssRegex = /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig
+        const xssRegex = /(\b)(on\S+)(\s*)=|javascript|<(|\/|[^\/>][^>]+|\/[^>][^>]+)>/ig
 
-       const isInvalidSupermarket_name = xssRegex.test(value.supermarket_name)
+        const isInvalidSupermarket_name = xssRegex.test(value.supermarket_name)
 
-       if(isInvalidSupermarket_name === true){
-        setError("supermarket_name", { message: "Caracteres inválidos" })
+        if (isInvalidSupermarket_name === true) {
+            setError("supermarket_name", { message: "Caracteres inválidos" })
 
-       }
+        }
 
         if (isValidGTIN === false) {
             setError("gtin", { message: "Código inválido" })
@@ -78,7 +88,7 @@ export function FormSearchPrice(props: IFormSearchPrice) {
                     name="gtin"
                     type="number"
                     label="Código do produto"
-                    w={["25", "25"]}
+                    w="25"
                     color="gray.900"
                     focusBorderColor="brand.500"
                     borderColor="gray.500"
@@ -114,6 +124,16 @@ export function FormSearchPrice(props: IFormSearchPrice) {
                     isLoading={formState.isSubmitting}
 
                 > Buscar
+                </Button>
+
+                <Button
+                    w="28"
+                    mx="auto"
+                    onClick={() => handleCreatePrice({}, "create")}
+                    bg="pink.500"
+                    _hover={{ bgColor: "pink.600" }}
+                >
+                    Criar preço
                 </Button>
 
             </SimpleGrid>

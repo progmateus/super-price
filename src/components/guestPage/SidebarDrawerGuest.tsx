@@ -28,7 +28,7 @@ export function SidebarDrawerGuest(props: ISidebarDrawerProps) {
                             <Link href="#benefits"> Vantagens</Link>
                             <Link href="#contact"> Contato</Link>
 
-                            <Link fontStyle="none" href="/signup" >
+                            <Link fontStyle="none" href="/signin" >
                                 <Button
                                     w="15rem"
                                     bg="#E879AB"

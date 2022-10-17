@@ -50,7 +50,7 @@ type CreatePriceFormData = {
 
 const priceFormSchema = yup.object().shape({
     gtin: yup.string().required("Campo obrigatório").max(50, "Limite de caracteres excedido"),
-    supermarket_name: yup.string().required("Campo obrigatório").max(50, "Limite de caracteres excedido"),
+    supermarket_name: yup.string().required("Campo obrigatório").max(100, "Limite de caracteres excedido"),
     price: yup.string().required("Campo obrigatório").max(12, "Limite de caracteres excedido").min(1)
 })
 
@@ -84,9 +84,9 @@ export function PriceModal(props) {
             case "create":
 
                 const urlEncoded = encodeQueryData(values);
-                
 
-                try{
+
+                try {
                     const getResponse = await api.get("/prices", {
                         params: {
                             gtin: values.gtin,
@@ -128,8 +128,8 @@ export function PriceModal(props) {
 
                         break;
                     }
-                }catch(err){
-                    if(err.response.data.message === "Product not found!" ){
+                } catch (err) {
+                    if (err.response.data.message === "Product not found!") {
                         await api.post("/prices", {
                             gtin: values.gtin,
                             supermarket_name: values.supermarket_name,
@@ -146,7 +146,7 @@ export function PriceModal(props) {
                     }
                 }
 
-              
+
 
             case "edit":
                 await api.patch("/prices", {

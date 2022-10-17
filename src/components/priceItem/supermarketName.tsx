@@ -9,11 +9,11 @@ interface SupermarketNameProps {
 export function SupermarketName(props: SupermarketNameProps) {
     return (
         <Flex
-            w="35%"
+            w="18rem"
         >
             <Text
                 m="auto"
-                fontSize={["xs", "1rem"]}
+                fontSize={[12, "1rem"]}
                 fontWeight="bold"
                 color="gray.700"
                 textAlign="center"

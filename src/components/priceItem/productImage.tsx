@@ -7,9 +7,11 @@ interface ProductImageProps {
 export function ProductImage(props: ProductImageProps) {
     return (
         <Box
-            w={["21%", "10%"]}
+            w={["10rem", "8rem"]}
             m="1"
             maxWidth="95px"
+            textAlign="center"
+
         >
             {
                 props.thumbnail ? (

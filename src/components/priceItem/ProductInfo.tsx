@@ -1,4 +1,4 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 
 interface ProductInfoProps {
@@ -9,8 +9,9 @@ interface ProductInfoProps {
 export function ProductInfo(props: ProductInfoProps) {
     return (
         <Box
-            w="55%"
+            w={["20rem", "26rem"]}
             p="2"
+            h="100%"
         >
             <Text
                 fontSize={["xs", "1rem"]}
@@ -25,14 +26,12 @@ export function ProductInfo(props: ProductInfoProps) {
 
             <Text
                 mt={["5", "15"]}
-                mb="auto"
                 color="green.500"
                 fontSize={["lg", "2xl"]}
                 fontWeight="bold"
             >
                 {props.price}
             </Text>
-
         </Box>
     )
 }
