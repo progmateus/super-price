@@ -46,8 +46,8 @@ export function TablePrices(props: ITablePriceProps) {
                     <Tr >
                         <Th textAlign="center" >PREÇO</Th>
                         <Th textAlign="center" >SUPERMERCADO</Th>
-                        <Th px="2" >ATUALIZAÇÃO</Th>
-                        <Th px="2" textAlign="center" ></Th>
+                        <Th textAlign="center" px="2" >ATUALIZAÇÃO</Th>
+                        <Th textAlign="center" px="2" ></Th>
                     </Tr>
                 </Thead>
 
@@ -84,6 +84,6 @@ export function TablePrices(props: ITablePriceProps) {
                     }
                 </Tbody>
             </Table>
-        </Box>
+        </Box >
     )
 }

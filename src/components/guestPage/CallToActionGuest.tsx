@@ -53,15 +53,18 @@ export function CallToActionGuest() {
 
                         <Link
                             href="/signin"
+                            _hover={{
+                                textDecoration: "none"
+                            }}
                         >
                             <Button
                                 color="white"
-
                                 h="16"
                                 bg="#E879AB"
                                 _hover={{
                                     bgColor: "#C75895",
                                 }}
+                                _focus={{ outline: "none" }}
                                 fontSize={24}
                                 w={["16rem", "16rem", "20rem", "18rem"]}
                                 borderRadius={100}

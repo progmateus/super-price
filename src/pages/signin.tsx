@@ -77,9 +77,6 @@ export default function SignIn() {
       >
 
         <Box textAlign="center" mb="4">
-          {/* <Box mb="2">
-            <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
-          </Box> */}
           <Link href="/" mt="0" _focus={{ outline: "none" }}>
             <Img w={["6rem", "5rem"]} mx="auto" src="logo-super-price-icon.png" />
           </Link>

@@ -13,13 +13,13 @@ export function FooterGuest() {
             </Text>
             <Flex justify="center" mt={["6", "4"]}>
                 <HStack spacing="8">
-                    <Link href="http://www.facebook.com/">
+                    <Link href="http://www.facebook.com/" _focus={{ outline: "none" }}>
                         < Icon as={FaFacebookSquare} fontSize={[18, 20]} opacity={0.4} />
                     </Link>
-                    <Link href="http://www.instagram.com.com/">
+                    <Link href="http://www.instagram.com/" _focus={{ outline: "none" }}>
                         <Icon as={BsInstagram} fontSize={[18, 20]} opacity={0.4} />
                     </Link>
-                    <Link href="http://www.twitter.com/">
+                    <Link href="http://www.twitter.com/" _focus={{ outline: "none" }}>
                         <Icon as={BsTwitter} fontSize={[18, 20]} opacity={0.4} />
                     </Link>
                 </HStack>
