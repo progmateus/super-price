@@ -1,34 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Superprice 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/devsuperior/sds1-wmazoni/blob/master/LICENSE) 
 
-## Getting Started
+# Sobre o projeto
 
-First, run the development server:
+https://wmazoni-sds1.netlify.app
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Superprice é uma aplicação full stack web 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação consiste em uma pesquisa de preferência de games, onde os dados são coletados no app mobile, e depois são listados no app web, que também apresenta um dashboard com gráficos baseados nestes dados.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+A aplicação permite aos usuarios, cadastrar, editar, buscar e comparar os preços de um produto entre os supermercados mais próximos.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+O usúario pode optar por buscar pelo gtin do produto ou usar a câmera do celular para escanear o codigo de barras do mesmo, e depois os preços são listados no app web, que também apresenta uma
+pagina com a lista dos preços.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Layout mobile
+![Mobile 1](https://github.com/progmateus/assets/blob/main/mobile-dashboard.png?raw=true) ![Mobile 2](https://github.com/progmateus/assets/blob/main/mobile-prices.png?raw=true) ![Mobile 3](https://github.com/progmateus/assets/blob/main/mobile-scanner.png?raw=true)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Layout web
+![Web 1](https://github.com/progmateus/assets/blob/main/desktop-dashboard.jpg?raw=true)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Web 2](https://github.com/progmateus/assets/blob/main/desktop-prices.jpg?raw=true)
 
-## Deploy on Vercel
+## Modelo conceitual
+![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/model.jpg?raw=true)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Tecnologias utilizadas
+## Back end
+- Nodejs
+- HTML / CSS / JS / TypeScript
+- Typeorm
+- Jest
+## Front end
+- HTML / CSS / JS / TypeScript
+- ReactJS
+- Nextjs
+- Chakra ui
+## Implantação em produção
+- Back end: Heroku
+- Front end web: Netlify
+- Banco de dados: Postgresql
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# Autor
+
+Mateus Lopes
+
+https://www.linkedin.com/in/progmateus

@@ -82,7 +82,11 @@ export default function Prices(props) {
             </Flex >
 
 
-            <BarCode />
+            {
+                !isWideVersion && (
+                    <BarCode />
+                )
+            }
 
             {
                 isOpen === true && (
