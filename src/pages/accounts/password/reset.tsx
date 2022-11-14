@@ -91,7 +91,7 @@ export default function ResetUserPassword(props: IResetUserPasswordProps) {
                         <Box px="4" py="7">
                             <Flex justify="center">
                                 <Link href="/" mt="0" _focus={{ outline: "none" }}>
-                                    <Img w={["8rem", "8rem"]} mx="auto" src="/images/completed.png" />
+                                    <Img w="8rem" mx="auto" src="/logo-super-price-completed.png" />
                                 </Link>
                             </Flex>
                             <Box
@@ -99,7 +99,7 @@ export default function ResetUserPassword(props: IResetUserPasswordProps) {
                                 onSubmit={handleSubmit(handleResetPassword)}
                             >
                                 <VStack
-                                    mt="8"
+                                    mt="4"
                                     spacing="4"
 
                                 >
