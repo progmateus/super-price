@@ -6,10 +6,12 @@ export function FooterGuest() {
     return (
         <Box p={["2", "4"]}>
             <Heading size="lg"> Superprice </Heading>
-            <Text mt={["2", "2"]} fontSize={[12, 14]}> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industrys standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type
-                specimen book.
+            <Text mt={["2", "2"]} fontSize={[12, 14]}> O SuperPrice é um aplicativo que permite á você,
+                nosso usuário, buscar pelo menor preço entre os supermercados mais próximos. Tendo como maior
+                objetivo aumentar as chances de passar todos os produtos da sua lista para o carrinho e assim
+                para a sua casa
+
+
             </Text>
             <Flex justify="center" mt={["6", "4"]}>
                 <HStack spacing="8">
