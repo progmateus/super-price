@@ -26,7 +26,7 @@ export default function Prices(props) {
         lg: true
     })
 
-    const { handleOpenPriceModal, price, setPrice, setType } = usePriceModal();
+    const { price } = usePriceModal();
 
     return (
         < Flex direction="column" >

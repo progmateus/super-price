@@ -61,7 +61,8 @@ export function FormSearchPrice(props: IFormSearchPrice) {
     const isWideVersion = useBreakpointValue({
         base: false,
         md: true,
-        lg: true
+        lg: true,
+        xl: false
     })
 
     const handleSubmitSearch: SubmitHandler<searchProductFormData> = async (value) => {
@@ -92,7 +93,8 @@ export function FormSearchPrice(props: IFormSearchPrice) {
             <SimpleGrid
                 minChildWidth="240px"
                 spacing={["2", "4"]}
-                templateColumns={["10rem, 8rem", "10rem, 8rem", "32rem auto"]}
+                templateColumns={["10rem, 8rem", "10rem, 8rem", "32rem 8rem"]}
+
             >
                 <SimpleGrid
                     minChildWidth="240px"
@@ -103,7 +105,8 @@ export function FormSearchPrice(props: IFormSearchPrice) {
                         type="number"
                         label="Código do produto"
                         w={{
-                            xs: "20rem",
+                            xs: "4rem",
+                            sm: "20rem",
                             md: "20rem",
                             lg: "14rem",
                             xl: "25rem",
@@ -125,7 +128,8 @@ export function FormSearchPrice(props: IFormSearchPrice) {
                         label="Supermercado"
                         color="gray.900"
                         w={{
-                            xs: "20rem",
+                            xs: "4rem",
+                            sm: "20rem",
                             md: "20rem",
                             lg: "25rem",
                             xl: "15rem",
@@ -144,10 +148,11 @@ export function FormSearchPrice(props: IFormSearchPrice) {
 
                 <SimpleGrid
                     minChildWidth="400px"
-                    spacing={["6", "6", "2"]}
+                    spacing={["6", "6", "0", "0", "4"]}
                     templateColumns="4rem 6rem"
-                    mx={["auto", "auto", "0"]}
+                    mx={["auto", "auto", "0",]}
                     mt={["4", "0"]}
+
                 >
                     <Button
                         size="md"
@@ -170,8 +175,8 @@ export function FormSearchPrice(props: IFormSearchPrice) {
                     </Button>
 
                     <Button
-                        w="25"
-                        mx="auto"
+                        w={["25", "25", "5rem", "4rem", "25"]}
+                        mx={["auto", "auto", "0", "0", "auto"]}
                         mt={["0", "8"]}
                         onClick={() => handleCreatePrice({
                             price: {
@@ -182,7 +187,7 @@ export function FormSearchPrice(props: IFormSearchPrice) {
                         _hover={{ bgColor: "pink.600" }}
 
                     >
-                        Criar preço
+                        Criar
                     </Button>
                 </SimpleGrid>
 
