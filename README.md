@@ -54,7 +54,7 @@ Superprice é uma aplicação Full Stack web
 ## 2-  Escaner de código de barras
 ![prices](https://github.com/progmateus/assets/blob/main/desktop-scanner.jpg?raw=true)
 
-## 3- Editar usuário
+## 3- Atualizar perfil
 ![Modelo Conceitual](https://github.com/progmateus/assets/blob/main/desktop-update-user.jpg?raw=true)
 
 ## 3- Ajustar imagem de perfil
