@@ -6,7 +6,6 @@ import { getCroppedImg, convertUrlToFile } from './canvasUtils';
 import { AuthContext } from '../../contexts/AuthContext';
 import { api } from '../../services/apiClient';
 
-
 export function CropperAvatarProfile(props) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -68,6 +67,7 @@ export function CropperAvatarProfile(props) {
       let data = new FormData();
 
       data.append("avatar", file, file.name);
+
 
       const response = await api.patch("/users/avatar", data, {
         headers: {

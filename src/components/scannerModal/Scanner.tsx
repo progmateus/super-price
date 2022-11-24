@@ -64,7 +64,6 @@ export function Scanner(props) {
                                 setOnDetected(data.codeResult.code)
                                 const urlEncoded = encodeQueryData({ gtin: data.codeResult.code });
                                 Router.push(`/prices/${urlEncoded}`)
-
                             }
                         }
                     })
