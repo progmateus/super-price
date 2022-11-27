@@ -1,4 +1,4 @@
-import { Box, Button, Flex, HStack, Icon, IconButton, Img, Link, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Icon, IconButton, Img, Link, useBreakpointValue } from "@chakra-ui/react";
 import { RiMenuLine } from "react-icons/ri";
 
 export function HeaderGuest(props) {

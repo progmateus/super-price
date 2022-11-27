@@ -1,4 +1,4 @@
-import { Box, Text, Heading, Button, Flex, HStack, Icon, IconButton, Img, Link, useBreakpointValue, useDisclosure, SimpleGrid } from "@chakra-ui/react";
+import { Box, Text, Heading, Flex, Icon, SimpleGrid } from "@chakra-ui/react";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { BsCurrencyDollar, BsSearch } from "react-icons/bs";
 

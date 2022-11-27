@@ -1,4 +1,4 @@
-import { Box, Text, Heading, Button, Flex, HStack, Icon, IconButton, Img, Link, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
+import { Box, Text, Heading, Flex, Icon, useBreakpointValue } from "@chakra-ui/react";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 

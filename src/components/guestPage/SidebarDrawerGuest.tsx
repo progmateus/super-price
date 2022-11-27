@@ -1,5 +1,4 @@
 import { Button, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, Icon, Link, StackDivider, VStack } from "@chakra-ui/react";
-import { SidebarNav } from "../sidebar/SidebarNav";
 import { IoPersonOutline } from "react-icons/io5";
 
 

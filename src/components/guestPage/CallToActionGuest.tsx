@@ -1,4 +1,4 @@
-import { Box, Button, Flex, HStack, Icon, Heading, Text, IconButton, Img, Link, useBreakpointValue, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Heading, Text, Img, Link, useBreakpointValue } from "@chakra-ui/react";
 
 
 export function CallToActionGuest() {
