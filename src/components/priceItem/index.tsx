@@ -1,8 +1,5 @@
 import { Box, Flex, Text, Img } from "@chakra-ui/react";
 import { titleCase } from "../../utils/titleCase";
-import { ProductImage } from "./productImage";
-import { ProductInfo } from "./ProductInfo";
-import { SupermarketName } from "./supermarketName";
 
 
 interface PriceItemProps {
@@ -33,12 +30,6 @@ interface PriceItemProps {
 
 export function PriceItem(props: PriceItemProps) {
     return (
-        // <Flex w={["22rem", "50rem"]} p="2" bg="#FFFFFF" h="28" borderRadius={4} >
-        //     <ProductImage thumbnail={props.price.product.thumbnail} />
-        //     <ProductInfo name={props.price.product.name} price={props.price.price.price} />
-        //     <SupermarketName name={props.price.supermarket.name} />
-        // </Flex >
-
         <Flex
             bg="#FFFFFF"
             borderRadius={4}
@@ -69,9 +60,7 @@ export function PriceItem(props: PriceItemProps) {
                     color="gray.900"
                     lineHeight="1.1"
                     textAlign="left"
-                    fontWeight="bold"
-                /// bg="red.100"
-                >
+                    fontWeight="bold"                >
                     {props.price.product.name}
                 </Text>
 

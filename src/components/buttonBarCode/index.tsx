@@ -16,7 +16,6 @@ export function ButtonBarCode() {
                 alignItems="center"
                 bg="brand.700"
                 bottom="5"
-                ///left="43%"
                 onClick={onOpen}
             >
                 <Icon as={RiBarcodeLine} fontSize="40" />

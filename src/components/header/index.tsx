@@ -1,12 +1,8 @@
-import { Box, Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
-import { useContext } from "react"
+import { Flex, Icon, IconButton, useBreakpointValue } from "@chakra-ui/react"
 import { RiMenuLine } from "react-icons/ri"
-import { Router } from "react-router-dom"
-import { AuthContext } from "../../contexts/AuthContext"
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext"
 import { withSSRGuest } from "../../utils/withSSRGuest"
 import { Logo } from "./Logo"
-import { NotificationsNav } from "./NotificationsNav"
 import { Profile } from "./Profile"
 import { SearchBox } from "./SearchBox"
 
@@ -54,7 +50,6 @@ export function Header() {
 
 
             <Flex ml="auto" >
-                {/* <NotificationsNav /> */}
                 <Profile
                     showProfileData={isWideVersion}
                 />

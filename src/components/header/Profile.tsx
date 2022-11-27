@@ -22,7 +22,6 @@ export function Profile({
                 </Box>
             )}
 
-            {/* <Avatar size="md" name={`${user?.name} ${user?.lastname}`} src={user?.avatar} /> */}
             <Avatar size="md" name={`${user?.name} ${user?.lastname}`} src={user?.avatar} />
 
         </Flex >
