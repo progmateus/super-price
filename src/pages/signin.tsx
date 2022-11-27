@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Icon, Img, Link, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Img, Link, Stack, Text } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,7 +6,6 @@ import { Input } from "../components/form/Input";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
-import { RiShoppingCart2Line } from "react-icons/ri";
 
 type SingInFormData = {
   email: string;
@@ -68,8 +67,6 @@ export default function SignIn() {
         bg="white"
         p="8"
         borderRadius={8}
-        // borderColor="#E9E9E9"
-        // borderWidth={0.1}
         boxShadow='md'
         rounded='md'
         flexDir="column"

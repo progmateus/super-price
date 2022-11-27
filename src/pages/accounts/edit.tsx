@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon, Avatar, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Divider, VStack, SimpleGrid, HStack, Text, Icon } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -11,9 +11,7 @@ import { withSSRAuth } from "../../utils/withSSRAuth";
 import { titleCase } from "../../utils/titleCase";
 import { api } from "../../services/apiClient";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useCallback, useContext, useState } from "react";
-import Cropper from "react-easy-crop";
-import { getCroppedImg } from "../../components/cropperAvatarProfile/canvasUtils";
+import { useContext, useState } from "react";
 import { CropperAvatarProfile } from "../../components/cropperAvatarProfile";
 
 

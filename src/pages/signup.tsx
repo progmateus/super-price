@@ -1,13 +1,12 @@
-import { Box, Button, Flex, FormErrorMessage, Icon, Img, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Img, Link, Text, VStack } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { withSSRGuest } from "../utils/withSSRGuest";
-import { RiShoppingCart2Line } from "react-icons/ri";
 import { Input } from "../components/form/Input";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { api } from "../services/apiClient";
 import { AuthContext } from "../contexts/AuthContext";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 
 type CreateUserFormData = {
@@ -75,12 +74,10 @@ export default function SignUp() {
 
             <Box
                 width="80"
-                /// mx="auto"
                 p="8"
                 bg="white"
                 borderRadius={8}
-                // borderColor="gray.300"
-                // borderWidth={0.2}
+
                 boxShadow='md'
                 rounded='md'
 
@@ -88,9 +85,6 @@ export default function SignUp() {
 
                 <Box>
                     <Box mb="4">
-                        {/* <Box mx="auto" mb="2" textAlign="center" >
-                            <Icon as={RiShoppingCart2Line} fontSize="4rem" color="brand.900" />
-                        </Box> */}
                         <Link href="/" mt="0" _focus={{ outline: "none" }}>
                             <Img w="5rem" mx="auto" src="logo-super-price-icon.png" />
                         </Link>

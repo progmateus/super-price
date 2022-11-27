@@ -8,8 +8,6 @@ import { CallToActionGuest } from "../components/guestPage/CallToActionGuest";
 
 
 export default function Home() {
-
-
     const isWideVersion = useBreakpointValue({
         base: false,
         lg: true
@@ -29,6 +27,7 @@ export default function Home() {
                 as="section"
                 color="gray.900"
                 minHeight="100vh"
+
             >
 
                 <CallToActionGuest />

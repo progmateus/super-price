@@ -2,11 +2,11 @@ import Router from "next/router";
 import * as yup from "yup"
 import { List, ListRowRenderer, AutoSizer, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
 import 'react-virtualized/styles.css';
-import { Box, Button, Flex, Icon, Stack, Text, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Button, Flex, Icon, useBreakpointValue } from "@chakra-ui/react"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { SubmitHandler, useForm } from "react-hook-form";
-import { RiAlertLine, RiSearchLine } from "react-icons/ri";
-import { BarCode } from "../components/barCode";
+import { RiSearchLine } from "react-icons/ri";
+import { ButtonBarCode } from "../components/buttonBarCode";
 import { Input } from "../components/form/Input";
 import { Header } from "../components/header";
 import { ProductItem } from "../components/productItem";
@@ -140,67 +140,13 @@ export default function Products(props) {
                             </AutoSizer>
                         )}
                     </WindowScroller>
-
-
-                    {/* <WindowScroller>
-                            {({ height, isScrolling, registerChild, scrollTop }) => (
-
-                                <List
-                                    autoHeight
-                                    height={height}
-                                    isScrolling={isScrolling}
-                                    rowCount={props.products.length}
-                                    rowHeight={80}
-                                    rowRenderer={rowRenderer}
-                                    scrollTop={scrollTop}
-                                    width={600}
-                                />
-                            )}
-                        </WindowScroller> */}
-
-
-
-
-                    {/* <Stack spacing="2" >
-
-                        {
-
-                            props.products.length > 0 ? (
-                                props.products.map((product: ProductProps) => {
-                                    return (
-                                        <ProductItem
-                                            key={product.id}
-                                            product={product}
-                                        />
-                                    )
-                                })
-
-                            ) :
-                                <Flex
-                                    w={["90", "60vw"]}
-                                    bg="#b0fbf1"
-                                    borderColor="#97fadc"
-                                    h="24"
-                                    borderRadius={6}
-                                    alignItems="center"
-                                    p="5"
-                                    color="#09c7ac"
-                                >
-                                    <Icon color="#04898F" mr="1" as={RiAlertLine} />
-                                    <Text > Nenhum Resultado Encontrado </Text>
-                                </Flex>
-                        }
-                    </Stack> */}
-
-
-
                 </Box>
 
             </Flex>
 
             {
                 !isWideVersion && (
-                    <BarCode />
+                    <ButtonBarCode />
                 )
             }
 
@@ -229,9 +175,12 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
     if (!query.product_name) {
         response = await apiClient.get("/products")
+        console.log("response: ", response)
+
     }
 
     const { data: products } = response;
+
 
 
     products.map((product) => {

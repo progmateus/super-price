@@ -1,14 +1,11 @@
-import { Box, Button, Flex, FormControl, Heading, HStack, Icon, Img, Link, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, Icon, Img, Link, Text, VStack } from "@chakra-ui/react";
 import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
-import { FiCheckCircle } from "react-icons/fi";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { VscError } from "react-icons/vsc";
 
-import { FormEvent, useState } from "react";
-import { RiShoppingCart2Line } from "react-icons/ri";
+import { useState } from "react";
 import { Input } from "../../../components/form/Input";
-import { api } from "../../../services/apiClient";
 import { withSSRGuest } from "../../../utils/withSSRGuest";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
@@ -46,11 +43,7 @@ export default function ResetUserPassword(props: IResetUserPasswordProps) {
     const handleResetPassword: SubmitHandler<ResetPasswordFormData> = async (values) => {
 
         try {
-            // const response = await api.post(`/password/reset?token=${props.token}`, {
-            //     password: values.password,
-            // })
-
-            const response = await axios.post(`http://192.166.17.165:3333/password/reset?token=${props.token}`, {
+            const response = await axios.post(`http://52.90.220.102/password/reset?token=${props.token}`, {
                 password: values.password,
 
             })

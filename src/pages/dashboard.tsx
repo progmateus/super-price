@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Stack, useBreakpointValue, Text } from "@chakra-ui/react"
+import { Box, Flex, useBreakpointValue, Text } from "@chakra-ui/react"
 import { List, ListRowRenderer, AutoSizer, WindowScroller, CellMeasurer, CellMeasurerCache } from "react-virtualized";
 import Sidebar from "../components/sidebar"
 import { Header } from "../components/header"
@@ -6,7 +6,7 @@ import { PriceItem } from "../components/priceItem"
 import { withSSRAuth } from "../utils/withSSRAuth"
 import { setupAPIClient } from "../services/api"
 import { titleCase } from "../utils/titleCase"
-import { BarCode } from "../components/barCode"
+import { ButtonBarCode } from "../components/buttonBarCode"
 import { ScannerModal } from "../components/scannerModal/"
 import { useScannerModal } from "../contexts/ScannerModalContext"
 import { useRef } from "react";
@@ -34,12 +34,6 @@ export default function Dashboard(props) {
                         price={props.prices[index]}
                     />
                 </Box>
-
-                {/* <Box style={style}>
-                    <PriceItem
-                        price={props.prices[index]}
-                    />
-                </Box> */}
             </CellMeasurer>
         )
     }
@@ -87,7 +81,7 @@ export default function Dashboard(props) {
 
             {
                 !isWideVersion && (
-                    <BarCode />
+                    <ButtonBarCode />
                 )
             }
 

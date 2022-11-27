@@ -54,14 +54,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (token) {
             api.get("/users/profile")
                 .then(response => {
-                    const { id, name, lastname, email } = response.data;
+                    const { id, name, lastname, email, avatar_url } = response.data;
 
                     setUser({
                         id,
                         name,
                         lastname,
                         email,
-                        avatar: "https://avatars.githubusercontent.com/u/73197343?v=4"
+                        avatar: avatar_url
                     })
                 }).catch(() => {
                     signOut();
@@ -121,14 +121,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
     async function setProfileUser() {
         api.get("/users/profile")
             .then(response => {
-                const { id, name, lastname, email } = response.data;
+                const { id, name, lastname, email, avatar_url } = response.data;
 
                 setUser({
                     id,
                     name,
                     lastname,
                     email,
-                    avatar: "https://avatars.githubusercontent.com/u/73197343?v=4"
+                    avatar: avatar_url
                 })
             })
     }

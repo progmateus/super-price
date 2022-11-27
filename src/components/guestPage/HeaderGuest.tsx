@@ -8,7 +8,6 @@ export function HeaderGuest(props) {
         lg: true
     })
 
-    const { isOpen, onClose, onOpen } = useDisclosure();
     return (
         <Box
             position="fixed"

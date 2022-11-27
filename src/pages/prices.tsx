@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button, Flex, Text, useBreakpointValue } from "@chakra-ui/react"
+import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react"
 import { Header } from "../components/header";
 import { withSSRAuth } from "../utils/withSSRAuth";
 import Sidebar from "../components/sidebar";
@@ -14,8 +14,7 @@ import { usePriceModal } from "../contexts/PriceModalContext";
 import { FormSearchPrice } from "../components/sectionPrice/formSearchPrice";
 import { TablePrices } from "../components/sectionPrice/tablePrices";
 import { ProductInfo } from "../components/sectionPrice/productInfo";
-import { BarCode } from "../components/barCode";
-import { useState } from "react";
+import { ButtonBarCode } from "../components/buttonBarCode";
 
 export default function Prices(props) {
 
@@ -82,11 +81,9 @@ export default function Prices(props) {
             </Flex >
 
 
-            {
-                !isWideVersion && (
-                    <BarCode />
-                )
-            }
+
+            <ButtonBarCode />
+
 
             {
                 isOpen === true && (
