@@ -108,7 +108,6 @@ export function Scanner(props) {
                 return console.log('Error starting Quagga:', err);
             }
             if (props.scannerRef && props.scannerRef.current) {
-                console.log("start")
                 Quagga.start();
             }
         });

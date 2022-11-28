@@ -175,7 +175,6 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
 
     if (!query.product_name) {
         response = await apiClient.get("/products")
-        console.log("response: ", response)
 
     }
 
