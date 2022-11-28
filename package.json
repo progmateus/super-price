@@ -21,7 +21,6 @@
     "@ericblade/quagga2": "^1.7.1",
     "@fontsource/roboto": "^4.5.7",
     "@hookform/resolvers": "^2.8.8",
-    "@next/swc-win32-x64-msvc": "^11.1.2",
     "@types/next": "^9.0.0",
     "@types/react-dom": "^16.8.3",
     "@types/react-router-dom": "^5.3.3",
