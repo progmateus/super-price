@@ -1,6 +1,7 @@
 
 import axios, { AxiosError } from "axios"
 import { parseCookies, setCookie } from "nookies"
+import { contextType } from "react-modal";
 import { signOut } from "../contexts/AuthContext";
 import { AuthTokenError } from "../errors/authTokenError";
 
@@ -14,7 +15,8 @@ export function setupAPIClient(ctx = undefined) {
     const api = axios.create({
         baseURL: "http://52.90.220.102",
         headers: {
-            Authorization: `Bearer ${cookies['super-price.token']}`
+            Authorization: `Bearer ${cookies['super-price.token']}`,
+            contextType: "text/plain"
         }
     })
 
