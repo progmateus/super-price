@@ -14,7 +14,7 @@ module.exports = {
             // // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
             key: 'Content-Security-Policy',
             value:
-              "default-src [52.90.220.102] 'self' data: 'unsafe-inline'"
+              "default-src [http://52.90.220.102] 'self' data: 'unsafe-inline'"
           }
         ]
       }
