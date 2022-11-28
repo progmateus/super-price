@@ -41,7 +41,7 @@ export function CallToActionGuest() {
                         mt={["6", "6", "8", "15rem", "6"]}
                         fontSize={[22, 28]}
                     >
-                        Consulte, compare e economize<br />
+                        CONSULTE, compare e economize<br />
                         nas suas Compras em <br />
                         Supermercados da sua cidade
                     </Text>

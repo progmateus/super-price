@@ -35,14 +35,19 @@ export default function SignIn() {
       await signIn(credentials);
     } catch (err) {
 
-      if (err.response.status === 500) {
+      if (err.response.status === 400) {
         setError('apiError', {
-          message: "Ocorreu um erro",
+          message: "E-mail ou senha inválidos",
+        });
+      }
+      else if (err.response.status === 401) {
+        setError('apiError', {
+          message: "E-mail ou senha inválidos",
         });
       }
       else {
         setError('apiError', {
-          message: "E-mail ou senha inválidos",
+          message: "Ocorreu um erro",
         });
       }
     }
