@@ -19,7 +19,7 @@ const searchFormSchema = yup.object().shape({
 
 export function SearchBox() {
 
-    const { register, handleSubmit, formState, setValue } = useForm(({
+    const { register, handleSubmit, setValue } = useForm(({
         resolver: yupResolver(searchFormSchema)
     }));
 

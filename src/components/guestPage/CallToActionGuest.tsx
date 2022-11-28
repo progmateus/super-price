@@ -38,7 +38,7 @@ export function CallToActionGuest() {
                         Supermercados
                     </Heading>
                     <Text
-                        mt={["6", "6", "8", "6"]}
+                        mt={["6", "6", "8", "15rem", "6"]}
                         fontSize={[22, 28]}
                     >
                         Consulte, compare e economize<br />

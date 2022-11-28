@@ -67,7 +67,7 @@ export default function Home() {
                 bg="#10324C"
                 minHeight="5vh"
                 textAlign="center"
-                px={["2rem", "15rem"]}
+                px={["2rem", "2rem", "2rem", "15rem"]}
                 pt="4"
             >
 
