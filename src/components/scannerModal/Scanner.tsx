@@ -1,3 +1,4 @@
+import { useBreakpointValue } from '@chakra-ui/react';
 import Quagga from '@ericblade/quagga2';
 import Router from 'next/router';
 import { useCallback, useLayoutEffect, useState } from 'react';
@@ -37,6 +38,11 @@ export function Scanner(props) {
     const [onDetected, setOnDetected] = useState({})
 
     const validatorGTIN = new ValidatorGTIN();
+
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg: true
+    })
 
     const errorCheck = useCallback((result) => {
         if (!onDetected) {
@@ -81,6 +87,7 @@ export function Scanner(props) {
                 type: "LiveStream",
                 target: props.scannerRef.current,
                 constraints: {
+                    /// width: 250,
                     width: 250,
                     height: 250,
                     facingMode: "environment",
