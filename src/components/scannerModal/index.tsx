@@ -39,7 +39,7 @@ export function ScannerModal() {
 
                                 <ModalBody >
 
-                                    <Box ref={scannerRef} position="relative" border="8px solid black">
+                                    <Box ref={scannerRef} position="relative" border="8px black">
                                         <canvas className="drawingBuffer" style={{
                                             position: 'absolute',
                                             top: '0px',
