@@ -13,7 +13,7 @@ export function setupAPIClient(ctx = undefined) {
     let cookies = parseCookies(ctx);
 
     const api = axios.create({
-        baseURL: "http://52.90.220.102",
+        baseURL: "https://api.superprice.app",
         headers: {
             Authorization: `Bearer ${cookies['super-price.token']}`
         }

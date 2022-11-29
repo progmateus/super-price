@@ -43,7 +43,7 @@ export default function ResetUserPassword(props: IResetUserPasswordProps) {
     const handleResetPassword: SubmitHandler<ResetPasswordFormData> = async (values) => {
 
         try {
-            const response = await axios.post(`http://52.90.220.102/password/reset?token=${props.token}`, {
+            const response = await axios.post(`https://api.superprice.app/password/reset?token=${props.token}`, {
                 password: values.password,
 
             })

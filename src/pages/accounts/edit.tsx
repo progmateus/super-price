@@ -11,7 +11,7 @@ import { withSSRAuth } from "../../utils/withSSRAuth";
 import { titleCase } from "../../utils/titleCase";
 import { api } from "../../services/apiClient";
 import { AuthContext } from "../../contexts/AuthContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { CropperAvatarProfile } from "../../components/cropperAvatarProfile";
 
 
@@ -29,31 +29,31 @@ const updateUserFormSchema = yup.object().shape({
 })
 
 export default function UpdateUser(props) {
-
-    const { setProfileUser, user } = useContext(AuthContext);
-
+    const { user, setProfileUser } = useContext(AuthContext);
     const [success, setSuccess] = useState(false)
+    const [formKey, setFormKey] = useState(0)
 
-    const { register, handleSubmit, setError, formState } = useForm(({
-        defaultValues: {
-            name: props.name,
-            lastname: props.lastname,
-            email: props.email,
-            apiError: null
-        },
+
+    const { register, handleSubmit, setError, formState, reset } = useForm(({
+        defaultValues: useMemo(() => {
+            return {
+                name: user?.name,
+                lastname: user?.lastname,
+                email: user?.email
+            };
+        }, [user]),
         resolver: yupResolver(updateUserFormSchema)
     }));
 
+    useEffect(() => {
+        reset({
+            name: titleCase(user?.name),
+            lastname: titleCase(user?.lastname),
+            email: user?.email
+        });
+    }, [user]);
+
     const { errors, isDirty } = formState;
-
-    const handleClickImage = async () => {
-        const input: HTMLElement = document.querySelector("#input_upload_avatar");
-        input.click();
-    }
-
-
-
-
 
     const handleUpdateUser: SubmitHandler<UpdateUserFormData> = async (values) => {
         try {
@@ -64,8 +64,8 @@ export default function UpdateUser(props) {
             });
 
             setProfileUser();
+            setFormKey(Math.random());
             setSuccess(true)
-
         } catch (err) {
             if (err.response.data.message === 'User already exists!') {
                 setError("email", { message: "E-mail já está sendo ultilizado" })
@@ -78,22 +78,22 @@ export default function UpdateUser(props) {
             <Header />
             <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
                 <Sidebar />
-
-
                 <Box
                     flex="1"
                     borderRadius={8}
                     bg="#FFFFFF"
                     p={["6", "8"]}
                 >
-
                     <Box>
                         <Heading size="lg" fontWeight="normal" color="gray.900"> Atualizar informações </Heading>
                         <Divider my="6" borderColor="gray.700" />
 
                         <CropperAvatarProfile />
 
-                        <Box as="form" onSubmit={handleSubmit(handleUpdateUser)}>
+                        <Box
+                            as="form"
+                            onSubmit={handleSubmit(handleUpdateUser)}
+                        >
                             <VStack spacing="8" >
                                 <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
                                     <Input
@@ -206,7 +206,7 @@ export const getServerSideProps = withSSRAuth(async (ctx) => {
             name: titleCase(name),
             lastname: titleCase(lastname),
             email,
-            avatar
+            avatar,
         }
     }
 });
