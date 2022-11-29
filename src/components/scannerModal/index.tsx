@@ -32,25 +32,21 @@ export function ScannerModal() {
 
                         <ModalContent mx="5" my="auto" >
 
-                            <Box w="100%" >
+                            <Box>
                                 <ModalHeader mb="3"> </ModalHeader>
 
                                 <ModalCloseButton color="gray.900" />
 
-                                <ModalBody w="100%" >
+                                <ModalBody>
 
                                     <Box
                                         ref={scannerRef}
                                         position="relative"
-                                        w="100%"
-                                        h="14rem"
                                     /// border="8px solid black"
                                     >
                                         <canvas className="drawingBuffer" style={{
                                             position: 'absolute',
                                             top: '0px',
-                                            width: "100%",
-                                            height: "100%"
                                         }} />
                                         {isScanning ? <Scanner scannerRef={scannerRef} /> : null}
                                     </Box>
