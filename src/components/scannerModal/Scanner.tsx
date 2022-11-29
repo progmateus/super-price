@@ -83,7 +83,7 @@ export function Scanner(props) {
                 constraints: {
                     width: 250,
                     height: 200,
-                    facingMode: "user",
+                    facingMode: "environment",
                     /// deviceId: "7832475934759384534"
                 },
                 singleChannel: false
