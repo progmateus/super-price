@@ -47,9 +47,7 @@ export function ScannerModal() {
                                         <canvas className="drawingBuffer" style={{
                                             position: 'absolute',
                                             top: '0px',
-                                            backgroundColor: "#FFFFFF",
-                                            maxWidth: "400px",
-                                            maxHeight: "250px"
+                                            backgroundColor: "#FFFFFF"
                                         }} />
                                         {isScanning ? <Scanner scannerRef={scannerRef} /> : null}
                                     </Box>
