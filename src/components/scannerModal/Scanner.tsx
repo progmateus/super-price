@@ -88,7 +88,7 @@ export function Scanner(props) {
                 target: props.scannerRef.current,
                 constraints: {
                     /// width: 250,
-                    width: 250,
+                    width: 300,
                     height: 250,
                     facingMode: "environment",
                     /// deviceId: "7832475934759384534"
