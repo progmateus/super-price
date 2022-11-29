@@ -46,7 +46,11 @@ export function PriceItem(props: PriceItemProps) {
                     maxWidth={[55, 95]}
                     maxHeight={20}
                     mx="auto"
-                    src={props.price.product.thumbnail}
+                    {...props.price.product.thumbnail ? (
+                        { src: props.price.product.thumbnail }
+                    ) :
+                        { src: "https://cosmos.bluesoft.com.br/assets/product-placeholder-ce4926921923d1e9bc66cd0e1493b49b.png" }
+                    }
                 />
             </Box>
 
