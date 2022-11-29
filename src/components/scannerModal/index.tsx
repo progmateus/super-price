@@ -30,7 +30,7 @@ export function ScannerModal() {
                     <Modal isOpen={isOpen} onClose={() => handleCloseModal()}>
                         <ModalOverlay />
 
-                        <ModalContent w="15rem" h="15rem" my="auto" mx="5">
+                        <ModalContent w="15rem" h="14rem" my="auto" mx="5">
 
                             <Box >
                                 <ModalHeader mb="3"> </ModalHeader>
