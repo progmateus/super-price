@@ -39,11 +39,6 @@ export function Scanner(props) {
 
     const validatorGTIN = new ValidatorGTIN();
 
-    const isWideVersion = useBreakpointValue({
-        base: false,
-        lg: true
-    })
-
     const errorCheck = useCallback((result) => {
         if (!onDetected) {
             return;
@@ -87,8 +82,8 @@ export function Scanner(props) {
                 type: "LiveStream",
                 target: props.scannerRef.current,
                 constraints: {
-                    width: 250,
-                    height: 300,
+                    width: 400,
+                    height: 250,
                     facingMode: "environment",
                     /// deviceId: "7832475934759384534"
                 },
