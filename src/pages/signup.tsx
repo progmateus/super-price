@@ -20,7 +20,7 @@ const signUpForSchema = yup.object().shape({
     name: yup.string().required("Nome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Caracteres inválidos").max(50, "Limite de caracteres excedido."),
     lastname: yup.string().required("Sobrenome obrigatório").matches(/^[a-záàâãéèêíïóôõöúçñ]+$/i, "Caracteres inválidos").max(50, "Limite de caracteres excedido."),
     email: yup.string().required("E-mail obrigatório").email("E-mail inválido").max(80, "Limite de caracteres excedido."),
-    password: yup.string().required("Senha obrigatória").max(80, "Limite de caracteres excedido.")
+    password: yup.string().required("Senha obrigatória").min(6, "No mínimo 6 caracteres.").max(80, "Limite de caracteres excedido.")
 
 })
 

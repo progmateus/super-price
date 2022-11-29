@@ -24,7 +24,7 @@ const resetPasswordFormSchema = yup.object().shape({
     password: yup.string().required("Senha Obrigatória").min(6, "No mínimo 6 caracteres").max(80, "Limite de caracteres excedido."),
     password_confirmation: yup.string().oneOf([
         null, yup.ref("password")
-    ], "As senhas precisam ser iguais").min(6, "No mínimo 6 caracteres").max(80, "Limite de caracteres excedido."),
+    ], "As senhas precisam ser iguais").max(80, "Limite de caracteres excedido."),
 })
 
 export default function ResetUserPassword(props: IResetUserPasswordProps) {
