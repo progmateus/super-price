@@ -30,7 +30,7 @@ export function ScannerModal() {
                     <Modal isOpen={isOpen} onClose={() => handleCloseModal()}>
                         <ModalOverlay />
 
-                        <ModalContent w="16rem" my="auto" >
+                        <ModalContent w="16rem" h="19rem" my="auto" >
 
                             <Box >
                                 <ModalHeader mb="3"> </ModalHeader>
@@ -47,6 +47,8 @@ export function ScannerModal() {
                                         <canvas className="drawingBuffer" style={{
                                             position: 'absolute',
                                             top: '0px',
+                                            width: "100%",
+                                            height: "100%"
                                         }} />
                                         {isScanning ? <Scanner scannerRef={scannerRef} /> : null}
                                     </Box>
