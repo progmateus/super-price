@@ -81,53 +81,55 @@ export function Scanner(props) {
             .then((devices) => {
                 console.log(devices)
                 alert(devices);
+
+                Quagga.init({
+                    inputStream: {
+                        name: "Live",
+                        type: "LiveStream",
+                        target: props.scannerRef.current,
+                        constraints: {
+                            width: 2400,
+                            height: 1080,
+                            facingMode: "environment",
+                            /// deviceId: "7832475934759384534"
+                        },
+                        singleChannel: false
+                    },
+                    decoder: {
+                        readers: ["ean_reader"],
+                        multiple: false
+                    },
+                    locator: {
+                        patchSize: 'medium',
+                        halfSample: true,
+                    }
+                }, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return
+                    }
+                    console.log("Initialization finished. Ready to start");
+
+                    Quagga.onProcessed(handleProcessed);
+
+                    if (err) {
+                        return console.log('Error starting Quagga:', err);
+                    }
+                    if (props.scannerRef && props.scannerRef.current) {
+                        Quagga.start();
+                    }
+                });
+
+                Quagga.onDetected(errorCheck);
+
+                return () => {
+                    Quagga.offDetected();
+                    Quagga.offProcessed();
+                    Quagga.stop();
+                };;
             })
 
-        Quagga.init({
-            inputStream: {
-                name: "Live",
-                type: "LiveStream",
-                target: props.scannerRef.current,
-                constraints: {
-                    width: 2400,
-                    height: 1080,
-                    facingMode: "environment",
-                    /// deviceId: "7832475934759384534"
-                },
-                singleChannel: false
-            },
-            decoder: {
-                readers: ["ean_reader"],
-                multiple: false
-            },
-            locator: {
-                patchSize: 'medium',
-                halfSample: true,
-            }
-        }, function (err) {
-            if (err) {
-                console.log(err);
-                return
-            }
-            console.log("Initialization finished. Ready to start");
 
-            Quagga.onProcessed(handleProcessed);
-
-            if (err) {
-                return console.log('Error starting Quagga:', err);
-            }
-            if (props.scannerRef && props.scannerRef.current) {
-                Quagga.start();
-            }
-        });
-
-        Quagga.onDetected(errorCheck);
-
-        return () => {
-            Quagga.offDetected();
-            Quagga.offProcessed();
-            Quagga.stop();
-        };;
     }, []);
 
     return null;
