@@ -82,8 +82,8 @@ export function Scanner(props) {
                 type: "LiveStream",
                 target: props.scannerRef.current,
                 constraints: {
-                    width: 1920,
-                    height: 1080,
+                    width: 7680,
+                    height: 4320,
                     facingMode: "environment",
                     /// deviceId: "7832475934759384534"
                 },
