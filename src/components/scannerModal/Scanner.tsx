@@ -76,15 +76,17 @@ export function Scanner(props) {
     }
 
     useLayoutEffect(() => {
+        let id;
         Quagga.CameraAccess.enumerateVideoDevices()
             .then(async (devices) => {
                 // console.log(devices);
-                // const device = devices.slice(-1)
+                /// const device = devices.slice(-1)
+                id = devices[0].deviceId
                 // // console.log("id: ", )
                 // alert(device[0].label)
-                devices.forEach((device) => {
-                    alert(device.label)
-                })
+                // devices.forEach((device) => {
+                //     alert(device.label)
+                // })
 
             })
 
@@ -96,7 +98,7 @@ export function Scanner(props) {
                 constraints: {
                     width: 2400,
                     height: 1080,
-                    facingMode: "environment",
+                    facingMode: "id",
                     /// deviceId: "7832475934759384534"
                 },
                 singleChannel: false
