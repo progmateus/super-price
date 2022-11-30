@@ -50,9 +50,9 @@ export function ScannerModal() {
                                             left='0%'
                                             bottom='25%'
                                             border="4px solid red">
-                                            <Center color="blue" mt="20%">
+                                            {/* <Center color="blue" mt="20%">
                                                 <Divider orientation='horizontal' />
-                                            </Center>
+                                            </Center> */}
                                         </Box>
 
 
