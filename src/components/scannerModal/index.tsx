@@ -1,4 +1,4 @@
-import { Box, Button, Flex, HStack, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
+import { Box, Button, Center, Divider, Flex, HStack, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
 import { useScannerModal } from "../../contexts/ScannerModalContext";
 import { RiErrorWarningFill } from "react-icons/ri"
 import { useEffect, useRef, useState } from "react";
@@ -9,6 +9,8 @@ import React from "react";
 export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
+    const [cameraId, setCameraId] = useState("");
+
     const scannerRef = React.useRef(null);
 
     async function handleCloseModal() {
@@ -40,13 +42,30 @@ export function ScannerModal() {
                                     <Box
                                         ref={scannerRef}
                                         position="relative"
-                                    /// border="8px solid black"
                                     >
+                                        <Box
+                                            position="absolute"
+                                            top='25%'
+                                            right='0%'
+                                            left='0%'
+                                            bottom='25%'
+                                            border="4px solid red">
+                                            <Center color="blue" mt="20%">
+                                                <Divider orientation='horizontal' />
+                                            </Center>
+                                        </Box>
+
+
                                         <canvas className="drawingBuffer" style={{
                                             position: 'absolute',
                                             top: '0px',
                                         }} />
-                                        {isScanning ? <Scanner scannerRef={scannerRef} /> : null}
+
+                                        {isScanning ? <Scanner
+                                            scannerRef={scannerRef}
+                                            cameraId={cameraId}
+                                            setCameraId={setCameraId}
+                                        /> : null}
                                     </Box>
 
                                 </ModalBody>

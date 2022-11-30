@@ -76,6 +76,7 @@ export function Scanner(props) {
     }
 
     useLayoutEffect(() => {
+
         let id;
         Quagga.CameraAccess.enumerateVideoDevices()
             .then(async (devices) => {
@@ -89,21 +90,33 @@ export function Scanner(props) {
                 type: "LiveStream",
                 target: props.scannerRef.current,
                 constraints: {
-                    width: 1920,
-                    height: 1080,
+                    width: {
+                        min: 640
+                    },
+                    height: {
+                        min: 480
+                    },
                     facingMode: "environment",
                     deviceId: id
                 },
-                singleChannel: false
+
+                singleChannel: false,
+                area: {
+                    top: '25%',
+                    right: '0%',
+                    left: '0%',
+                    bottom: '25%',
+                },
             },
             decoder: {
                 readers: ["ean_reader"],
                 multiple: false
             },
             locator: {
-                patchSize: 'medium',
-                halfSample: true,
-            }
+                patchSize: 'small',
+                halfSample: false,
+            },
+
         }, function (err) {
             if (err) {
                 console.log(err);
