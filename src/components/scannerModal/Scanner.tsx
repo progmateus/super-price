@@ -1,3 +1,4 @@
+import { AlertTitle } from '@chakra-ui/core';
 import { useBreakpointValue } from '@chakra-ui/react';
 import Quagga from '@ericblade/quagga2';
 import Router from 'next/router';
@@ -75,6 +76,10 @@ export function Scanner(props) {
     }
 
     useLayoutEffect(() => {
+
+        const cameras = navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+
+        alert(cameras)
 
         Quagga.init({
             inputStream: {
