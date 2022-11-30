@@ -6,7 +6,7 @@ import { Scanner } from "./Scanner";
 import React from "react";
 
 
-export async function ScannerModal() {
+export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
     const scannerRef = React.useRef(null);
