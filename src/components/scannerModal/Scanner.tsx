@@ -77,13 +77,11 @@ export function Scanner(props) {
 
     useLayoutEffect(() => {
 
-        async function getDevices() {
-            return await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-        }
-
-        const cameras = getDevices();
-
-        alert(cameras);
+        navigator.mediaDevices.enumerateDevices()
+            .then((devices) => {
+                console.log(devices)
+                alert(devices);
+            })
 
         Quagga.init({
             inputStream: {
