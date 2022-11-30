@@ -79,15 +79,8 @@ export function Scanner(props) {
         let id;
         Quagga.CameraAccess.enumerateVideoDevices()
             .then(async (devices) => {
-                // console.log(devices);
                 const device = devices.slice(-1)
                 id = device[0].deviceId
-                // // console.log("id: ", )
-                // alert(device[0].label)
-                // devices.forEach((device) => {
-                //     alert(device.label)
-                // })
-
             })
 
         Quagga.init({
@@ -96,8 +89,8 @@ export function Scanner(props) {
                 type: "LiveStream",
                 target: props.scannerRef.current,
                 constraints: {
-                    width: 600,
-                    height: 400,
+                    width: 1920,
+                    height: 1080,
                     facingMode: "environment",
                     deviceId: id
                 },
