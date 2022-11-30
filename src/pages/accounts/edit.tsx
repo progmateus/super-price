@@ -194,19 +194,19 @@ function readFile(file) {
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
 
-    const apiClient = setupAPIClient(ctx);
+    // const apiClient = setupAPIClient(ctx);
 
-    const response = await apiClient.get("/users/profile")
+    // const response = await apiClient.get("/users/profile")
 
-    const { id, name, lastname, email, avatar } = response.data;
+    // const { id, name, lastname, email, avatar } = response.data;
 
     return {
         props: {
-            id,
-            name: titleCase(name),
-            lastname: titleCase(lastname),
-            email,
-            avatar,
+            // id,
+            // name: titleCase(name),
+            // lastname: titleCase(lastname),
+            // email,
+            // avatar,
         }
     }
 });

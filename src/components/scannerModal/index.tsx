@@ -1,15 +1,17 @@
-import { Box, Button, Center, Divider, Flex, HStack, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react"
+import { Box, Button, Center, Divider, Flex, HStack, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from "@chakra-ui/react"
 import { useScannerModal } from "../../contexts/ScannerModalContext";
 import { RiErrorWarningFill } from "react-icons/ri"
 import { useEffect, useRef, useState } from "react";
 import { Scanner } from "./Scanner";
 import React from "react";
+import Quagga from '@ericblade/quagga2';
 
 
 export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
-    const [cameraId, setCameraId] = useState("");
+    const [cameraDevices, setcameraDevices] = useState([]);
+    const [deviceId, setDeviceId] = useState("")
 
     const scannerRef = React.useRef(null);
 
@@ -17,9 +19,18 @@ export function ScannerModal() {
         onClose();
     }
 
+    function handleSelectChange(e) {
+        console.log(e.target.value);
+        setDeviceId(e.target.value)
+    }
+
     useEffect(() => {
         setTimeout(() => {
             setIsScanning(true)
+            Quagga.CameraAccess.enumerateVideoDevices()
+                .then(async (devices) => {
+                    setcameraDevices(devices);
+                })
         }, 100)
     }, [])
 
@@ -33,9 +44,29 @@ export function ScannerModal() {
                         <ModalContent mx="5" my="auto">
 
                             <Box>
-                                <ModalHeader mb="3"> </ModalHeader>
+                                <ModalHeader color="gray.900">
+                                    <Select
+                                        placeholder='Selecione a sua camera'
+                                        w="16rem"
+                                        color="gray.900"
+                                        onChange={(e) => handleSelectChange(e)}
+                                    >
+                                        {
+                                            cameraDevices.map((device) => {
+                                                return <option
+                                                    key={device.deviceId}
+                                                    value={device.deviceId}
+                                                > {device.label}
+                                                </option>
+                                            })
+                                        }
+                                    </Select>
+                                    <ModalCloseButton />
 
-                                <ModalCloseButton color="gray.900" />
+
+
+                                </ModalHeader>
+
 
                                 <ModalBody>
 
@@ -50,9 +81,6 @@ export function ScannerModal() {
                                             left='0%'
                                             bottom='25%'
                                             border="4px solid red">
-                                            {/* <Center color="blue" mt="20%">
-                                                <Divider orientation='horizontal' />
-                                            </Center> */}
                                         </Box>
 
 
@@ -63,8 +91,7 @@ export function ScannerModal() {
 
                                         {isScanning ? <Scanner
                                             scannerRef={scannerRef}
-                                            cameraId={cameraId}
-                                            setCameraId={setCameraId}
+                                            deviceId={deviceId}
                                         /> : null}
                                     </Box>
 

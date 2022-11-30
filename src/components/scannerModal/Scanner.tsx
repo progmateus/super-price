@@ -77,13 +77,7 @@ export function Scanner(props) {
 
     useLayoutEffect(() => {
 
-        let id;
-        Quagga.CameraAccess.enumerateVideoDevices()
-            .then(async (devices) => {
-                const device = devices.slice(-1)
-                id = device[0].deviceId
-            })
-
+        console.log(props.deviceId);
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -96,8 +90,8 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    facingMode: "environment",
-                    deviceId: id
+                    ...(!props.deviceId && { facingMode: 'environment' }),
+                    ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
                 singleChannel: false,
@@ -141,7 +135,7 @@ export function Scanner(props) {
             Quagga.offProcessed();
             Quagga.stop();
         };
-    }, []);
+    }, [props.deviceId]);
 
     return null;
 }
