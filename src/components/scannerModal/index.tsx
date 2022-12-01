@@ -13,9 +13,6 @@ export function ScannerModal() {
     const [cameraDevices, setcameraDevices] = useState([]);
     const [deviceId, setDeviceId] = useState("")
 
-    const regexBack = /(back)/ig
-    const regexFront = /(front)/g
-
     const scannerRef = React.useRef(null);
 
     async function handleCloseModal() {
@@ -27,12 +24,15 @@ export function ScannerModal() {
     }
 
     useEffect(() => {
+        Quagga.CameraAccess.enumerateVideoDevices()
+            .then(async (devices) => {
+                setcameraDevices(devices)
+            })
+    }, [])
+
+    useEffect(() => {
         setTimeout(() => {
             setIsScanning(true)
-            Quagga.CameraAccess.enumerateVideoDevices()
-                .then(async (devices) => {
-                    setcameraDevices(devices)
-                })
         }, 100)
     }, [])
 
