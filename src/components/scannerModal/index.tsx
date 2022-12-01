@@ -13,6 +13,9 @@ export function ScannerModal() {
     const [cameraDevices, setcameraDevices] = useState([]);
     const [deviceId, setDeviceId] = useState("")
 
+    const regexBack = /(back)/ig
+    const regexFront = /(front)/g
+
     const scannerRef = React.useRef(null);
 
     async function handleCloseModal() {
@@ -20,8 +23,7 @@ export function ScannerModal() {
     }
 
     function handleSelectChange(e) {
-        console.log(e.target.value);
-        setDeviceId(e.target.value)
+        setDeviceId(e.target.value);
     }
 
     useEffect(() => {
@@ -29,7 +31,7 @@ export function ScannerModal() {
             setIsScanning(true)
             Quagga.CameraAccess.enumerateVideoDevices()
                 .then(async (devices) => {
-                    setcameraDevices(devices);
+                    setcameraDevices(devices)
                 })
         }, 100)
     }, [])
@@ -53,11 +55,13 @@ export function ScannerModal() {
                                     >
                                         {
                                             cameraDevices.map((device) => {
-                                                return <option
-                                                    key={device.deviceId}
-                                                    value={device.deviceId}
-                                                > {device.label}
-                                                </option>
+                                                if (regexBack.test(device.label)) {
+                                                    return <option
+                                                        key={device.deviceId}
+                                                        value={device.deviceId}
+                                                    > {device.label}
+                                                    </option>
+                                                }
                                             })
                                         }
                                     </Select>

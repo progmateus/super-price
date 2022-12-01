@@ -3,6 +3,7 @@ import { useBreakpointValue } from '@chakra-ui/react';
 import Quagga from '@ericblade/quagga2';
 import Router from 'next/router';
 import { useCallback, useLayoutEffect, useState } from 'react';
+import { Stream } from 'stream';
 import { useScannerModal } from '../../contexts/ScannerModalContext';
 import encodeQueryData from '../../utils/encodeURL';
 import { ValidatorGTIN } from '../../utils/validatorGTIN';
@@ -77,7 +78,10 @@ export function Scanner(props) {
 
     useLayoutEffect(() => {
 
-        console.log(props.deviceId);
+        ///  console.log(props.deviceId);
+
+
+
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -90,7 +94,7 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    ...(!props.deviceId && { facingMode: 'environment' }),
+                    facingMode: 'environment',
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
