@@ -78,10 +78,6 @@ export function Scanner(props) {
 
     useLayoutEffect(() => {
 
-        ///  console.log(props.deviceId);
-
-
-
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -128,7 +124,12 @@ export function Scanner(props) {
                 return console.log('Error starting Quagga:', err);
             }
             if (props.scannerRef && props.scannerRef.current) {
+                Quagga.CameraAccess.enumerateVideoDevices()
+                    .then(async (devices) => {
+                        props.setcameraDevices(devices);
+                    })
                 Quagga.start();
+
             }
         });
 

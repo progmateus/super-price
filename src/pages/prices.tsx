@@ -16,6 +16,8 @@ import { TablePrices } from "../components/sectionPrice/tablePrices";
 import { ProductInfo } from "../components/sectionPrice/productInfo";
 import { ButtonBarCode } from "../components/buttonBarCode";
 
+
+
 export default function Prices(props) {
 
     const { isOpen } = useScannerModal();
@@ -43,8 +45,6 @@ export default function Prices(props) {
                         query={props.query}
                         error={props.error}
                     />
-
-
 
                     {
                         props.product ? (
@@ -80,10 +80,7 @@ export default function Prices(props) {
 
             </Flex >
 
-
-
             <ButtonBarCode />
-
 
             {
                 isOpen === true && (

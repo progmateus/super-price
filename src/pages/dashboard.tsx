@@ -12,6 +12,7 @@ import { useScannerModal } from "../contexts/ScannerModalContext"
 import { useRef } from "react";
 
 
+
 export default function Dashboard(props) {
 
     const { isOpen } = useScannerModal();

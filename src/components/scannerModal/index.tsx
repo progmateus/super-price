@@ -1,19 +1,22 @@
 import { Box, Button, Center, Divider, Flex, HStack, Icon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text } from "@chakra-ui/react"
 import { useScannerModal } from "../../contexts/ScannerModalContext";
 import { RiErrorWarningFill } from "react-icons/ri"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Scanner } from "./Scanner";
 import React from "react";
-import Quagga from '@ericblade/quagga2';
-
 
 export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
-    const [cameraDevices, setcameraDevices] = useState([]);
     const [deviceId, setDeviceId] = useState("")
-
+    const [cameraDevices, setcameraDevices] = useState<any>([]);
     const scannerRef = React.useRef(null);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setIsScanning(true)
+        }, 100)
+    }, [])
 
     async function handleCloseModal() {
         onClose();
@@ -22,19 +25,6 @@ export function ScannerModal() {
     function handleSelectChange(e) {
         setDeviceId(e.target.value);
     }
-
-    useEffect(() => {
-        Quagga.CameraAccess.enumerateVideoDevices()
-            .then(async (devices) => {
-                setcameraDevices(devices)
-            })
-    }, [])
-
-    useEffect(() => {
-        setTimeout(() => {
-            setIsScanning(true)
-        }, 100)
-    }, [])
 
     return (
         <>
@@ -60,16 +50,11 @@ export function ScannerModal() {
                                                     value={device.deviceId}
                                                 > {device.label}
                                                 </option>
-
                                             })
                                         }
                                     </Select>
                                     <ModalCloseButton />
-
-
-
                                 </ModalHeader>
-
 
                                 <ModalBody>
 
@@ -95,6 +80,7 @@ export function ScannerModal() {
                                         {isScanning ? <Scanner
                                             scannerRef={scannerRef}
                                             deviceId={deviceId}
+                                            setcameraDevices={setcameraDevices}
                                         /> : null}
                                     </Box>
 
