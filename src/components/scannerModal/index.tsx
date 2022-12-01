@@ -55,13 +55,12 @@ export function ScannerModal() {
                                     >
                                         {
                                             cameraDevices.map((device) => {
-                                                if (regexBack.test(device.label)) {
-                                                    return <option
-                                                        key={device.deviceId}
-                                                        value={device.deviceId}
-                                                    > {device.label}
-                                                    </option>
-                                                }
+                                                return <option
+                                                    key={device.deviceId}
+                                                    value={device.deviceId}
+                                                > {device.label}
+                                                </option>
+
                                             })
                                         }
                                     </Select>
