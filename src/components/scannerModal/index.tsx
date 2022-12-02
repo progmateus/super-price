@@ -9,9 +9,6 @@ export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
     const [deviceId, setDeviceId] = useState("")
-    const [facingMode, setFacingMode] = useState("user")
-
-
     const [cameraDevices, setcameraDevices] = useState<any>([]);
     const scannerRef = React.useRef(null);
 
@@ -26,21 +23,6 @@ export function ScannerModal() {
     }
 
     function handleSelectChange(e) {
-        const stream = cameraDevices.find((device => device.deviceId === e.target.value))
-
-        const backRegex = /back/gi
-        const frontRegex = /front/gi
-
-        if (backRegex.test(stream.label)) {
-            alert("back")
-            setFacingMode('environment')
-        }
-
-        if (frontRegex.test(stream.label)) {
-            alert("front")
-            setFacingMode("user")
-        }
-
         setDeviceId(e.target.value);
     }
 
@@ -98,7 +80,6 @@ export function ScannerModal() {
                                         {isScanning ? <Scanner
                                             scannerRef={scannerRef}
                                             deviceId={deviceId}
-                                            facingMode={facingMode}
                                             setcameraDevices={setcameraDevices}
                                         /> : null}
                                     </Box>

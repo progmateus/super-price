@@ -1,9 +1,6 @@
-import { AlertTitle } from '@chakra-ui/core';
-import { useBreakpointValue } from '@chakra-ui/react';
 import Quagga from '@ericblade/quagga2';
 import Router from 'next/router';
 import { useCallback, useLayoutEffect, useState } from 'react';
-import { Stream } from 'stream';
 import { useScannerModal } from '../../contexts/ScannerModalContext';
 import encodeQueryData from '../../utils/encodeURL';
 import { ValidatorGTIN } from '../../utils/validatorGTIN';
@@ -88,7 +85,11 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    facingMode: props.facingMode,
+                    aspectRatio: {
+                        min: 16 / 9,
+                        max: 16 / 10
+                    },
+                    ...(!props.deviceId && { facingMode: 'environment' }),
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
