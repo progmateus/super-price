@@ -34,6 +34,7 @@ export function Scanner(props) {
     const { onClose } = useScannerModal();
 
     const [onDetected, setOnDetected] = useState({})
+    const [deviceId, setDeviceId] = useState(props.deviceId)
 
     const validatorGTIN = new ValidatorGTIN();
 
@@ -79,11 +80,18 @@ export function Scanner(props) {
                 type: "LiveStream",
                 target: props.scannerRef.current,
                 constraints: {
-                    width: 4000,
-                    height: 3000,
-                    aspectRatio: 1.33333333,
-                    ...(!props.deviceId && { facingMode: 'environment', }),
-                    ...(props.deviceId && { deviceId: props.deviceId }),
+                    width: {
+                        min: 1024,
+                        ideal: 1280,
+                        max: 1920
+                    },
+                    height: {
+                        min: 576,
+                        ideal: 720,
+                        max: 1080
+                    },
+                    ...(!deviceId && { facingMode: { ideal: 'environment' }, }),
+                    ...(deviceId && { deviceId: { exact: deviceId } }),
                 },
 
                 singleChannel: false,
@@ -103,7 +111,7 @@ export function Scanner(props) {
                 halfSample: false,
             },
 
-        }, function (err) {
+        }, async function (err) {
             if (err) {
                 console.log(err);
                 return
@@ -116,11 +124,38 @@ export function Scanner(props) {
                 return console.log('Error starting Quagga:', err);
             }
             if (props.scannerRef && props.scannerRef.current) {
+
+                if (!deviceId) {
+
+                    let streams = [];
+                    const devicesEnvironment = [];
+                    await Quagga.CameraAccess.enumerateVideoDevices()
+                        .then(async (devices) => {
+                            devices.forEach((device) => {
+                                streams.push(device)
+                            })
+                            /// props.setcameraDevices(devices);
+                        })
+
+                    for (let i in streams) {
+                        const device = streams[i]
+
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: device.deviceId } } });
+                        stream.getVideoTracks().forEach(track => {
+                            const capabilities = track.getCapabilities();
+                            if (capabilities.facingMode[0] === "environment") {
+                                ///  const settings = track.getSettings();
+                                devicesEnvironment.push({
+                                    deviceId: capabilities.deviceId,
+                                    label: track.label
+                                })
+                            }
+                        })
+                    }
+                    props.setcameraDevices(devicesEnvironment)
+                    setDeviceId(devicesEnvironment[devicesEnvironment.length - 1].deviceId)
+                }
                 Quagga.start();
-                Quagga.CameraAccess.enumerateVideoDevices()
-                    .then(async (devices) => {
-                        props.setcameraDevices(devices);
-                    })
             }
         });
         Quagga.onDetected(errorCheck);
