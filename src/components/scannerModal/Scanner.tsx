@@ -80,13 +80,17 @@ export function Scanner(props) {
                 target: props.scannerRef.current,
                 constraints: {
                     width: {
-                        min: 640
+                        min: 1920
                     },
                     height: {
-                        min: 480
+                        min: 1080
                     },
-                    aspectRatio: 1.33333333,
-                    facingMode: 'environment',
+                    ///  aspectRatio: 1.33333333,
+                    aspectRatio: {
+                        min: 1,
+                        max: 2
+                    },
+                    ...(!props.deviceId && { facingMode: 'environment', }),
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
