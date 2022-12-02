@@ -4,6 +4,8 @@ import { RiErrorWarningFill } from "react-icons/ri"
 import { useEffect, useState } from "react";
 import { Scanner } from "./Scanner";
 import React from "react";
+import Quagga from '@ericblade/quagga2';
+
 
 export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
@@ -23,6 +25,9 @@ export function ScannerModal() {
     }
 
     function handleSelectChange(e) {
+        Quagga.offDetected();
+        Quagga.offProcessed();
+        Quagga.stop();
         setDeviceId(e.target.value);
     }
 

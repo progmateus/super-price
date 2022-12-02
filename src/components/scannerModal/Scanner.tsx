@@ -85,8 +85,8 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    aspectRatio: 100,
-                    ...(!props.deviceId && { facingMode: 'environment' }),
+                    aspectRatio: 1.33333333,
+                    facingMode: 'environment',
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
@@ -120,12 +120,11 @@ export function Scanner(props) {
                 return console.log('Error starting Quagga:', err);
             }
             if (props.scannerRef && props.scannerRef.current) {
+                Quagga.start();
                 Quagga.CameraAccess.enumerateVideoDevices()
                     .then(async (devices) => {
                         props.setcameraDevices(devices);
                     })
-                Quagga.start();
-
             }
         });
         Quagga.onDetected(errorCheck);
