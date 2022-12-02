@@ -25,6 +25,7 @@ function getMedianOfCodeErrors(decodedCodes) {
 }
 
 export function Scanner(props) {
+    const [facingMode, setFacingMode] = useState("environment")
 
     function scannerEnd() {
         Quagga.offDetected();
@@ -79,20 +80,13 @@ export function Scanner(props) {
     useLayoutEffect(() => {
         const backRegex = /back/gi
         const frontRegex = /front/gi
-        let facingMode;
 
         if (backRegex.test(props.deviceLabel)) {
-            alert("back")
-            facingMode = 'environment'
+            setFacingMode('environment')
         }
-        else if (frontRegex.test(props.deviceLabel)) {
-            alert("front")
 
-            facingMode = 'user'
-        }
-        else {
-            alert("else")
-            facingMode = 'environment'
+        if (frontRegex.test(props.deviceLabel)) {
+            setFacingMode("front")
         }
 
         Quagga.init({
