@@ -9,7 +9,7 @@ export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
     const [deviceId, setDeviceId] = useState("")
-    const [facingMode, setFacingMode] = useState("environment")
+    const [facingMode, setFacingMode] = useState("user")
 
 
     const [cameraDevices, setcameraDevices] = useState<any>([]);
