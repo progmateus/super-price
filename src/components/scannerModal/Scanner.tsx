@@ -86,7 +86,7 @@ export function Scanner(props) {
                         min: 480
                     },
                     aspectRatio: {
-                        min: 1.777
+                        min: 2
                     },
                     ...(!props.deviceId && { facingMode: 'environment' }),
                     ...(props.deviceId && { deviceId: props.deviceId }),
@@ -130,7 +130,6 @@ export function Scanner(props) {
 
             }
         });
-
         Quagga.onDetected(errorCheck);
 
         return () => {
