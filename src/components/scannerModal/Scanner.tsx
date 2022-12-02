@@ -86,8 +86,8 @@ export function Scanner(props) {
                         min: 480
                     },
                     aspectRatio: {
-                        min: 16 / 9,
-                        max: 16 / 10
+                        min: 1,
+                        max: 2
                     },
                     ...(!props.deviceId && { facingMode: 'environment' }),
                     ...(props.deviceId && { deviceId: props.deviceId }),
