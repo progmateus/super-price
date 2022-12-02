@@ -25,8 +25,6 @@ function getMedianOfCodeErrors(decodedCodes) {
 }
 
 export function Scanner(props) {
-    const [facingMode, setFacingMode] = useState("environment")
-
     function scannerEnd() {
         Quagga.offDetected();
         Quagga.offProcessed();
@@ -78,17 +76,6 @@ export function Scanner(props) {
     }
 
     useLayoutEffect(() => {
-        const backRegex = /back/gi
-        const frontRegex = /front/gi
-
-        if (backRegex.test(props.deviceLabel)) {
-            setFacingMode('environment')
-        }
-
-        if (frontRegex.test(props.deviceLabel)) {
-            setFacingMode("front")
-        }
-
         Quagga.init({
             inputStream: {
                 name: "Live",
@@ -101,7 +88,7 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    facingMode: facingMode,
+                    facingMode: props.facingMode,
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
@@ -151,7 +138,7 @@ export function Scanner(props) {
             Quagga.offProcessed();
             Quagga.stop();
         };
-    }, [props.deviceId, props.deviceLabel]);
+    }, [props.deviceId]);
 
     return null;
 }
