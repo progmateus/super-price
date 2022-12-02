@@ -34,8 +34,6 @@ export function Scanner(props) {
     const { onClose } = useScannerModal();
 
     const [onDetected, setOnDetected] = useState({})
-    const [deviceId, setDeviceId] = useState(props.deviceId)
-
     const validatorGTIN = new ValidatorGTIN();
 
     const errorCheck = useCallback((result) => {
@@ -90,8 +88,9 @@ export function Scanner(props) {
                         ideal: 720,
                         max: 1080
                     },
-                    ...(!deviceId && { facingMode: { ideal: 'environment' }, }),
-                    ...(deviceId && { deviceId: { exact: deviceId } }),
+                    aspectRatio: 4 / 3,
+                    ...(!props.deviceId && { facingMode: { ideal: 'environment' }, }),
+                    ...(props.deviceId && { deviceId: { exact: props.deviceId } }),
                 },
 
                 singleChannel: false,
@@ -125,36 +124,10 @@ export function Scanner(props) {
             }
             if (props.scannerRef && props.scannerRef.current) {
 
-                if (!deviceId) {
-
-                    let streams = [];
-                    const devicesEnvironment = [];
-                    await Quagga.CameraAccess.enumerateVideoDevices()
-                        .then(async (devices) => {
-                            devices.forEach((device) => {
-                                streams.push(device)
-                            })
-                            /// props.setcameraDevices(devices);
-                        })
-
-                    for (let i in streams) {
-                        const device = streams[i]
-
-                        const stream = await navigator.mediaDevices.getUserMedia({ video: { deviceId: { exact: device.deviceId } } });
-                        stream.getVideoTracks().forEach(track => {
-                            const capabilities = track.getCapabilities();
-                            if (capabilities.facingMode[0] === "environment") {
-                                ///  const settings = track.getSettings();
-                                devicesEnvironment.push({
-                                    deviceId: capabilities.deviceId,
-                                    label: track.label
-                                })
-                            }
-                        })
-                    }
-                    props.setcameraDevices(devicesEnvironment)
-                    setDeviceId(devicesEnvironment[devicesEnvironment.length - 1].deviceId)
-                }
+                await Quagga.CameraAccess.enumerateVideoDevices()
+                    .then(async (devices) => {
+                        props.setcameraDevices(devices);
+                    })
                 Quagga.start();
             }
         });
