@@ -9,6 +9,8 @@ export function ScannerModal() {
     const { isOpen, onClose } = useScannerModal();
     const [isScanning, setIsScanning] = useState(false);
     const [deviceId, setDeviceId] = useState("")
+    const [deviceLabel, setDeviceLabel] = useState("")
+
     const [cameraDevices, setcameraDevices] = useState<any>([]);
     const scannerRef = React.useRef(null);
 
@@ -23,6 +25,8 @@ export function ScannerModal() {
     }
 
     function handleSelectChange(e) {
+        const stream = cameraDevices.find((device => device.deviceId === e.target.value))
+        setDeviceLabel(stream.label)
         setDeviceId(e.target.value);
     }
 
@@ -80,6 +84,7 @@ export function ScannerModal() {
                                         {isScanning ? <Scanner
                                             scannerRef={scannerRef}
                                             deviceId={deviceId}
+                                            deviceLabel={deviceLabel}
                                             setcameraDevices={setcameraDevices}
                                         /> : null}
                                     </Box>

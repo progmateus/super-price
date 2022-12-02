@@ -77,6 +77,24 @@ export function Scanner(props) {
     }
 
     useLayoutEffect(() => {
+        const backRegex = /back/gi
+        const frontRegex = /front/gi
+        let facingMode;
+
+        if (backRegex.test(props.deviceLabel)) {
+            facingMode = 'environment'
+            alert("entrou no back")
+        }
+        else if (frontRegex.test(props.deviceLabel)) {
+            facingMode = 'user'
+            alert("entrou no front")
+
+        }
+        else {
+            facingMode = 'environment'
+            alert("entrou no else")
+
+        }
 
         Quagga.init({
             inputStream: {
@@ -90,7 +108,7 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    facingMode: 'environment',
+                    facingMode: facingMode,
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
