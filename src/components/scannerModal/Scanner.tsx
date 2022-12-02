@@ -77,19 +77,23 @@ export function Scanner(props) {
     }
 
     useLayoutEffect(() => {
-        // const backRegex = /back/gi
-        // const frontRegex = /front/gi
-        // let facingMode;
+        const backRegex = /back/gi
+        const frontRegex = /front/gi
+        let facingMode;
 
-        // if (backRegex.test(props.deviceLabel)) {
-        //     facingMode = 'environment'
-        // }
-        // else if (frontRegex.test(props.deviceLabel)) {
-        //     facingMode = 'user'
-        // }
-        // else {
-        //     facingMode = 'environment'
-        // }
+        if (backRegex.test(props.deviceLabel)) {
+            alert("back")
+            facingMode = 'environment'
+        }
+        else if (frontRegex.test(props.deviceLabel)) {
+            alert("front")
+
+            facingMode = 'user'
+        }
+        else {
+            alert("else")
+            facingMode = 'environment'
+        }
 
         Quagga.init({
             inputStream: {
@@ -103,7 +107,7 @@ export function Scanner(props) {
                     height: {
                         min: 480
                     },
-                    facingMode: "user",
+                    facingMode: facingMode,
                     ...(props.deviceId && { deviceId: props.deviceId }),
                 },
 
@@ -153,7 +157,7 @@ export function Scanner(props) {
             Quagga.offProcessed();
             Quagga.stop();
         };
-    }, [props.deviceId]);
+    }, [props.deviceId, props.deviceLabel]);
 
     return null;
 }
