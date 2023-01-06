@@ -88,9 +88,15 @@ export default function Products(props) {
             <Flex my={["4", "6"]} px="6" maxWidth={1480}>
                 <Sidebar />
 
-
-                <Box mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }} w={["100%", "100%", "65%"]} h="100vh">
-                    <Flex as="form" alignItems="center" pb="3" onSubmit={handleSubmit(handleSearchProduct)}>
+                <Box
+                    mx={{ sm: "auto", lg: "auto", xl: "0", '2xl': "0" }}
+                    w={["100%", "100%", "65%"]} h="100vh"
+                >
+                    <Flex
+                        as="form"
+                        alignItems="center"
+                        pb="3"
+                        onSubmit={handleSubmit(handleSearchProduct)}>
 
                         <Input
                             name="product_name"

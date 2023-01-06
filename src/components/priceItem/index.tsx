@@ -35,12 +35,12 @@ export function PriceItem(props: PriceItemProps) {
             borderRadius={4}
             align="center"
             w={["100%", "85%"]}
+            h="6.8rem"
         >
             <Box
                 w={["7rem", "5rem"]}
                 m="1"
                 textAlign="center"
-
             >
                 <Img
                     maxWidth={[55, 95]}
@@ -64,7 +64,7 @@ export function PriceItem(props: PriceItemProps) {
                     color="gray.900"
                     lineHeight="1.1"
                     textAlign="left"
-                    fontWeight="bold"                >
+                    fontWeight="bold">
                     {props.price.product.name}
                 </Text>
 

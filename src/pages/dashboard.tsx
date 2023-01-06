@@ -14,7 +14,6 @@ import { useRef } from "react";
 
 
 export default function Dashboard(props) {
-
     const { isOpen } = useScannerModal();
 
     const cache = useRef(new CellMeasurerCache({
@@ -30,7 +29,7 @@ export default function Dashboard(props) {
     const rowRenderer: ListRowRenderer = ({ index, key, style, parent }) => {
         return (
             <CellMeasurer key={key} cache={cache.current} parent={parent} columnIndex={0} rowIndex={index}>
-                <Box mb={2}>
+                <Box style={style}>
                     <PriceItem
                         price={props.prices[index]}
                     />
@@ -51,7 +50,6 @@ export default function Dashboard(props) {
                     w={["100%", "100%", "65%"]}
                     h="100vh"
                 >
-
                     <Box mb="2">
                         <Text color="gray.400"> Atualizações recentes</Text>
                     </Box>
@@ -72,6 +70,7 @@ export default function Dashboard(props) {
                                         rowRenderer={rowRenderer}
                                         scrollTop={scrollTop}
                                         width={width}
+
                                     />
                                 )}
                             </AutoSizer>
